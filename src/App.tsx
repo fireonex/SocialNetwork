@@ -1,17 +1,16 @@
 import React from 'react';
 import './App.css';
+import {Technologies} from "./Technologies";
+import {Header} from "./Header";
 
-function App() {
-  return (
-    <div className="App">
-     <ul>
-         <li>html</li>
-         <li>css</li>
-         <li>js</li>
-         <li>react</li>
-     </ul>
-    </div>
-  );
+function App () {
+    return (
+        <div className="App">
+            <Header/>
+            <Technologies/>
+        </div>
+    );
 }
+
 
 export default App;

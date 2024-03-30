@@ -7,7 +7,7 @@ export const Posts = () => {
     return (
         <div>
 
-            <div className={s.posts}>
+            <div>
                 my posts
                 <div>
                     <textarea></textarea>

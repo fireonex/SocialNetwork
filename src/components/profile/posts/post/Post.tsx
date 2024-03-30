@@ -1,5 +1,6 @@
 import React from 'react';
-import s from './Post.module.css';
+import {S} from './Post.styles'
+
 
 export type PostPropsType = {
     message: string
@@ -10,15 +11,19 @@ export type PostPropsType = {
 export const Post = (props: PostPropsType) => {
     return (
         <div>
-            <div className={s.item}>
-                <img src={'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/69447950/1/?bust=1698331747&width=720'}
+            <S.Post>
+                <S.Avatar src={'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/69447950/1/?bust=1698331747&width=720'}
                      alt={'avatar'}/>
                 {props.message}
-                <div className={s.like}>
+                <S.LikeWrapper>
                     <span>like - {props.count}</span>
-                </div>
-            </div>
+                </S.LikeWrapper>
+            </S.Post>
         </div>
     );
 };
+
+
+
+
 

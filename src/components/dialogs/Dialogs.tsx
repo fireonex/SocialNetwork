@@ -1,45 +1,23 @@
-import styled from "styled-components";
-
+import {S} from './Dialogs.styles'
 
 export const Dialogs = () => {
     return (
-        <StyledDialogs>
-            <DialogsItems>
-                <Dialog>Sam</Dialog>
-                <Dialog>John</Dialog>
-                <Dialog>Sarah</Dialog>
-                <Dialog>Tom</Dialog>
-                <Dialog>Rebecca</Dialog>
-            </DialogsItems>
-            <Messages>
-                <Message>Hello</Message>
-                <Message>What's up bro??</Message>
-                <Message>I love you</Message>
-                <Message>Let's go to restaurant</Message>
-            </Messages>
-        </StyledDialogs>
+        <S.Dialogs>
+            <S.DialogsItems>
+                <S.Dialog>Sam</S.Dialog>
+                <S.Dialog>John</S.Dialog>
+                <S.Dialog>Sarah</S.Dialog>S
+                <S.Dialog>Tom</S.Dialog>
+                <S.Dialog>Rebecca</S.Dialog>
+            </S.DialogsItems>
+            <S.Messages>
+                <S.Message>Hello</S.Message>
+                <S.Message>What's up bro??</S.Message>
+                <S.Message>I love you</S.Message>
+                <S.Message>Let's go to restaurant</S.Message>
+            </S.Messages>
+        </S.Dialogs>
     )
 }
 
 
-const StyledDialogs = styled.section`
-    display: grid;
-    grid-template-columns: 2fr 10fr;
-`
-
-const DialogsItems = styled.div`
-
-`
-
-const Dialog = styled.div`
-    padding: 10px;
-    border: 1px solid #0c3306;
-`
-
-const Messages = styled.div`
-
-`
-
-const Message = styled.div`
-    padding: 10px;
-`

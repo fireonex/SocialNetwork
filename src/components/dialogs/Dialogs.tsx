@@ -1,20 +1,21 @@
 import {S} from './Dialogs.styles'
+import {Dialog} from "./dialog/Dialog";
+import {Message} from "./dialog/Message";
 
 export const Dialogs = () => {
     return (
         <S.Dialogs>
             <S.DialogsItems>
-                <S.Dialog>Sam</S.Dialog>
-                <S.Dialog>John</S.Dialog>
-                <S.Dialog>Sarah</S.Dialog>S
-                <S.Dialog>Tom</S.Dialog>
-                <S.Dialog>Rebecca</S.Dialog>
+                <Dialog id={1} personName={'Sam'}/>
+                <Dialog id={2} personName={'John'}/>
+                <Dialog id={3} personName={'Sarah'}/>
+                <Dialog id={4} personName={'Tom'}/>
+                <Dialog id={5} personName={'Rebecca'}/>
             </S.DialogsItems>
             <S.Messages>
-                <S.Message>Hello</S.Message>
-                <S.Message>What's up bro??</S.Message>
-                <S.Message>I love you</S.Message>
-                <S.Message>Let's go to restaurant</S.Message>
+                <Message text={'Whats up bro??'}/>
+                <Message text={'I love you'}/>
+                <Message text={'Lets go to restaurant'}/>
             </S.Messages>
         </S.Dialogs>
     )

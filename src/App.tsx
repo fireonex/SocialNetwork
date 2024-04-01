@@ -17,10 +17,10 @@ function App() {
                 <Navbar/>
 
                 <S.AppContent>
-                    <Route path={'/profile'} render={() => <Profile/>}/>
-                    <Route path={'/dialogs'} render={() => <Dialogs/>}/>
-                    <Route path={'/news'} render={() => <News/>}/>
-                    <Route path={'/music'} render={() => <Music/>}/>
+                    <Route path={'/profile'} exact render={() => <Profile/>}/>
+                    <Route path={'/dialogs'} exact render={() => <Dialogs/>}/>
+                    <Route path={'/news'} exact render={() => <News/>}/>
+                    <Route path={'/music'} exact render={() => <Music/>}/>
                 </S.AppContent>
 
             </S.AppWrapper>

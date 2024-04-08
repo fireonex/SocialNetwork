@@ -1,9 +1,13 @@
 import React from 'react';
-import s from './Posts.module.css';
 import {Post} from "./post/Post";
+import {postDataType} from "../../redux/State";
 
+type postsPropsType = {
+    messagesData: Array<postDataType>
+}
 
-export const Posts = () => {
+export const Posts = ({messagesData}: postsPropsType) => {
+
     return (
         <div>
 
@@ -15,9 +19,11 @@ export const Posts = () => {
                     <button>Remove</button>
                 </div>
                 <div>
-                    <Post message={"How are you?"} count={5}/>
-                    <Post message={"Hello!!!"} count={8}/>
-                    <Post message={"This is my first post"} count={10}/>
+                    {
+                        messagesData.map((el) =>
+                            <Post key={el.id} message={el.post} count={el.likesCount}/>
+                        )
+                    }
                 </div>
             </div>
 

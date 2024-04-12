@@ -1,3 +1,5 @@
+import friendAvatar from '../../assets/img.png'
+
 export type postDataType = {
     id: number
     post: string
@@ -23,10 +25,20 @@ export type profilePageDataType = {
     messagesData: postDataType[]
 }
 
+export type friendsType = {
+    id: number
+    friendName: string
+    friendPhoto: string
+}
+
+export type sidebarPageType = {
+    sidebarFriends: friendsType[]
+}
+
 export type rootStateType = {
     profilePage: profilePageDataType
     dialogsPage: dialogsPageType
-    sidebarPage: {}
+    navbarPage: sidebarPageType
 }
 
 export const state: rootStateType = {
@@ -55,5 +67,16 @@ export const state: rootStateType = {
         ]
     },
 
-    sidebarPage: {}
+    navbarPage: {
+        sidebarFriends: [
+            {id: 1, friendName: 'Laezel', friendPhoto: friendAvatar},
+            {id: 2, friendName: 'Astarion', friendPhoto: friendAvatar},
+            {id: 3, friendName: 'Will', friendPhoto: friendAvatar},
+        ]
+    }
+}
+
+export const addPost = (postText: string) => {
+    let newPost =  {id: 4, post: postText, likesCount: 0};
+    state.profilePage.messagesData.push(newPost)
 }

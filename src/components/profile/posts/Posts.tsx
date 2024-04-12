@@ -4,18 +4,27 @@ import {postDataType} from "../../redux/State";
 
 type postsPropsType = {
     messagesData: Array<postDataType>
+    addPost: (postText: string) => void
 }
 
-export const Posts = ({messagesData}: postsPropsType) => {
+export const Posts = ({messagesData, addPost}: postsPropsType) => {
+
+    let newPostElement = React.createRef<HTMLTextAreaElement>()
+
+    const addPostHandler = () => {
+        if (newPostElement.current) {
+            let text = newPostElement.current.value
+            addPost(text)
+        }
+    }
 
     return (
         <div>
-
             <div>
                 my posts
                 <div>
-                    <textarea></textarea>
-                    <button>Add post</button>
+                    <textarea ref={newPostElement}></textarea>
+                    <button onClick={addPostHandler}>Add post</button>
                     <button>Remove</button>
                 </div>
                 <div>
@@ -26,7 +35,6 @@ export const Posts = ({messagesData}: postsPropsType) => {
                     }
                 </div>
             </div>
-
         </div>
     );
 };

@@ -1,5 +1,8 @@
 import friendAvatar from '../../assets/img.png'
-import {rerenderEntireThree} from "../../render";
+
+let rerenderEntireThree = (state: rootStateType) => {
+    console.log('state changed')
+}
 
 
 export type postDataType = {
@@ -108,4 +111,10 @@ export const sendMessage = () => {
 export const updateNewMessageText = (newText: string) => {
     state.dialogsPage.newMessageText = newText
     rerenderEntireThree(state)
+}
+
+//-------------------------------------------------------------------------------------//
+
+export const subscribe = (observer: () => void) => {
+    rerenderEntireThree = observer //наблюдатель (паттерн)
 }

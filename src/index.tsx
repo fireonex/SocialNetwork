@@ -1,20 +1,36 @@
 import './index.css';
-import {addPost, state, updateNewPostText} from "./components/redux/State";
-import {rerenderEntireThree} from "./render";
+import {
+    addPost,
+    sendMessage,
+    state,
+    subscribe,
+    updateNewMessageText,
+    updateNewPostText
+} from "./components/redux/State";
+
 import React from "react";
 import App from "./App";
 import {BrowserRouter} from "react-router-dom";
-
-// addPost(' Im cool!')
-
-
-// ReactDOM.render(
-//     <BrowserRouter>
-//         <App state={state} addPost={addPost}/>
-//     </BrowserRouter>,
-//     document.getElementById('root')
-// );
+import ReactDOM from "react-dom";
 
 
-rerenderEntireThree(state)
+const rerenderEntireThree = () => {
+    ReactDOM.render(
+        <BrowserRouter>
+            <App state={state}
+                 addPost={addPost}
+                 updateNewPostText={updateNewPostText}
+                 sendMessage={sendMessage}
+                 updateNewMessageText={updateNewMessageText}
+            />
+        </BrowserRouter>,
+        document.getElementById('root')
+    )
+}
+
+rerenderEntireThree()
+subscribe(rerenderEntireThree)
+
+
+
 

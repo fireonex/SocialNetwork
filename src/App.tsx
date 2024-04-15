@@ -10,13 +10,15 @@ import {S} from './App.styles'
 import {rootStateType} from "./components/redux/State";
 
 
-
-type AppPropsType = {
+export type AppPropsType = {
     state: rootStateType
-    addPost: (postText: string) => void
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
+    sendMessage: () => void
+    updateNewMessageText: (newText: string) => void
 }
 
-function App({state, addPost}: AppPropsType) {
+function App({state, addPost, updateNewPostText, sendMessage, updateNewMessageText}: AppPropsType) {
     return (
         <S.AppWrapper>
             <Header/>
@@ -26,10 +28,17 @@ function App({state, addPost}: AppPropsType) {
                 <Route path={'/profile'} exact render={() => <Profile
                     messagesData={state.profilePage.messagesData}
                     addPost={addPost}
+                    newPostText={state.profilePage.newPostText}
+                    updateNewPostText={updateNewPostText}
                 />}/>
+
                 <Route path={'/dialogs'} exact render={() => <Dialogs
                     dialogsData={state.dialogsPage.dialogsData}
-                    messagesInDialogsData={state.dialogsPage.messagesInDialogsData}/>}/>
+                    messagesInDialogsData={state.dialogsPage.messagesInDialogsData}
+                    sendMessage={sendMessage}
+                    updateNewMessageText={updateNewMessageText}
+                />}/>
+
                 <Route path={'/news'} exact render={() => <News/>}/>
                 <Route path={'/music'} exact render={() => <Music/>}/>
                 {/*<Route path={'/friends'} exact render={() => <Friends friendsData={state.navbarPage.sidebarFriends}/>}/>*/}

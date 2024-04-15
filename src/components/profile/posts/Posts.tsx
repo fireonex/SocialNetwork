@@ -1,21 +1,24 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import {Post} from "./post/Post";
 import {postDataType} from "../../redux/State";
 
+
 type postsPropsType = {
     messagesData: Array<postDataType>
-    addPost: (postText: string) => void
+    addPost: () => void
+    newPostText: string
+    updateNewPostText: (newText: string) => void
 }
 
-export const Posts = ({messagesData, addPost}: postsPropsType) => {
-
-    let newPostElement = React.createRef<HTMLTextAreaElement>()
+export const Posts = ({messagesData, addPost, updateNewPostText}: postsPropsType) => {
 
     const addPostHandler = () => {
-        if (newPostElement.current) {
-            let text = newPostElement.current.value
-            addPost(text)
-        }
+        addPost();
+        updateNewPostText('');
+    }
+
+    const onChangePostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        updateNewPostText(e.currentTarget.value);
     }
 
     return (
@@ -23,7 +26,7 @@ export const Posts = ({messagesData, addPost}: postsPropsType) => {
             <div>
                 my posts
                 <div>
-                    <textarea ref={newPostElement}></textarea>
+                    <textarea onChange={onChangePostHandler}/>
                     <button onClick={addPostHandler}>Add post</button>
                     <button>Remove</button>
                 </div>

@@ -2,24 +2,26 @@ import {S} from './Dialogs.styles'
 import {Dialog} from "./dialog/Dialog";
 import {Message} from "./dialog/Message";
 import {dialogsDataType, messagesInDialogsDataType} from "../redux/State";
-import React from "react";
+import React, {ChangeEvent} from "react";
 
 
 type DialogsPropsType = {
     dialogsData: Array<dialogsDataType>
     messagesInDialogsData: Array<messagesInDialogsDataType>
+    sendMessage: () => void
+    updateNewMessageText: (newText: string) => void
 }
 
 
-export const Dialogs = ({dialogsData, messagesInDialogsData}: DialogsPropsType) => {
-
-    let newMessageElement = React.createRef<HTMLTextAreaElement>()
+export const Dialogs = ({dialogsData, messagesInDialogsData, sendMessage, updateNewMessageText}: DialogsPropsType) => {
 
     const sendMessageHandler = () => {
-        if (newMessageElement.current) {
-            let text = newMessageElement.current.value
-            alert(text)
-        }
+        sendMessage();
+        updateNewMessageText('')
+    }
+
+    const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        updateNewMessageText(e.currentTarget.value)
     }
 
     return (
@@ -32,14 +34,13 @@ export const Dialogs = ({dialogsData, messagesInDialogsData}: DialogsPropsType) 
                 }
             </S.DialogsItems>
             <S.Messages>
-
                 {
                     messagesInDialogsData.map(el =>
                             <Message key={el.id} text={el.text}/>
                         // <FriendMessage key={el.id} text={el.text}/>
                     )
                 }
-                <textarea ref={newMessageElement}></textarea>
+                <textarea onChange={onChangeMessageHandler}></textarea>
                 <button onClick={sendMessageHandler}>Send message</button>
             </S.Messages>
         </S.Dialogs>

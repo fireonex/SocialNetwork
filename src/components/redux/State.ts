@@ -1,4 +1,6 @@
 import friendAvatar from '../../assets/img.png'
+import {rerenderEntireThree} from "../../render";
+
 
 export type postDataType = {
     id: number
@@ -19,10 +21,12 @@ export type messagesInDialogsDataType = {
 export type dialogsPageType = {
     dialogsData: dialogsDataType[]
     messagesInDialogsData: messagesInDialogsDataType[]
+    newMessageText: string
 }
 
 export type profilePageDataType = {
     messagesData: postDataType[]
+    newPostText: string
 }
 
 export type friendsType = {
@@ -41,6 +45,7 @@ export type rootStateType = {
     navbarPage: sidebarPageType
 }
 
+
 export const state: rootStateType = {
 
     profilePage: {
@@ -48,7 +53,9 @@ export const state: rootStateType = {
             {id: 1, post: 'How are you?', likesCount: 5},
             {id: 2, post: 'Hello!!!', likesCount: 8},
             {id: 3, post: 'This is my first post', likesCount: 10},
-        ]
+
+        ],
+        newPostText: 'hello'
     },
 
     dialogsPage: {
@@ -64,7 +71,8 @@ export const state: rootStateType = {
             {id: 2, text: 'I love you'},
             {id: 3, text: 'Lets go to restaurant'},
             {id: 4, text: 'Hey, Im online'}
-        ]
+        ],
+        newMessageText: 'hey friend'
     },
 
     navbarPage: {
@@ -76,7 +84,28 @@ export const state: rootStateType = {
     }
 }
 
-export const addPost = (postText: string) => {
-    let newPost =  {id: 4, post: postText, likesCount: 0};
+export const addPost = () => {
+    const newPost =  {id: 4, post: state.profilePage.newPostText, likesCount: 0};
     state.profilePage.messagesData.push(newPost)
+    //state.profilePage.newPostText = ''
+    rerenderEntireThree(state)
+}
+
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText
+    rerenderEntireThree(state)
+}
+
+//-----------MESSAGE IN DIALOGS---------------------------------------------------------//
+
+export const sendMessage = () => {
+    const newMessage = {id: 5, text: state.dialogsPage.newMessageText};
+    state.dialogsPage.messagesInDialogsData.push(newMessage)
+    //state.dialogsPage.newMessageText = ''
+    rerenderEntireThree(state)
+}
+
+export const updateNewMessageText = (newText: string) => {
+    state.dialogsPage.newMessageText = newText
+    rerenderEntireThree(state)
 }

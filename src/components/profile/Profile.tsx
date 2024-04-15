@@ -7,10 +7,12 @@ import {postDataType} from "../redux/State";
 
 type profilePropsType = {
     messagesData: Array<postDataType>
-    addPost: (postText: string) => void
+    addPost: () => void
+    newPostText: string
+    updateNewPostText: (newText: string) => void
 }
 
-export const Profile = ({messagesData, addPost}: profilePropsType) => {
+export const Profile = ({messagesData, addPost, newPostText, updateNewPostText}: profilePropsType) => {
 
     return (
         <S.Profile>
@@ -20,7 +22,11 @@ export const Profile = ({messagesData, addPost}: profilePropsType) => {
                 description={'profile description'}
 
             />
-            <Posts messagesData={messagesData} addPost={addPost}/>
+            <Posts messagesData={messagesData}
+                   addPost={addPost}
+                   newPostText={newPostText}
+                   updateNewPostText={updateNewPostText}
+            />
         </S.Profile>
     );
 };

@@ -49,7 +49,18 @@ export type rootStateType = {
 }
 
 
-export const state: rootStateType = {
+export type StoreType = {
+    _state: rootStateType
+    getState: () => rootStateType
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
+    sendMessage: () => void
+    updateNewMessageText: (newText: string) => void
+    subscribe: (observer: () => void) => void
+}
+
+export const store: StoreType = {
+    _state: {
 
     profilePage: {
         messagesData: [
@@ -85,36 +96,39 @@ export const state: rootStateType = {
             {id: 3, friendName: 'Will', friendPhoto: friendAvatar},
         ]
     }
+},
+
+    getState() {
+        return this._state
+    },
+
+    addPost() {
+        const newPost =  {id: 4, post: this._state.profilePage.newPostText, likesCount: 0};
+        this._state.profilePage.messagesData.push(newPost)
+        rerenderEntireThree(this._state)
+    },
+
+    updateNewPostText(newText: string) {
+        this._state.profilePage.newPostText = newText
+        rerenderEntireThree(this._state)
+    },
+
+    sendMessage() {
+        const newMessage = {id: 5, text: this._state.dialogsPage.newMessageText};
+        this._state.dialogsPage.messagesInDialogsData.push(newMessage)
+        //state.dialogsPage.newMessageText = ''
+        rerenderEntireThree(this._state)
+    },
+
+    updateNewMessageText(newText: string)  {
+        this._state.dialogsPage.newMessageText = newText
+        rerenderEntireThree(this._state)
+    },
+
+    subscribe(observer: () => void)  {
+        rerenderEntireThree = observer //наблюдатель (паттерн)
+    }
+
 }
 
-export const addPost = () => {
-    const newPost =  {id: 4, post: state.profilePage.newPostText, likesCount: 0};
-    state.profilePage.messagesData.push(newPost)
-    //state.profilePage.newPostText = ''
-    rerenderEntireThree(state)
-}
 
-export const updateNewPostText = (newText: string) => {
-    state.profilePage.newPostText = newText
-    rerenderEntireThree(state)
-}
-
-//-----------MESSAGE IN DIALOGS---------------------------------------------------------//
-
-export const sendMessage = () => {
-    const newMessage = {id: 5, text: state.dialogsPage.newMessageText};
-    state.dialogsPage.messagesInDialogsData.push(newMessage)
-    //state.dialogsPage.newMessageText = ''
-    rerenderEntireThree(state)
-}
-
-export const updateNewMessageText = (newText: string) => {
-    state.dialogsPage.newMessageText = newText
-    rerenderEntireThree(state)
-}
-
-//-------------------------------------------------------------------------------------//
-
-export const subscribe = (observer: () => void) => {
-    rerenderEntireThree = observer //наблюдатель (паттерн)
-}

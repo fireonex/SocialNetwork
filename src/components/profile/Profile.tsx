@@ -2,17 +2,18 @@ import React from 'react';
 import {Posts} from "./posts/Posts";
 import {ProfileInfo} from "./ProfileInfo";
 import {S} from './Profile.styles'
-import {postDataType} from "../redux/State";
+import {actionType, postDataType} from "../redux/State";
 
 
 type profilePropsType = {
     messagesData: Array<postDataType>
-    addPost: () => void
-    newPostText: string
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: actionType) => void
+    // addPost: () => void
+    //newPostText: string
+    // updateNewPostText: (newText: string) => void
 }
 
-export const Profile = ({messagesData, addPost, newPostText, updateNewPostText}: profilePropsType) => {
+export const Profile = ({messagesData, dispatch}: profilePropsType) => {
 
     return (
         <S.Profile>
@@ -23,9 +24,10 @@ export const Profile = ({messagesData, addPost, newPostText, updateNewPostText}:
 
             />
             <Posts messagesData={messagesData}
-                   addPost={addPost}
-                   newPostText={newPostText}
-                   updateNewPostText={updateNewPostText}
+                   dispatch={dispatch}
+                   // addPost={addPost}
+                   //newPostText={newPostText}
+                   // updateNewPostText={updateNewPostText}
             />
         </S.Profile>
     );

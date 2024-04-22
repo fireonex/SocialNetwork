@@ -7,18 +7,20 @@ import {Route} from "react-router-dom";
 import {News} from "./components/news/News";
 import {Music} from "./components/music/Music";
 import {S} from './App.styles'
-import {rootStateType} from "./components/redux/State";
+import {actionType, rootStateType} from "./components/redux/State";
+
 
 
 export type AppPropsType = {
     state: rootStateType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
-    sendMessage: () => void
-    updateNewMessageText: (newText: string) => void
+    dispatch: (action: actionType) => void
+    // addPost: () => void
+    // updateNewPostText: (newText: string) => void
+    // sendMessage: () => void
+    // updateNewMessageText: (newText: string) => void
 }
 
-function App({state, addPost, updateNewPostText, sendMessage, updateNewMessageText}: AppPropsType) {
+function App({state, dispatch}: AppPropsType) {
     return (
         <S.AppWrapper>
             <Header/>
@@ -27,16 +29,20 @@ function App({state, addPost, updateNewPostText, sendMessage, updateNewMessageTe
             <S.AppContent>
                 <Route path={'/profile'} exact render={() => <Profile
                     messagesData={state.profilePage.messagesData}
-                    addPost={addPost}
-                    newPostText={state.profilePage.newPostText}
-                    updateNewPostText={updateNewPostText}
+                    dispatch={dispatch}
+
+                    //newPostText={state.profilePage.newPostText}
+                    //addPost={addPost}
+                    // updateNewPostText={updateNewPostText}
                 />}/>
 
                 <Route path={'/dialogs'} exact render={() => <Dialogs
                     dialogsData={state.dialogsPage.dialogsData}
                     messagesInDialogsData={state.dialogsPage.messagesInDialogsData}
-                    sendMessage={sendMessage}
-                    updateNewMessageText={updateNewMessageText}
+                    dispatch={dispatch}
+
+                    // sendMessage={sendMessage}
+                    // updateNewMessageText={updateNewMessageText}
                 />}/>
 
                 <Route path={'/news'} exact render={() => <News/>}/>

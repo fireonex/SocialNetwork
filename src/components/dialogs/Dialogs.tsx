@@ -1,27 +1,31 @@
 import {S} from './Dialogs.styles'
 import {Dialog} from "./dialog/Dialog";
 import {Message} from "./dialog/Message";
-import {dialogsDataType, messagesInDialogsDataType} from "../redux/State";
+import {actionType, dialogsDataType, messagesInDialogsDataType} from "../redux/State";
 import React, {ChangeEvent} from "react";
 
 
 type DialogsPropsType = {
     dialogsData: Array<dialogsDataType>
     messagesInDialogsData: Array<messagesInDialogsDataType>
-    sendMessage: () => void
-    updateNewMessageText: (newText: string) => void
+    dispatch: (action: actionType) => void
+    //sendMessage: () => void
+    //updateNewMessageText: (newText: string) => void
 }
 
 
-export const Dialogs = ({dialogsData, messagesInDialogsData, sendMessage, updateNewMessageText}: DialogsPropsType) => {
+export const Dialogs = ({dialogsData, messagesInDialogsData, dispatch}: DialogsPropsType) => {
 
     const sendMessageHandler = () => {
-        sendMessage();
-        updateNewMessageText('')
+        dispatch({type: "SEND-MESSAGE"});
+        // sendMessage();
+        dispatch({type: "UPDATE-NEW-MESSAGE-TEXT", newText: ''})
+        // updateNewMessageText('')
     }
 
     const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewMessageText(e.currentTarget.value)
+        dispatch({type: "UPDATE-NEW-MESSAGE-TEXT", newText: e.currentTarget.value})
+        // updateNewMessageText(e.currentTarget.value)
     }
 
     return (

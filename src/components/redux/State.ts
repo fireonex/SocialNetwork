@@ -1,6 +1,9 @@
 import friendAvatar from '../../assets/img.png'
+import {addPostActionType, profileReducer, updateNewPostTextActionType} from "./profileReducer";
+import {dialogsReducer, sendMessageActionType, updateNewMessageTextActionType} from "./dialogsReducer";
+import {navbarReducer} from "./navbarReducer";
 
-let rerenderEntireThree = (state: rootStateType) => {
+export let rerenderEntireThree = (state: rootStateType) => {
     console.log('state changed')
 }
 
@@ -53,13 +56,13 @@ export type rootStateType = {
 
 //-------------types of actions----------------------------//
 
-export type addPostActionType = ReturnType<typeof addPostAC>
+// export type addPostActionType = ReturnType<typeof addPostAC>
+//
+// export type updateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
 
-export type updateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
-
-export type sendMessageActionType = ReturnType<typeof sendMessageAC>
-
-export type updateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
+// export type sendMessageActionType = ReturnType<typeof sendMessageAC>
+//
+// export type updateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
 
 
 export type actionType = addPostActionType
@@ -73,10 +76,10 @@ export type actionType = addPostActionType
 export type StoreType = {
     _state: rootStateType
     getState: () => rootStateType
-    _addPost: () => void
-    _updateNewPostText: (newText: string) => void
-    _sendMessage: () => void
-    _updateNewMessageText: (newText: string) => void
+    // _addPost: () => void
+    // _updateNewPostText: (newText: string) => void
+    // _sendMessage: () => void
+    // _updateNewMessageText: (newText: string) => void
     subscribe: (observer: () => void) => void
     dispatch: (action: actionType) => void
 }
@@ -108,7 +111,7 @@ export const store: StoreType = {
                 {id: 3, text: 'Lets go to restaurant'},
                 {id: 4, text: 'Hey, Im online'}
             ],
-            newMessageText: 'hey friend'
+            newMessageText: ''
         },
 
         navbarPage: {
@@ -124,28 +127,28 @@ export const store: StoreType = {
         return this._state
     },
 
-    _addPost() {
-        const newPost = {id: 4, post: this._state.profilePage.newPostText, likesCount: 0};
-        this._state.profilePage.messagesData.push(newPost)
-        rerenderEntireThree(this._state)
-    },
-
-    _updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        rerenderEntireThree(this._state)
-    },
-
-    _sendMessage() {
-        const newMessage = {id: 5, text: this._state.dialogsPage.newMessageText};
-        this._state.dialogsPage.messagesInDialogsData.push(newMessage)
-        //state.dialogsPage.newMessageText = ''
-        rerenderEntireThree(this._state)
-    },
-
-    _updateNewMessageText(newText: string) {
-        this._state.dialogsPage.newMessageText = newText
-        rerenderEntireThree(this._state)
-    },
+    // _addPost() {
+    //     const newPost = {id: 4, post: this._state.profilePage.newPostText, likesCount: 0};
+    //     this._state.profilePage.messagesData.push(newPost)
+    //     rerenderEntireThree(this._state)
+    // },
+    //
+    // _updateNewPostText(newText: string) {
+    //     this._state.profilePage.newPostText = newText
+    //     rerenderEntireThree(this._state)
+    // },
+    //
+    // _sendMessage() {
+    //     const newMessage = {id: 5, text: this._state.dialogsPage.newMessageText};
+    //     this._state.dialogsPage.messagesInDialogsData.push(newMessage)
+    //     //state.dialogsPage.newMessageText = ''
+    //     rerenderEntireThree(this._state)
+    // },
+    //
+    // _updateNewMessageText(newText: string) {
+    //     this._state.dialogsPage.newMessageText = newText
+    //     rerenderEntireThree(this._state)
+    // },
 
     subscribe(observer: () => void) {
         rerenderEntireThree = observer //наблюдатель (паттерн)
@@ -153,41 +156,47 @@ export const store: StoreType = {
 
     dispatch(action: actionType) {
 
-        if (action.type === 'ADD-POST') {
-            this._addPost()
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.navbarPage = navbarReducer(this._state.navbarPage, action)
 
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            this._updateNewPostText(action.newText)
+        rerenderEntireThree(this._state)
 
-        } else if (action.type === 'SEND-MESSAGE') {
-            this._sendMessage()
-
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
-            this._updateNewMessageText(action.newText)
-        }
+        // if (action.type === 'ADD-POST') {
+        //     this._addPost()
+        //
+        // } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+        //     this._updateNewPostText(action.newText)
+        //
+        // } else if (action.type === 'SEND-MESSAGE') {
+        //     this._sendMessage()
+        //
+        // } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+        //     this._updateNewMessageText(action.newText)
+        // }
     }
 }
 
 
-export const addPostAC = () => ({
-    type: "ADD-POST"
-}) as const
+// export const addPostAC = () => ({
+//     type: "ADD-POST"
+// }) as const
+//
+//
+// export const updateNewPostTextAC = (text: string) => ({
+//     type: "UPDATE-NEW-POST-TEXT",
+//     newText: text
+// }) as const
 
 
-export const updateNewPostTextAC = (text: string) => ({
-    type: "UPDATE-NEW-POST-TEXT",
-    newText: text
-}) as const
-
-
-export const sendMessageAC = () => ({
-    type: 'SEND-MESSAGE'
-}) as const
-
-
-export const updateNewMessageTextAC = (text: string) => ({
-    type: 'UPDATE-NEW-MESSAGE-TEXT',
-    newText: text
-}) as const
+// export const sendMessageAC = () => ({
+//     type: 'SEND-MESSAGE'
+// }) as const
+//
+//
+// export const updateNewMessageTextAC = (text: string) => ({
+//     type: 'UPDATE-NEW-MESSAGE-TEXT',
+//     newText: text
+// }) as const
 
 

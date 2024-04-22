@@ -5,10 +5,9 @@ import {
     actionType,
     dialogsDataType,
     messagesInDialogsDataType,
-    sendMessageAC,
-    updateNewMessageTextAC
 } from "../redux/State";
 import React, {ChangeEvent} from "react";
+import {sendMessageAC, updateNewMessageTextAC} from "../redux/dialogsReducer";
 
 
 type DialogsPropsType = {

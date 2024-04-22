@@ -8,9 +8,6 @@ import {actionType, postDataType} from "../redux/State";
 type profilePropsType = {
     messagesData: Array<postDataType>
     dispatch: (action: actionType) => void
-    // addPost: () => void
-    //newPostText: string
-    // updateNewPostText: (newText: string) => void
 }
 
 export const Profile = ({messagesData, dispatch}: profilePropsType) => {
@@ -25,9 +22,6 @@ export const Profile = ({messagesData, dispatch}: profilePropsType) => {
             />
             <Posts messagesData={messagesData}
                    dispatch={dispatch}
-                   // addPost={addPost}
-                   //newPostText={newPostText}
-                   // updateNewPostText={updateNewPostText}
             />
         </S.Profile>
     );

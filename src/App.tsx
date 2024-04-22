@@ -14,10 +14,6 @@ import {actionType, rootStateType} from "./components/redux/State";
 export type AppPropsType = {
     state: rootStateType
     dispatch: (action: actionType) => void
-    // addPost: () => void
-    // updateNewPostText: (newText: string) => void
-    // sendMessage: () => void
-    // updateNewMessageText: (newText: string) => void
 }
 
 function App({state, dispatch}: AppPropsType) {
@@ -30,19 +26,12 @@ function App({state, dispatch}: AppPropsType) {
                 <Route path={'/profile'} exact render={() => <Profile
                     messagesData={state.profilePage.messagesData}
                     dispatch={dispatch}
-
-                    //newPostText={state.profilePage.newPostText}
-                    //addPost={addPost}
-                    // updateNewPostText={updateNewPostText}
                 />}/>
 
                 <Route path={'/dialogs'} exact render={() => <Dialogs
                     dialogsData={state.dialogsPage.dialogsData}
                     messagesInDialogsData={state.dialogsPage.messagesInDialogsData}
                     dispatch={dispatch}
-
-                    // sendMessage={sendMessage}
-                    // updateNewMessageText={updateNewMessageText}
                 />}/>
 
                 <Route path={'/news'} exact render={() => <News/>}/>

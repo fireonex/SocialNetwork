@@ -53,29 +53,19 @@ export type rootStateType = {
 
 //-------------types of actions----------------------------//
 
-export type addPostActionType = {
-    type: 'ADD-POST'
-}
+export type addPostActionType = ReturnType<typeof addPostAC>
 
-export type updateNewPostTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
-}
+export type updateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
 
-export type sendMessageActionType = {
-    type: 'SEND-MESSAGE'
-}
+export type sendMessageActionType = ReturnType<typeof sendMessageAC>
 
-export type updateNewMessageTextActionType = {
-    type: 'UPDATE-NEW-MESSAGE-TEXT'
-    newText: string
+export type updateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
 
-}
 
 export type actionType = addPostActionType
-                        | updateNewPostTextActionType
-                        | sendMessageActionType
-                        | updateNewMessageTextActionType
+    | updateNewPostTextActionType
+    | sendMessageActionType
+    | updateNewMessageTextActionType
 
 
 //---------------------------------------------------------//
@@ -177,5 +167,27 @@ export const store: StoreType = {
         }
     }
 }
+
+
+export const addPostAC = () => ({
+    type: "ADD-POST"
+}) as const
+
+
+export const updateNewPostTextAC = (text: string) => ({
+    type: "UPDATE-NEW-POST-TEXT",
+    newText: text
+}) as const
+
+
+export const sendMessageAC = () => ({
+    type: 'SEND-MESSAGE'
+}) as const
+
+
+export const updateNewMessageTextAC = (text: string) => ({
+    type: 'UPDATE-NEW-MESSAGE-TEXT',
+    newText: text
+}) as const
 
 

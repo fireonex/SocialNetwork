@@ -7,12 +7,6 @@ export type updateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
 
 export const profileReducer = (state: profilePageDataType, action: actionType) => {
 
-    // if (action.type === 'ADD-POST') {
-    //     const newPost = {id: 4, post: state.newPostText, likesCount: 0};
-    //     state.messagesData.push(newPost)
-    // } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-    //     state.newPostText = action.newText
-    // }
 
     switch (action.type) {
         case 'ADD-POST':

@@ -1,13 +1,15 @@
 import {S} from './Dialogs.styles'
 import {Dialog} from "./dialog/Dialog";
 import {Message} from "./dialog/Message";
+
+import React, {ChangeEvent} from "react";
 import {
-    actionType,
     dialogsDataType,
     messagesInDialogsDataType,
-} from "../redux/State";
-import React, {ChangeEvent} from "react";
-import {sendMessageAC, updateNewMessageTextAC} from "../redux/dialogsReducer";
+    sendMessageAC,
+    updateNewMessageTextAC
+} from "../redux/dialogsReducer";
+import {actionType} from "../redux/redux-store";
 
 
 type DialogsPropsType = {

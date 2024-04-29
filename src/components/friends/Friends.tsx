@@ -1,6 +1,7 @@
 import {Friend} from "./Friend";
-import {friendsType} from "../redux/State";
 import {S} from './Friend.styles'
+import {friendsType} from "../redux/navbarReducer";
+
 
 type FriendsPropsType = {
     friendsData: friendsType[]

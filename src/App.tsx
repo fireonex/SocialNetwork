@@ -7,14 +7,15 @@ import {Route} from "react-router-dom";
 import {News} from "./components/news/News";
 import {Music} from "./components/music/Music";
 import {S} from './App.styles'
-import {actionType, rootStateType} from "./components/redux/State";
-
+import {actionType, rootStateType} from "./components/redux/redux-store";
 
 
 export type AppPropsType = {
     state: rootStateType
     dispatch: (action: actionType) => void
 }
+
+
 
 function App({state, dispatch}: AppPropsType) {
     return (

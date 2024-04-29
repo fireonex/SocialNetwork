@@ -9,46 +9,46 @@ export let rerenderEntireThree = (state: rootStateType) => {
 
 //---------types of functions-------------------------------//
 
-export type postDataType = {
+type postDataType = {
     id: number
     post: string
     likesCount: number
 }
 
-export type dialogsDataType = {
+type dialogsDataType = {
     id: number
     personName: string
 }
 
-export type messagesInDialogsDataType = {
+type messagesInDialogsDataType = {
     id: number
     text: string
 }
 
-export type dialogsPageType = {
+type dialogsPageType = {
     dialogsData: dialogsDataType[]
     messagesInDialogsData: messagesInDialogsDataType[]
     newMessageText: string
 }
 
-export type profilePageDataType = {
+type profilePageDataType = {
     messagesData: postDataType[]
     newPostText: string
 }
 
-export type friendsType = {
+type friendsType = {
     id: number
     friendName: string
     friendPhoto: string
 }
 
-export type sidebarPageType = {
+type sidebarPageType = {
     sidebarFriends: friendsType[]
 }
 
 //---------------------------------------------------------//
 
-export type rootStateType = {
+type rootStateType = {
     profilePage: profilePageDataType
     dialogsPage: dialogsPageType
     navbarPage: sidebarPageType
@@ -65,7 +65,7 @@ export type rootStateType = {
 // export type updateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
 
 
-export type actionType = addPostActionType
+type actionType = addPostActionType
     | updateNewPostTextActionType
     | sendMessageActionType
     | updateNewMessageTextActionType
@@ -73,7 +73,7 @@ export type actionType = addPostActionType
 
 //---------------------------------------------------------//
 
-export type StoreType = {
+type StoreType = {
     _state: rootStateType
     getState: () => rootStateType
     // _addPost: () => void
@@ -84,7 +84,7 @@ export type StoreType = {
     dispatch: (action: actionType) => void
 }
 
-export const store: StoreType = {
+const store: StoreType = {
     _state: {
 
         profilePage: {

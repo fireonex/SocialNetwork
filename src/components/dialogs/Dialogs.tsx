@@ -3,34 +3,25 @@ import {Dialog} from "./dialog/Dialog";
 import {Message} from "./dialog/Message";
 
 import React, {ChangeEvent} from "react";
-import {
-    dialogsDataType,
-    messagesInDialogsDataType,
-    sendMessageAC,
-    updateNewMessageTextAC
-} from "../redux/dialogsReducer";
-import {actionType} from "../redux/redux-store";
+import {dialogsDataType, messagesInDialogsDataType} from "../redux/dialogsReducer";
 
 
 type DialogsPropsType = {
     dialogsData: Array<dialogsDataType>
     messagesInDialogsData: Array<messagesInDialogsDataType>
-    dispatch: (action: actionType) => void
+    sendMessage: () => void
+    updateNewMessageText: (message: string) => void
 }
 
 
-export const Dialogs = ({dialogsData, messagesInDialogsData, dispatch}: DialogsPropsType) => {
+export const Dialogs = ({dialogsData, messagesInDialogsData, sendMessage, updateNewMessageText}: DialogsPropsType) => {
 
     const sendMessageHandler = () => {
-        //dispatch({type: "SEND-MESSAGE"});
-        dispatch(sendMessageAC())
-        //dispatch({type: "UPDATE-NEW-MESSAGE-TEXT", newText: ''})
-        dispatch(updateNewMessageTextAC(''))
+        sendMessage()
     }
 
     const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        //dispatch({type: "UPDATE-NEW-MESSAGE-TEXT", newText: e.currentTarget.value})
-        dispatch(updateNewMessageTextAC(e.currentTarget.value))
+        updateNewMessageText(e.currentTarget.value)
     }
 
     return (

@@ -1,26 +1,22 @@
 import React, {ChangeEvent} from 'react';
 import {Post} from "./post/Post";
-import {addPostAC, postDataType, updateNewPostTextAC} from "../../redux/profileReducer";
-import {actionType} from "../../redux/redux-store";
+import {postDataType} from "../../redux/profileReducer";
 
 
 type postsPropsType = {
     messagesData: Array<postDataType>
-    dispatch: (action: actionType) => void
+    updateNewPostText: (text: string) => void;
+    addPost: () => void;
 }
 
-export const Posts = ({messagesData, dispatch}: postsPropsType) => {
+export const Posts = ({messagesData, updateNewPostText, addPost}: postsPropsType) => {
 
     const addPostHandler = () => {
-        dispatch(addPostAC())
-        //dispatch({type: "ADD-POST"});
-        dispatch(updateNewPostTextAC(''))
-        //dispatch({type: "UPDATE-NEW-POST-TEXT", newText: ''});
+        addPost()
     }
 
     const onChangePostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(updateNewPostTextAC(e.currentTarget.value))
-        //dispatch({type: "UPDATE-NEW-POST-TEXT", newText: e.currentTarget.value});
+        updateNewPostText(e.currentTarget.value)
     }
 
     return (
@@ -42,5 +38,5 @@ export const Posts = ({messagesData, dispatch}: postsPropsType) => {
             </div>
         </div>
     );
-};
+}
 

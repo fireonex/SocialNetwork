@@ -1,17 +1,15 @@
 import React from 'react';
-import {Posts} from "./posts/Posts";
 import {ProfileInfo} from "./ProfileInfo";
 import {S} from './Profile.styles'
 import {postDataType} from "../redux/profileReducer";
-import {actionType} from "../redux/redux-store";
+import {PostsContainer} from "./posts/PostsContainer";
 
 
 type profilePropsType = {
     messagesData: Array<postDataType>
-    dispatch: (action: actionType) => void
 }
 
-export const Profile = ({messagesData, dispatch}: profilePropsType) => {
+export const Profile = ({messagesData}: profilePropsType) => {
 
     return (
         <S.Profile>
@@ -21,9 +19,7 @@ export const Profile = ({messagesData, dispatch}: profilePropsType) => {
                 description={'profile description'}
 
             />
-            <Posts messagesData={messagesData}
-                   dispatch={dispatch}
-            />
+            <PostsContainer messagesData={messagesData}/>
         </S.Profile>
     );
 };

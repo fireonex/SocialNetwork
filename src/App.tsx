@@ -8,6 +8,7 @@ import {News} from "./components/news/News";
 import {Music} from "./components/music/Music";
 import {S} from './App.styles'
 import {actionType, rootStateType} from "./components/redux/redux-store";
+import {DialogsContainer} from "./components/dialogs/DialogsContainer";
 
 
 export type AppPropsType = {
@@ -26,13 +27,11 @@ function App({state, dispatch}: AppPropsType) {
             <S.AppContent>
                 <Route path={'/profile'} exact render={() => <Profile
                     messagesData={state.profilePage.messagesData}
-                    dispatch={dispatch}
                 />}/>
 
-                <Route path={'/dialogs'} exact render={() => <Dialogs
+                <Route path={'/dialogs'} exact render={() => <DialogsContainer
                     dialogsData={state.dialogsPage.dialogsData}
                     messagesInDialogsData={state.dialogsPage.messagesInDialogsData}
-                    dispatch={dispatch}
                 />}/>
 
                 <Route path={'/news'} exact render={() => <News/>}/>

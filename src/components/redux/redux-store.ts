@@ -1,4 +1,4 @@
-import {combineReducers, createStore} from "redux";
+import {combineReducers, createStore, Store} from "redux";
 import {addPostActionType, profilePageDataType, profileReducer, updateNewPostTextActionType} from "./profileReducer";
 import {dialogsPageType, dialogsReducer, sendMessageActionType, updateNewMessageTextActionType} from "./dialogsReducer";
 import {navbarPageType, navbarReducer} from "./navbarReducer";
@@ -22,4 +22,4 @@ let reducers = combineReducers({
     navbarPage: navbarReducer
 });
 
-export let store = createStore(reducers)
+export let store: Store<rootStateType, actionType> = createStore(reducers)

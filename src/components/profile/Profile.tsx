@@ -1,15 +1,15 @@
 import React from 'react';
 import {ProfileInfo} from "./ProfileInfo";
 import {S} from './Profile.styles'
-import {postDataType} from "../redux/profileReducer";
 import {PostsContainer} from "./posts/PostsContainer";
 
 
 type profilePropsType = {
-    messagesData: Array<postDataType>
+    //messagesData: Array<postDataType>
+    //store: Store<rootStateType, actionType>
 }
 
-export const Profile = ({messagesData}: profilePropsType) => {
+export const Profile = ({}: profilePropsType) => {
 
     return (
         <S.Profile>
@@ -19,7 +19,7 @@ export const Profile = ({messagesData}: profilePropsType) => {
                 description={'profile description'}
 
             />
-            <PostsContainer messagesData={messagesData}/>
+            <PostsContainer/>
         </S.Profile>
     );
 };

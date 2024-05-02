@@ -1,7 +1,6 @@
 import {S} from './Dialogs.styles'
 import {Dialog} from "./dialog/Dialog";
 import {Message} from "./dialog/Message";
-
 import React, {ChangeEvent} from "react";
 import {dialogsDataType, messagesInDialogsDataType} from "../redux/dialogsReducer";
 

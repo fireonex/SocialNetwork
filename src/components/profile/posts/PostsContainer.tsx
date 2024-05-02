@@ -1,26 +1,43 @@
 import React from 'react';
-import {addPostAC, postDataType, updateNewPostTextAC} from "../../redux/profileReducer";
-import {store} from "../../redux/redux-store";
+import {addPostAC, updateNewPostTextAC} from "../../redux/profileReducer";
 import {Posts} from "./Posts";
+import {StoreContext} from "../../../StoreContext";
+import {store} from "../../redux/redux-store";
 
 
 type postsContainerPropsType = {
-    messagesData: Array<postDataType>
+    //store: Store<rootStateType, actionType>
+    //messagesData: Array<postDataType>
 }
 
-export const PostsContainer = ({messagesData}: postsContainerPropsType) => {
+export const PostsContainer = ({}: postsContainerPropsType) => {
 
-    const addPostHandler = () => {
-        store.dispatch(addPostAC())
-        store.dispatch(updateNewPostTextAC(''))
-    }
-
-    const updateNewPostTextHandler = (text: string) => {
-        store.dispatch(updateNewPostTextAC(text))
-    }
 
     return (
-        <Posts updateNewPostText={updateNewPostTextHandler} addPost={addPostHandler} messagesData={messagesData}/>
+        <StoreContext.Consumer>
+            {context => {
+                if (!context) return null;  // Добавьте проверку на null
+
+
+                let state = store.getState();
+                const addPostHandler = () => {
+                    store.dispatch(addPostAC());
+                    store.dispatch(updateNewPostTextAC(''));
+                };
+
+                const updateNewPostTextHandler = (text: string) => {
+                    store.dispatch(updateNewPostTextAC(text));
+                };
+
+                return (
+                    <Posts updateNewPostText={updateNewPostTextHandler} addPost={addPostHandler}
+                           messagesData={state.profilePage.messagesData}// Убедитесь, что используете правильный путь к данным
+                    />
+                );
+            }}
+        </StoreContext.Consumer>
+
+
     );
 };
 

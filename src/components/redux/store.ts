@@ -73,7 +73,7 @@ type actionType = addPostActionType
 
 //---------------------------------------------------------//
 
-type StoreType = {
+export type StoreType = {
     _state: rootStateType
     getState: () => rootStateType
     // _addPost: () => void

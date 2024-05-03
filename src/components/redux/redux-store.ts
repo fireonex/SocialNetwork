@@ -10,6 +10,7 @@ export type rootStateType = {
     navbarPage: navbarPageType
 }
 
+
 export type actionType = addPostActionType
     | updateNewPostTextActionType
     | sendMessageActionType

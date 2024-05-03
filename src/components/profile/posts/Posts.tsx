@@ -10,33 +10,24 @@ type postsPropsType = {
 }
 
 export const Posts = ({messagesData, updateNewPostText, addPost}: postsPropsType) => {
-
     const addPostHandler = () => {
-        addPost()
-    }
+        addPost();
+    };
 
     const onChangePostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewPostText(e.currentTarget.value)
-    }
+        updateNewPostText(e.currentTarget.value);
+    };
 
     return (
         <div>
+            my posts
             <div>
-                my posts
-                <div>
-                    <textarea onChange={onChangePostHandler}/>
-                    <button onClick={addPostHandler}>Add post</button>
-                    <button>Remove</button>
-                </div>
-                <div>
-                    {
-                        messagesData.map((el) =>
-                            <Post key={el.id} message={el.post} count={el.likesCount}/>
-                        )
-                    }
-                </div>
+                <textarea onChange={onChangePostHandler} />
+                <button onClick={addPostHandler}>Add post</button>
             </div>
+            {messagesData.map(el =>
+                <Post key={el.id} message={el.post} count={el.likesCount} />
+            )}
         </div>
     );
-}
-
+};

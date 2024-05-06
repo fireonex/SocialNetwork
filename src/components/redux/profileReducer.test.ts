@@ -22,7 +22,7 @@ test('addPost should add new post to profile page', () => {
     // ожидаем, что количество постов увеличится
     expect(newState.messagesData.length).toBe(initialState.messagesData.length + 1);
     // и последний пост будет иметь текст 'hello' (newPostText из начального состояния)
-    expect(newState.messagesData[newState.messagesData.length - 1].post).toBe('hello');
+    expect(newState.messagesData[newState.messagesData.length - 1].post).toBe(initialState.newPostText);
 });
 
 

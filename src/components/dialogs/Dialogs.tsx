@@ -10,40 +10,37 @@ type DialogsPropsType = {
     messagesInDialogsData: Array<messagesInDialogsDataType>
     sendMessage: () => void
     updateNewMessageText: (message: string) => void
+    newMessageText: string
 }
 
 
-export const Dialogs = ({dialogsData, messagesInDialogsData, sendMessage, updateNewMessageText}: DialogsPropsType) => {
+export const Dialogs = ({dialogsData,
+                            messagesInDialogsData,
+                            sendMessage, updateNewMessageText,
+                            newMessageText}: DialogsPropsType) => {
 
     const sendMessageHandler = () => {
-        sendMessage()
+        sendMessage();
     }
 
     const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewMessageText(e.currentTarget.value)
+        updateNewMessageText(e.currentTarget.value);
     }
 
     return (
         <S.Dialogs>
             <S.DialogsItems>
-                {
-                    dialogsData.map(el =>
-                        <Dialog key={el.id} id={el.id} personName={el.personName}/>
-                    )
-                }
+                {dialogsData.map(el =>
+                    <Dialog key={el.id} id={el.id} personName={el.personName}/>
+                )}
             </S.DialogsItems>
             <S.Messages>
-                {
-                    messagesInDialogsData.map(el =>
-                            <Message key={el.id} text={el.text}/>
-                        // <FriendMessage key={el.id} text={el.text}/>
-                    )
-                }
-                <textarea onChange={onChangeMessageHandler}></textarea>
+                {messagesInDialogsData.map(el =>
+                    <Message key={el.id} text={el.text}/>
+                )}
+                <textarea value={newMessageText} onChange={onChangeMessageHandler}></textarea>
                 <button onClick={sendMessageHandler}>Send message</button>
             </S.Messages>
         </S.Dialogs>
     )
 }
-
-

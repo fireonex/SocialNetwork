@@ -31,11 +31,11 @@ export const profileReducer = (state = initialState, action: actionType) => {
 
     switch (action.type) {
         case 'ADD-POST':
-            const newPost = {id: 4, post: state.newPostText, likesCount: 0};
+            const newPost = {id: state.messagesData.length + 1, post: state.newPostText, likesCount: 0};
             return {
                 ...state,
                 messagesData: [...state.messagesData, newPost],
-                newPostText: ''
+                newPostText: ''  // Сброс поля ввода
             }
 
             // const newPost = {id: 4, post: state.newPostText, likesCount: 0};
@@ -46,8 +46,10 @@ export const profileReducer = (state = initialState, action: actionType) => {
             //     ...state,
             //     newPostText: action.newText
             // }
-            state.newPostText = action.newText;
-            return state;
+            return {
+                ...state,
+                newPostText: action.newText  // Обновление текста поля ввода
+            };
         default:
             return state;
     }

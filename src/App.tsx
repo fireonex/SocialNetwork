@@ -20,7 +20,6 @@ function App({}: AppPropsType) {
                 <Route path='/dialogs' exact component={DialogsContainer} />
                 <Route path='/news' exact component={News} />
                 <Route path='/music' exact component={Music} />
-                {/* Если нужно добавить другие маршруты, добавьте их здесь */}
             </S.AppContent>
         </S.AppWrapper>
     );

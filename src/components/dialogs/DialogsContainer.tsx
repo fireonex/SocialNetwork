@@ -47,7 +47,8 @@ type DialogsPropsType = {
 const mapStateToProps = (state: rootStateType)=> {
     return {
         dialogsData: state.dialogsPage.dialogsData,
-        messagesInDialogsData: state.dialogsPage.messagesInDialogsData
+        messagesInDialogsData: state.dialogsPage.messagesInDialogsData,
+        newMessageText: state.dialogsPage.newMessageText
     }
 }
 

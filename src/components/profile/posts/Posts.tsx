@@ -7,9 +7,10 @@ type postsPropsType = {
     messagesData: Array<postDataType>
     updateNewPostText: (text: string) => void;
     addPost: () => void;
+    newPostText: string;
 }
 
-export const Posts = ({messagesData, updateNewPostText, addPost}: postsPropsType) => {
+export const Posts = ({messagesData, updateNewPostText, addPost, newPostText}: postsPropsType) => {
     const addPostHandler = () => {
         addPost();
     };
@@ -22,7 +23,7 @@ export const Posts = ({messagesData, updateNewPostText, addPost}: postsPropsType
         <div>
             my posts
             <div>
-                <textarea onChange={onChangePostHandler} />
+                <textarea value={newPostText} onChange={onChangePostHandler} /> {/* Здесь используем value */}
                 <button onClick={addPostHandler}>Add post</button>
             </div>
             {messagesData.map(el =>

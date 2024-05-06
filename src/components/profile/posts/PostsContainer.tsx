@@ -44,7 +44,8 @@ type postsContainerPropsType = {
 
 // mapStateToProps подключает данные из Redux store
 const mapStateToProps = (state: rootStateType) => ({
-    messagesData: state.profilePage.messagesData
+    messagesData: state.profilePage.messagesData,
+    newPostText: state.profilePage.newPostText
 });
 
 // mapDispatchToProps создает функции, которые будут диспатчить экшены

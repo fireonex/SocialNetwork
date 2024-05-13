@@ -1,5 +1,3 @@
-import {actionType} from "./redux-store";
-
 //---------types----------------------------------------------------//
 export type addPostActionType = ReturnType<typeof addPostAC>
 export type updateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
@@ -14,6 +12,8 @@ export type profilePageDataType = {
     messagesData: postDataType[]
     newPostText: string
 }
+
+export type profilePageActionsType = addPostActionType | updateNewPostTextActionType
 //-----------------------------------------------------------------//
 
 let initialState: profilePageDataType = {
@@ -27,7 +27,7 @@ let initialState: profilePageDataType = {
 }
 
 
-export const profileReducer = (state = initialState, action: actionType) => {
+export const profileReducer = (state = initialState, action: profilePageActionsType):profilePageDataType => {
 
     switch (action.type) {
         case 'ADD-POST':
@@ -37,15 +37,7 @@ export const profileReducer = (state = initialState, action: actionType) => {
                 messagesData: [...state.messagesData, newPost],
                 newPostText: ''  // Сброс поля ввода
             }
-
-            // const newPost = {id: 4, post: state.newPostText, likesCount: 0};
-            // state.messagesData.push(newPost);
-            // return state;
         case 'UPDATE-NEW-POST-TEXT':
-            // return {
-            //     ...state,
-            //     newPostText: action.newText
-            // }
             return {
                 ...state,
                 newPostText: action.newText  // Обновление текста поля ввода

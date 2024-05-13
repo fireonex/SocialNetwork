@@ -1,5 +1,5 @@
 import './index.css';
-import {store} from "./components/redux/redux-store";
+import {store} from "./redux/redux-store";
 import React from "react";
 import App from "./App";
 import {BrowserRouter} from "react-router-dom";
@@ -16,10 +16,3 @@ ReactDOM.render(
     </BrowserRouter>,
     document.getElementById('root')
 )
-
-
-
-
-
-
-

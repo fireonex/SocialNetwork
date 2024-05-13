@@ -1,14 +1,17 @@
 import React from 'react';
-import { Header } from "./components/header/Header";
-import { Navbar } from "./components/navbar/Navbar";
-import { Profile } from "./components/profile/Profile";
-import { Route } from "react-router-dom";
-import { News } from "./components/news/News";
-import { Music } from "./components/music/Music";
-import { S } from './App.styles';
-import { DialogsContainer } from "./components/dialogs/DialogsContainer";
+import {Header} from "./components/header/Header";
+import {Navbar} from "./components/navbar/Navbar";
+import {Profile} from "./components/profile/Profile";
+import {Route} from "react-router-dom";
+import {News} from "./components/news/News";
+import {Music} from "./components/music/Music";
+import {S} from './App.styles';
+import {DialogsContainer} from "./components/dialogs/DialogsContainer";
+import {UsersContainer} from "./components/users/UsersContainer";
+
 
 export type AppPropsType = {};
+
 
 function App({}: AppPropsType) {
     return (
@@ -18,6 +21,7 @@ function App({}: AppPropsType) {
             <S.AppContent>
                 <Route path='/profile' exact component={Profile} />
                 <Route path='/dialogs' exact component={DialogsContainer} />
+                <Route path='/users' exact component={UsersContainer} />
                 <Route path='/news' exact component={News} />
                 <Route path='/music' exact component={Music} />
             </S.AppContent>

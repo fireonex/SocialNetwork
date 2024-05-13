@@ -21,6 +21,8 @@ export type dialogsPageType = {
     newMessageText: string
 }
 
+export type dialogsPageActionsType = sendMessageActionType | updateNewMessageTextActionType
+
 //-------------------------------------------------------------------//
 
 let initialState: dialogsPageType = {
@@ -40,7 +42,7 @@ let initialState: dialogsPageType = {
     newMessageText: ''
 }
 
-export const dialogsReducer = (state = initialState, action: actionType) => {
+export const dialogsReducer = (state = initialState, action: dialogsPageActionsType) => {
 
 
     switch (action.type) {

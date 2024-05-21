@@ -7,7 +7,7 @@ import {News} from "./components/news/News";
 import {Music} from "./components/music/Music";
 import {S} from './App.styles';
 import {DialogsContainer} from "./components/dialogs/DialogsContainer";
-import {UsersContainer} from "./components/users/UsersContainer";
+import UsersContainer from "./components/users/UsersContainer";
 
 
 export type AppPropsType = {};

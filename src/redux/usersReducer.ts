@@ -2,13 +2,21 @@
 //---------types----------------------------------------------------//
 export type followUserActionType = ReturnType<typeof followAC>
 export type setUsersActionType = ReturnType<typeof setUsersAC>
+export type changeCurrentPageActionType = ReturnType<typeof changeCurrentPageAC>
+export type setTotalUsersCountActionType = ReturnType<typeof setTotalUsersCountAC>
 
-export type usersPageActionsType = followUserActionType | setUsersActionType
+
+export type usersPageActionsType = followUserActionType
+    | setUsersActionType
+    | changeCurrentPageActionType
+    | setTotalUsersCountActionType
+
 
 export type userPhotosType = {
     small: null | string,
     large: null | string
 }
+
 
 export type userDataType = {
     name: string
@@ -19,38 +27,20 @@ export type userDataType = {
     followed: boolean
 }
 
+
 export type usersPageType = {
     users: userDataType[]
+    pageSize: number
+    totalCount: number
+    currentPage: number
 }
 //-----------------------------------------------------------------//
 
 let initialState: usersPageType = {
-    users: [
-        // {
-        //     id: 1,
-        //     avatarUrl: 'src/assets/defaultSmallUserImg.png',
-        //     followed: false,
-        //     fullName: 'John Snow',
-        //     status: 'Hello everyone',
-        //     location: {country: 'USA', city: 'New York'}
-        // },
-        // {
-        //     id: 2,
-        //     avatarUrl: 'src/assets/defaultSmallUserImg.png',
-        //     followed: true,
-        //     fullName: 'Alla Smith',
-        //     status: 'Im best!',
-        //     location: {country: 'USA', city: 'Los Angeles'}
-        // },
-        // {
-        //     id: 3,
-        //     avatarUrl: 'src/assets/defaultSmallUserImg.png',
-        //     followed: false,
-        //     fullName: 'Paul Anders',
-        //     status: 'Send me now',
-        //     location: {country: 'France', city: 'Paris'}
-        // },
-    ]
+    users: [],
+    pageSize: 5,
+    totalCount: 0,
+    currentPage: 1
 }
 
 
@@ -67,9 +57,18 @@ export const usersReducer = (state = initialState, action: usersPageActionsType)
         case 'SET-USERS':
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: action.users
             };
-
+        case 'CHANGE-CURRENT-PAGE':
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
+        case "SET-TOTAL-USERS-COUNT":
+            return {
+                ...state,
+                totalCount: action.totalUsersCount
+            }
         default:
             return state;
     }
@@ -81,7 +80,15 @@ export const followAC = (id: number) => ({
 }) as const
 
 
-
 export const setUsersAC = (users: Array<userDataType>) => ({
     type: "SET-USERS", users
+}) as const
+
+
+export const changeCurrentPageAC = (currentPage: number) => ({
+    type: "CHANGE-CURRENT-PAGE", currentPage
+}) as const
+
+export const setTotalUsersCountAC = (totalUsersCount: number) => ({
+    type: "SET-TOTAL-USERS-COUNT", totalUsersCount
 }) as const

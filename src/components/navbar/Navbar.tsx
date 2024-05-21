@@ -21,6 +21,9 @@ export const Navbar = ({}: NavbarPropsType) => {
                 <NavLink to={'/dialogs'}>Messages</NavLink>
             </S.NavLinkWrapper>
             <S.NavLinkWrapper>
+                <NavLink to={'/users'}>Users</NavLink>
+            </S.NavLinkWrapper>
+            <S.NavLinkWrapper>
                 <NavLink to={'/news'}>News</NavLink>
             </S.NavLinkWrapper>
             <S.NavLinkWrapper>

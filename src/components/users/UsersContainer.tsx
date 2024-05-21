@@ -1,8 +1,8 @@
-import {Users} from "./Users";
 import {rootStateType} from "../../redux/redux-store";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {followAC, setUsersAC, userDataType} from "../../redux/usersReducer";
+import {Users} from "./Users";
 
 const mapStateToProps = (state: rootStateType)=> {
     return {

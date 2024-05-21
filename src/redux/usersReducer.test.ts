@@ -8,27 +8,27 @@ describe('usersReducer', () => {
             users: [
                 {
                     id: 1,
-                    avatarUrl: 'src/assets/img.png',
+                    photos: { small: null, large: null },
                     followed: false,
-                    fullName: 'How are you?',
+                    name: 'John Snow',
                     status: 'Hello everyone',
-                    location: { country: 'USA', city: 'New York' }
+                    uniqueUrlName: null
                 },
                 {
                     id: 2,
-                    avatarUrl: 'src/assets/img.png',
+                    photos: { small: null, large: null },
                     followed: true,
-                    fullName: 'Hello!!!',
+                    name: 'Alla Smith',
                     status: 'Im best!',
-                    location: { country: 'USA', city: 'Los Angeles' }
+                    uniqueUrlName: null
                 },
                 {
                     id: 3,
-                    avatarUrl: 'src/assets/img.png',
+                    photos: { small: null, large: null },
                     followed: false,
-                    fullName: 'This is my first post',
+                    name: 'Paul Anders',
                     status: 'Send me now',
-                    location: { country: 'France', city: 'Paris' }
+                    uniqueUrlName: null
                 },
             ]
         };
@@ -45,16 +45,16 @@ describe('usersReducer', () => {
         const newUsers: userDataType[] = [
             {
                 id: 4,
-                avatarUrl: 'src/assets/img2.png',
+                photos: { small: null, large: null },
                 followed: false,
-                fullName: 'New User',
+                name: 'New User',
                 status: 'I am new here',
-                location: { country: 'Germany', city: 'Berlin' }
+                uniqueUrlName: null
             }
         ];
         const newState = usersReducer(initialState, setUsersAC(newUsers));
         expect(newState.users.length).toBe(4); // Checking the length of the users array
-        expect(newState.users[3].fullName).toBe('New User'); // Checking the details of the new user
+        expect(newState.users[3].name).toBe('New User'); // Checking the details of the new user
     });
 
     test('should handle non-existing action', () => {

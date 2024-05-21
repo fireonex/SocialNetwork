@@ -1,4 +1,4 @@
-import avatar from '../../../assets/img.png'
+import avatar from '../../../assets/defaultSmallUserImg.png'
 import {S} from './FriendMessage.styles'
 
 // export type UserType = {

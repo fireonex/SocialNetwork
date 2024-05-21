@@ -1,4 +1,4 @@
-import friendAvatar from "../assets/img.png";
+import friendAvatar from "../assets/defaultSmallUserImg.png";
 
 export type friendsType = {
     id: number

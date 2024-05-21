@@ -5,18 +5,18 @@ export type setUsersActionType = ReturnType<typeof setUsersAC>
 
 export type usersPageActionsType = followUserActionType | setUsersActionType
 
-export type userLocationType = {
-    country: string
-    city: string
+export type userPhotosType = {
+    small: null | string,
+    large: null | string
 }
 
 export type userDataType = {
+    name: string
     id: number
-    avatarUrl: string
+    uniqueUrlName: string | null
+    photos: userPhotosType
+    status: string | null
     followed: boolean
-    fullName: string
-    status: string
-    location: userLocationType
 }
 
 export type usersPageType = {
@@ -28,7 +28,7 @@ let initialState: usersPageType = {
     users: [
         // {
         //     id: 1,
-        //     avatarUrl: 'src/assets/img.png',
+        //     avatarUrl: 'src/assets/defaultSmallUserImg.png',
         //     followed: false,
         //     fullName: 'John Snow',
         //     status: 'Hello everyone',
@@ -36,7 +36,7 @@ let initialState: usersPageType = {
         // },
         // {
         //     id: 2,
-        //     avatarUrl: 'src/assets/img.png',
+        //     avatarUrl: 'src/assets/defaultSmallUserImg.png',
         //     followed: true,
         //     fullName: 'Alla Smith',
         //     status: 'Im best!',
@@ -44,7 +44,7 @@ let initialState: usersPageType = {
         // },
         // {
         //     id: 3,
-        //     avatarUrl: 'src/assets/img.png',
+        //     avatarUrl: 'src/assets/defaultSmallUserImg.png',
         //     followed: false,
         //     fullName: 'Paul Anders',
         //     status: 'Send me now',

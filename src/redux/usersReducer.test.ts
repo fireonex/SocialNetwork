@@ -1,4 +1,4 @@
- import { usersReducer, followAC, setUsersAC, usersPageType, userDataType } from './usersReducer';
+ import { usersReducer, follow, setUsers, usersPageType, userDataType } from './usersReducer';
 //
 // describe('usersReducer', () => {
 //     let initialState: usersPageType;

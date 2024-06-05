@@ -1,29 +1,31 @@
 import examplePhoto from "../../assets/defaultSmallUserImg.png";
 import React from "react";
 import styled from "styled-components";
-import {userDataType} from "../../redux/usersReducer";
+import { userDataType } from "../../redux/usersReducer";
 
 type UsersPropsType = {
-    pageSize: number
-    totalCount: number
-    currentPage: number
-    changeUserFollow: (id: number) => void
-    setCurrentPageHandler: (page: number) => void
-    users: Array<userDataType>
+    pageSize: number;
+    totalCount: number;
+    currentPage: number;
+    follow: (id: number) => void;
+    setCurrentPage: (page: number) => void;
+    users: Array<userDataType>;
 }
 
-export const Users = ({totalCount,
+export const Users = ({
+                          totalCount,
                           pageSize,
                           currentPage,
-                          setCurrentPageHandler,
+                          setCurrentPage,
                           users,
-                          changeUserFollow}: UsersPropsType) => {
+                          follow
+                      }: UsersPropsType) => {
 
-    let pagesCount = Math.ceil(totalCount / pageSize)
+    let pagesCount = Math.ceil(totalCount / pageSize);
 
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
+        pages.push(i);
     }
 
     return (
@@ -33,7 +35,7 @@ export const Users = ({totalCount,
                         key={page}
                         active={currentPage === page}
                         onClick={() => {
-                            setCurrentPageHandler(page)
+                            setCurrentPage(page);
                         }}
                     >
                         {page}
@@ -45,16 +47,12 @@ export const Users = ({totalCount,
                     <div>
                         <div>
                             <UserPhoto src={user.photos.small === null ? examplePhoto : user.photos.small}
-                                       alt={'user photo'}/>
+                                       alt={'user photo'} />
                         </div>
                         <div>
                             {user.followed
-                                ? <button onClick={() => {
-                                    changeUserFollow(user.id)
-                                }}>Unfollow</button>
-                                : <button onClick={() => {
-                                    changeUserFollow(user.id)
-                                }}>Follow</button>}
+                                ? <button onClick={() => { follow(user.id) }}>Unfollow</button>
+                                : <button onClick={() => { follow(user.id) }}>Follow</button>}
                         </div>
                     </div>
                     <div>
@@ -66,17 +64,20 @@ export const Users = ({totalCount,
                 </div>)
             }
         </div>
-    )
+    );
 }
+
 const UserPhoto = styled.img`
     width: 65px;
     border-radius: 50%;
-`
+`;
+
 const PaginationContainer = styled.div`
     display: flex;
     justify-content: center;
     margin: 20px 0;
 `;
+
 const PageNumber = styled.span<{ active?: boolean }>`
     margin: 0 5px;
     padding: 3px 5px;

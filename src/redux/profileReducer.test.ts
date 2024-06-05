@@ -1,16 +1,17 @@
-import {addPostAC, profileReducer, updateNewPostTextAC} from "./profileReducer";
-
+import { addPostAC, profileReducer, updateNewPostTextAC, setUserProfile } from "./profileReducer";
+import { ProfileType, profilePageDataType } from "./profileReducer";
 
 // Тест для проверки отправки нового сообщения
 test('addPost should add new post to profile page', () => {
     // начальное состояние
-    const initialState = {
+    const initialState: profilePageDataType = {
         messagesData: [
             { id: 1, post: 'How are you?', likesCount: 5 },
             { id: 2, post: 'Hello!!!', likesCount: 8 },
             { id: 3, post: 'This is my first post', likesCount: 10 },
         ],
-        newPostText: 'hello'
+        newPostText: 'hello',
+        profile: {} as ProfileType
     };
 
     // создание экшена
@@ -26,18 +27,17 @@ test('addPost should add new post to profile page', () => {
 });
 
 
-
 // Тест для проверки обновления текста нового сообщения
 test('updateNewPostText should change new post text', () => {
     // начальное состояние
-    const initialState = {
+    const initialState: profilePageDataType = {
         messagesData: [
-            {id: 1, post: 'How are you?', likesCount: 5},
-            {id: 2, post: 'Hello!!!', likesCount: 8},
-            {id: 3, post: 'This is my first post', likesCount: 10},
-
+            { id: 1, post: 'How are you?', likesCount: 5 },
+            { id: 2, post: 'Hello!!!', likesCount: 8 },
+            { id: 3, post: 'This is my first post', likesCount: 10 },
         ],
-        newPostText: 'hello'
+        newPostText: 'hello',
+        profile: {} as ProfileType
     };
 
     const newText = 'Updated message text';
@@ -52,3 +52,47 @@ test('updateNewPostText should change new post text', () => {
     expect(newState.newPostText).toBe(newText);
 });
 
+
+// Тест для проверки установки профиля пользователя
+test('setUserProfile should update profile data', () => {
+    // начальное состояние
+    const initialState: profilePageDataType = {
+        messagesData: [
+            { id: 1, post: 'How are you?', likesCount: 5 },
+            { id: 2, post: 'Hello!!!', likesCount: 8 },
+            { id: 3, post: 'This is my first post', likesCount: 10 },
+        ],
+        newPostText: 'hello',
+        profile: {} as ProfileType
+    };
+
+    const newProfile: ProfileType = {
+        userId: 1,
+        lookingForAJob: true,
+        lookingForAJobDescription: 'Looking for a React developer job',
+        fullName: 'John Doe',
+        contacts: {
+            github: 'github.com/johndoe',
+            vk: 'vk.com/johndoe',
+            facebook: 'facebook.com/johndoe',
+            instagram: 'instagram.com/johndoe',
+            twitter: 'twitter.com/johndoe',
+            website: 'johndoe.com',
+            youtube: 'youtube.com/johndoe',
+            mainLink: 'johndoe.com'
+        },
+        photos: {
+            small: 'small.jpg',
+            large: 'large.jpg'
+        }
+    };
+
+    // создание экшена
+    const action = setUserProfile(newProfile);
+
+    // получение нового состояния
+    const newState = profileReducer(initialState, action);
+
+    // ожидаем, что профиль обновится
+    expect(newState.profile).toEqual(newProfile);
+});

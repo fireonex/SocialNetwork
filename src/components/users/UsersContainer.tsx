@@ -8,10 +8,11 @@ import {
 } from "../../redux/usersReducer";
 import axios from "axios";
 import React from "react";
-import { rootStateType } from "../../redux/redux-store";
-import { connect } from "react-redux";
-import { Users } from "./Users";
-import { Preloader } from "../common/preloader/Preloader";
+import {rootStateType} from "../../redux/redux-store";
+import {connect} from "react-redux";
+import {Users} from "./Users";
+import {Preloader} from "../common/preloader/Preloader";
+
 
 type UsersAPIPropsType = {
     follow: (id: number) => void;

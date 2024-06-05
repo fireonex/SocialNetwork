@@ -1,26 +1,26 @@
 import React from 'react';
-import {ProfileInfo} from "./ProfileInfo";
-import {S} from './Profile.styles'
-import {PostsContainer} from "./posts/PostsContainer";
-
+import { ProfileInfo } from "./ProfileInfo";
+import { S } from './Profile.styles';
+import { PostsContainer } from "./posts/PostsContainer";
+import { ProfileType } from "../../redux/profileReducer";
 
 type profilePropsType = {
-    //messagesData: Array<postDataType>
-    //store: Store<rootStateType, actionType>
-}
+    avatarSrc: string;
+    avatarAlt: string;
+    description: string;
+    profile: ProfileType;
+};
 
-export const Profile = ({}: profilePropsType) => {
-
+export const Profile: React.FC<profilePropsType> = ({ avatarSrc, avatarAlt, description, profile }) => {
     return (
         <S.Profile>
             <ProfileInfo
-                avatarSrc={'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg'}
-                avatarAlt={'nature img'}
-                description={'profile description'}
-
+                avatarSrc={avatarSrc}
+                avatarAlt={avatarAlt}
+                description={description}
+                profile={profile}
             />
-            <PostsContainer/>
+            <PostsContainer />
         </S.Profile>
     );
 };
-

@@ -2,6 +2,7 @@ import examplePhoto from "../../assets/defaultSmallUserImg.png";
 import React from "react";
 import styled from "styled-components";
 import { userDataType } from "../../redux/usersReducer";
+import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
     pageSize: number;
@@ -46,8 +47,10 @@ export const Users = ({
                 users.map(user => <div key={user.id}>
                     <div>
                         <div>
-                            <UserPhoto src={user.photos.small === null ? examplePhoto : user.photos.small}
-                                       alt={'user photo'} />
+                            <NavLink to={`/profile/${user.id}`}>
+                                <UserPhoto src={user.photos.small === null ? examplePhoto : user.photos.small}
+                                           alt={'user photo'} />
+                            </NavLink>
                         </div>
                         <div>
                             {user.followed

@@ -1,23 +1,25 @@
 import React from 'react';
+import { ProfileType } from "../../redux/profileReducer";
 
 type ProfilePropsType = {
-    avatarSrc: string
-    avatarAlt: string
-    description: string
-}
+    avatarSrc: string;
+    avatarAlt: string;
+    description: string;
+    profile: ProfileType;
+};
 
-export const ProfileInfo = ({avatarSrc, avatarAlt, description}: ProfilePropsType) => {
+export const ProfileInfo: React.FC<ProfilePropsType> = ({ avatarSrc, avatarAlt, description, profile }) => {
     return (
         <div>
             <div>
                 <img
                     src={avatarSrc}
-                    alt={avatarAlt}/>
+                    alt={avatarAlt} />
             </div>
             <div>
-                {description}
+                <img src={profile.photos?.large || 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg'} alt={'Profile photo'} />
+                <div>{description}</div>
             </div>
         </div>
     );
 };
-

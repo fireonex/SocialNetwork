@@ -1,64 +1,63 @@
- import { usersReducer, follow, setUsers, usersPageType, userDataType } from './usersReducer';
-//
-// describe('usersReducer', () => {
-//     let initialState: usersPageType;
-//
-//     beforeEach(() => {
-//         initialState = {
-//             users: [
-//                 {
-//                     id: 1,
-//                     photos: { small: null, large: null },
-//                     followed: false,
-//                     name: 'John Snow',
-//                     status: 'Hello everyone',
-//                     uniqueUrlName: null
-//                 },
-//                 {
-//                     id: 2,
-//                     photos: { small: null, large: null },
-//                     followed: true,
-//                     name: 'Alla Smith',
-//                     status: 'Im best!',
-//                     uniqueUrlName: null
-//                 },
-//                 {
-//                     id: 3,
-//                     photos: { small: null, large: null },
-//                     followed: false,
-//                     name: 'Paul Anders',
-//                     status: 'Send me now',
-//                     uniqueUrlName: null
-//                 },
-//             ]
-//         };
-//     });
-//
-//     test('should toggle followed status of a user', () => {
-//         const newState = usersReducer(initialState, followAC(1));
-//         expect(newState.users[0].followed).toBe(true); // Check if followed is toggled
-//         expect(newState.users[1].followed).toBe(true); // unchanged
-//         expect(newState.users[2].followed).toBe(false); // unchanged
-//     });
-//
-//     test('should add new users to the existing list', () => {
-//         const newUsers: userDataType[] = [
-//             {
-//                 id: 4,
-//                 photos: { small: null, large: null },
-//                 followed: false,
-//                 name: 'New User',
-//                 status: 'I am new here',
-//                 uniqueUrlName: null
-//             }
-//         ];
-//         const newState = usersReducer(initialState, setUsersAC(newUsers));
-//         expect(newState.users.length).toBe(4); // Checking the length of the users array
-//         expect(newState.users[3].name).toBe('New User'); // Checking the details of the new user
-//     });
-//
-//     test('should handle non-existing action', () => {
-//         const newState = usersReducer(initialState, { type: "NON_EXISTING_ACTION" } as any);
-//         expect(newState).toEqual(initialState); // Ensure state is unchanged on unknown action
-//     });
-// });
+import { usersReducer, follow, setUsers, changeCurrentPage, setTotalUsersCount, toggleFetching, userDataType } from './usersReducer';
+
+describe('usersReducer', () => {
+    let initialState: any;
+
+    beforeEach(() => {
+        initialState = {
+            users: [
+                { id: 1, name: 'John', followed: false, photos: { small: null, large: null }, status: null, uniqueUrlName: null },
+                { id: 2, name: 'Jane', followed: true, photos: { small: null, large: null }, status: null, uniqueUrlName: null },
+                { id: 3, name: 'Doe', followed: false, photos: { small: null, large: null }, status: null, uniqueUrlName: null }
+            ],
+            pageSize: 5,
+            totalCount: 0,
+            currentPage: 1,
+            isFetching: true
+        };
+    });
+
+    it('should handle FOLLOW action', () => {
+        const action = follow(1);
+        const newState = usersReducer(initialState, action);
+
+        expect(newState.users[0].followed).toBe(true);
+        expect(newState.users[1].followed).toBe(true);
+        expect(newState.users[2].followed).toBe(false);
+    });
+
+    it('should handle SET_USERS action', () => {
+        const newUsers: userDataType[] = [
+            { id: 4, name: 'Anna', followed: false, photos: { small: null, large: null }, status: null, uniqueUrlName: null },
+            { id: 5, name: 'Elsa', followed: false, photos: { small: null, large: null }, status: null, uniqueUrlName: null }
+        ];
+        const action = setUsers(newUsers);
+        const newState = usersReducer(initialState, action);
+
+        expect(newState.users.length).toBe(2);
+        expect(newState.users[0].name).toBe('Anna');
+        expect(newState.users[1].name).toBe('Elsa');
+    });
+
+    it('should handle CHANGE_CURRENT_PAGE action', () => {
+        const action = changeCurrentPage(2);
+        const newState = usersReducer(initialState, action);
+
+        expect(newState.currentPage).toBe(2);
+    });
+
+    it('should handle SET_TOTAL_USERS_COUNT action', () => {
+        const action = setTotalUsersCount(100);
+        const newState = usersReducer(initialState, action);
+
+        expect(newState.totalCount).toBe(100);
+    });
+
+    it('should handle TOGGLE_IS_FETCHING action', () => {
+        const action = toggleFetching(false);
+        const newState = usersReducer(initialState, action);
+
+        expect(newState.isFetching).toBe(false);
+    });
+});
+

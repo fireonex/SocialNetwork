@@ -19,7 +19,7 @@ function App({}: AppPropsType) {
             <Header />
             <Navbar/>
             <S.AppContent>
-                <Route path='/profile' exact component={ProfileContainer} />
+                <Route path='/profile/:userId?' exact component={ProfileContainer} />
                 <Route path='/dialogs' exact component={DialogsContainer} />
                 <Route path='/users' exact component={UsersContainer} />
                 <Route path='/news' exact component={News} />

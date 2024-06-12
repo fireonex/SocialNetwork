@@ -1,5 +1,4 @@
 import React from 'react';
-import {Header} from "./components/header/Header";
 import {Navbar} from "./components/navbar/Navbar";
 import {Route} from "react-router-dom";
 import {News} from "./components/news/News";
@@ -8,6 +7,8 @@ import {S} from './App.styles';
 import {DialogsContainer} from "./components/dialogs/DialogsContainer";
 import UsersContainer from "./components/users/UsersContainer";
 import ProfileContainer from "./components/profile/ProfileContainer";
+import HeaderContainer from "./components/header/HeaderContainer";
+
 
 
 export type AppPropsType = {};
@@ -16,7 +17,7 @@ export type AppPropsType = {};
 function App({}: AppPropsType) {
     return (
         <S.AppWrapper>
-            <Header />
+            <HeaderContainer />
             <Navbar/>
             <S.AppContent>
                 <Route path='/profile/:userId?' exact component={ProfileContainer} />

@@ -10,7 +10,16 @@ const Logo = styled.img `
     width: 30px;
 `
 
+const LoginBlock = styled.div `
+    float: right;
+    margin: 20px;
+    a {
+        color: aliceblue; 
+    } 
+`
+
 export const S = {
     Header,
-    Logo
+    Logo,
+    LoginBlock
 }

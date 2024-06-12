@@ -62,7 +62,8 @@ export class UsersContainer extends React.Component<UsersAPIPropsType, UsersStat
         return (
             <>
                 {this.props.isFetching && <Preloader />}
-                <Users totalCount={this.props.totalCount}
+                {/*<Users totalCount={this.props.totalCount}*/}
+                <Users totalCount={60}
                        users={this.props.users}
                        pageSize={this.props.pageSize}
                        currentPage={this.props.currentPage}

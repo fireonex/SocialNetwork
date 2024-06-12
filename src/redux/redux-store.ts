@@ -3,6 +3,7 @@ import {profilePageActionsType, profilePageDataType, profileReducer} from "./pro
 import {dialogsPageActionsType, dialogsPageType, dialogsReducer} from "./dialogsReducer";
 import {navbarPageType, navbarReducer} from "./navbarReducer";
 import {usersPageActionsType, usersPageType, usersReducer} from "./usersReducer";
+import {authActionsType, authReducer, authStateType} from "./authReducer";
 
 
 export type rootStateType = {
@@ -10,19 +11,22 @@ export type rootStateType = {
     dialogsPage: dialogsPageType
     usersPage: usersPageType
     navbarPage: navbarPageType
+    auth: authStateType
 }
 
 
 export type actionType = profilePageActionsType
     | dialogsPageActionsType
     | usersPageActionsType
+    | authActionsType
 
 
 let reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
-    navbarPage: navbarReducer
+    navbarPage: navbarReducer,
+    auth: authReducer
 });
 
 export let store: Store<rootStateType, actionType> = createStore(reducers)

@@ -1,10 +1,10 @@
 import React from "react";
-import { Profile } from "./Profile";
-import axios from "axios";
-import { connect } from "react-redux";
-import { rootStateType } from "../../redux/redux-store";
-import { ProfileType, setUserProfile } from "../../redux/profileReducer";
+import {Profile} from "./Profile";
+import {connect} from "react-redux";
+import {rootStateType} from "../../redux/redux-store";
+import {ProfileType, setUserProfile} from "../../redux/profileReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {API} from "../../api/api";
 
 type ProfileContainerPropsType = MapStatePropsType & MapDispatchPropsType
 
@@ -31,11 +31,9 @@ class ProfileContainer extends React.Component<PropsType> {
         }
         console.log('User ID:', userId); // Логирование userId
 
-        axios.get<ProfileType>(
-            `https://social-network.samuraijs.com/api/1.0/profile/${userId}`
-        ).then((response) => {
-            console.log('Profile Data:', response.data); // Логирование данных профиля
-            this.props.setUserProfile(response.data);
+        API.getUserProfile(userId).then((data) => {
+            console.log('Profile Data:', data); // Логирование данных профиля
+            this.props.setUserProfile(data);
         });
     }
 

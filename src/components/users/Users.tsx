@@ -1,8 +1,9 @@
 import examplePhoto from "../../assets/defaultSmallUserImg.png";
 import React from "react";
 import styled from "styled-components";
-import { userDataType } from "../../redux/usersReducer";
+import {userDataType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
+import {API} from "../../api/api";
 
 type UsersPropsType = {
     pageSize: number;
@@ -49,13 +50,29 @@ export const Users = ({
                         <div>
                             <NavLink to={`/profile/${user.id}`}>
                                 <UserPhoto src={user.photos.small === null ? examplePhoto : user.photos.small}
-                                           alt={'user photo'} />
+                                           alt={'user photo'}/>
                             </NavLink>
                         </div>
                         <div>
                             {user.followed
-                                ? <button onClick={() => { follow(user.id) }}>Unfollow</button>
-                                : <button onClick={() => { follow(user.id) }}>Follow</button>}
+                                ? <button onClick={() => {
+                                    API.followUser(user).then((data) => {
+                                        if (data.resultCode === 0) {
+                                            follow(user.id)
+                                        }
+                                    })
+                                }
+                                }>Unfollow</button>
+
+                                : <button onClick={() => {
+                                    API.unfollowUser(user)
+                                        .then((data) => {
+                                            if (data.resultCode === 0) {
+                                                follow(user.id)
+                                            }
+                                        })
+                                }
+                                }>Follow</button>}
                         </div>
                     </div>
                     <div>

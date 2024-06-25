@@ -2,6 +2,7 @@ import axios from "axios";
 import {ProfileType} from "../redux/profileReducer";
 import {userDataType} from "../redux/usersReducer";
 
+
 const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -9,6 +10,7 @@ const instance = axios.create({
         "API-KEY": "72046884-8665-4f22-8638-ad799be78564"
     }
 })
+
 
 export const API = {
     getUsers: async (currentPage: number, pageSize: number) => {

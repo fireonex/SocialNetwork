@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {userDataType} from "../../redux/usersReducer";
 import {NavLink} from "react-router-dom";
 import {API} from "../../api/api";
+import {S} from "./Users.styles"
 
 type UsersPropsType = {
     pageSize: number;
@@ -12,6 +13,8 @@ type UsersPropsType = {
     follow: (id: number) => void;
     setCurrentPage: (page: number) => void;
     users: Array<userDataType>;
+    toggleIsFollowingProgress: (followingInProgress: boolean, userId: number) => void;
+    followingInProgress: [];
 }
 
 export const Users = ({
@@ -20,7 +23,9 @@ export const Users = ({
                           currentPage,
                           setCurrentPage,
                           users,
-                          follow
+                          follow,
+                          toggleIsFollowingProgress,
+                          followingInProgress
                       }: UsersPropsType) => {
 
     let pagesCount = Math.ceil(totalCount / pageSize);
@@ -32,7 +37,7 @@ export const Users = ({
 
     return (
         <div>
-            <PaginationContainer>
+            <S.PaginationContainer>
                 {pages.map(page => <PageNumber
                         key={page}
                         active={currentPage === page}
@@ -43,36 +48,40 @@ export const Users = ({
                         {page}
                     </PageNumber>
                 )}
-            </PaginationContainer>
+            </S.PaginationContainer>
             {
                 users.map(user => <div key={user.id}>
                     <div>
                         <div>
                             <NavLink to={`/profile/${user.id}`}>
-                                <UserPhoto src={user.photos.small === null ? examplePhoto : user.photos.small}
+                                <S.UserPhoto src={user.photos.small === null ? examplePhoto : user.photos.small}
                                            alt={'user photo'}/>
                             </NavLink>
                         </div>
                         <div>
                             {user.followed
                                 ? <button onClick={() => {
+                                    toggleIsFollowingProgress(true, user.id)
                                     API.followUser(user).then((data) => {
                                         if (data.resultCode === 0) {
                                             follow(user.id)
                                         }
+                                        toggleIsFollowingProgress(false, user.id)
                                     })
                                 }
-                                }>Unfollow</button>
+                                } disabled={followingInProgress.some(id => id === user.id)}>Unfollow</button>
 
                                 : <button onClick={() => {
+                                    toggleIsFollowingProgress(true, user.id)
                                     API.unfollowUser(user)
                                         .then((data) => {
                                             if (data.resultCode === 0) {
                                                 follow(user.id)
                                             }
+                                            toggleIsFollowingProgress(false, user.id)
                                         })
                                 }
-                                }>Follow</button>}
+                                } disabled={followingInProgress.some(id => id === user.id)}>Follow</button>}
                         </div>
                     </div>
                     <div>
@@ -87,16 +96,7 @@ export const Users = ({
     );
 }
 
-const UserPhoto = styled.img`
-    width: 65px;
-    border-radius: 50%;
-`;
 
-const PaginationContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-`;
 
 const PageNumber = styled.span<{ active?: boolean }>`
     margin: 0 5px;

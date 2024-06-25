@@ -1,5 +1,8 @@
 //---------types----------------------------------------------------//
 
+import {Dispatch} from "redux";
+import {API} from "../api/api";
+
 export type usersPageActionsType = ReturnType<typeof follow>
     | ReturnType<typeof setUsers>
     | ReturnType<typeof changeCurrentPage>
@@ -112,3 +115,15 @@ export const toggleFetching = (isFetching: boolean) => ({
 export const toggleIsFollowingProgress = (followingInProgress: boolean, userId: number) => ({
     type: "TOGGLE-IS-FOLLOWING-PROGRESS", followingInProgress, userId
 }) as const
+
+
+export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+    dispatch(toggleFetching(true));
+    API.getUsers(currentPage, pageSize).then((data) => {
+        dispatch(setUsers(data.items));
+        dispatch(setTotalUsersCount(data.totalCount));
+    })
+        .finally(() => {
+            dispatch(toggleFetching(false));
+        });
+}

@@ -6,6 +6,7 @@ import {NavLink} from "react-router-dom";
 import {API} from "../../api/api";
 import {S} from "./Users.styles"
 
+
 type UsersPropsType = {
     pageSize: number;
     totalCount: number;
@@ -16,6 +17,7 @@ type UsersPropsType = {
     toggleIsFollowingProgress: (followingInProgress: boolean, userId: number) => void;
     followingInProgress: [];
 }
+
 
 export const Users = ({
                           totalCount,

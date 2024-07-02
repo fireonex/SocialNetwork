@@ -8,6 +8,7 @@ import {DialogsContainer} from "./components/dialogs/DialogsContainer";
 import UsersContainer from "./components/users/UsersContainer";
 import ProfileContainer from "./components/profile/ProfileContainer";
 import HeaderContainer from "./components/header/HeaderContainer";
+import {Login} from "./components/login/Login";
 
 
 
@@ -25,6 +26,7 @@ function App({}: AppPropsType) {
                 <Route path='/users' exact component={UsersContainer} />
                 <Route path='/news' exact component={News} />
                 <Route path='/music' exact component={Music} />
+                <Route path='/login' exact component={Login} />
             </S.AppContent>
         </S.AppWrapper>
     );

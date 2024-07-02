@@ -3,6 +3,8 @@ import {Dialog} from "./dialog/Dialog";
 import {Message} from "./dialog/Message";
 import React, {ChangeEvent} from "react";
 import {dialogsDataType, messagesInDialogsDataType} from "../../redux/dialogsReducer";
+import {Redirect} from "react-router-dom";
+import withAuth from "../../HOCs/withAuth";
 
 
 type DialogsPropsType = {
@@ -11,13 +13,14 @@ type DialogsPropsType = {
     sendMessage: () => void
     updateNewMessageText: (message: string) => void
     newMessageText: string
+    isAuth: boolean
 }
 
 
-export const Dialogs = ({dialogsData,
+export const Dialogs = withAuth(({dialogsData,
                             messagesInDialogsData,
                             sendMessage, updateNewMessageText,
-                            newMessageText}: DialogsPropsType) => {
+                            newMessageText, isAuth}: DialogsPropsType) => {
 
     const sendMessageHandler = () => {
         sendMessage();
@@ -26,6 +29,8 @@ export const Dialogs = ({dialogsData,
     const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         updateNewMessageText(e.currentTarget.value);
     }
+
+    //if (!isAuth) return <Redirect to={'/login'}/>
 
     return (
         <S.Dialogs>
@@ -43,4 +48,4 @@ export const Dialogs = ({dialogsData,
             </S.Messages>
         </S.Dialogs>
     )
-}
+})

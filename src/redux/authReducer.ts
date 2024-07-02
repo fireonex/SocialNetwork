@@ -36,7 +36,7 @@ export const setAuthUserDataAC = (id: number, email: string, login: string) => (
 }) as const
 
 
-export const authMeTC = () => (dispatch: Dispatch) => {
+export const getAuthMeTC = () => (dispatch: Dispatch) => {
      API.authMe().then((response) => {
         if (response.data.resultCode === 0) {
             let { id, login, email } = response.data.data;

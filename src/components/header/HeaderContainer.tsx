@@ -2,7 +2,7 @@ import React from "react";
 import {Header} from "./Header";
 import {connect, ConnectedProps} from "react-redux";
 import {rootStateType} from "../../redux/redux-store";
-import {authMeTC} from "../../redux/authReducer";
+import {getAuthMeTC} from "../../redux/authReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 
 
@@ -37,6 +37,6 @@ const mapStateToProps = (state: rootStateType) => ({
     login: state.auth.login
 });
 
-const connector = connect(mapStateToProps, { authMeTC });
+const connector = connect(mapStateToProps, { authMeTC: getAuthMeTC });
 
 export default connector(withRouter(HeaderContainer));

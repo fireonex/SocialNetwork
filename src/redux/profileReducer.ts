@@ -1,3 +1,7 @@
+import {Dispatch} from "redux";
+import {API} from "../api/api";
+import {toggleFetching} from "./usersReducer";
+
 export type addPostActionType = ReturnType<typeof addPostAC>
 export type updateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
 export type setUserProfileActionType = ReturnType<typeof setUserProfile>
@@ -43,9 +47,9 @@ export type profilePageActionsType = addPostActionType | updateNewPostTextAction
 
 let initialState: profilePageDataType = {
     messagesData: [
-        { id: 1, post: 'How are you?', likesCount: 5 },
-        { id: 2, post: 'Hello!!!', likesCount: 8 },
-        { id: 3, post: 'This is my first post', likesCount: 10 },
+        {id: 1, post: 'How are you?', likesCount: 5},
+        {id: 2, post: 'Hello!!!', likesCount: 8},
+        {id: 3, post: 'This is my first post', likesCount: 10},
     ],
     newPostText: 'hello',
     profile: null // инициализируем profile как null
@@ -54,7 +58,7 @@ let initialState: profilePageDataType = {
 export const profileReducer = (state = initialState, action: profilePageActionsType): profilePageDataType => {
     switch (action.type) {
         case 'ADD-POST':
-            const newPost = { id: state.messagesData.length + 1, post: state.newPostText, likesCount: 0 };
+            const newPost = {id: state.messagesData.length + 1, post: state.newPostText, likesCount: 0};
             return {
                 ...state,
                 messagesData: [...state.messagesData, newPost],
@@ -86,3 +90,14 @@ export const updateNewPostTextAC = (text: string) => ({
 export const setUserProfile = (profile: ProfileType) => ({
     type: "SET-USER-PROFILE", profile
 }) as const
+
+
+export const getUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
+    dispatch(toggleFetching(true));
+    API.getUserProfile(userId).then((data) => {
+        dispatch(setUserProfile(data));
+    })
+        .finally(() => {
+            dispatch(toggleFetching(false));
+        });
+}

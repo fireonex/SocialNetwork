@@ -12,23 +12,26 @@ const instance = axios.create({
 })
 
 
+export type AuthResponseType = {
+    resultCode: number;
+    messages: string[];
+    data: {
+        id: number;
+        email: string;
+        login: string;
+    };
+};
+
+
 export const API = {
     getUsers: async (currentPage: number, pageSize: number) => {
         const res = await instance.get(`users?page=${currentPage}&count=${pageSize}`);
         return res.data;
     },
-    getUserProfile: async (userId: string) => {
+    getUserProfile: async (userId: number) => {
         const res = await instance.get<ProfileType>(`profile/${userId}`);
         return res.data;
     },
-    // followUser: async (user: userDataType) => {
-    //     const res = await instance.delete(`follow/${user.id}`)
-    //     return res.data
-    // },
-    // unfollowUser: async (user: userDataType) => {
-    //     const res = await instance.post(`follow/${user.id}`, {})
-    //     return res.data
-    // }
     followUser: async (user: userDataType) => {
         const res = await instance.post(`follow/${user.id}`, {});
         return res.data;
@@ -36,5 +39,8 @@ export const API = {
     unfollowUser: async (user: userDataType) => {
         const res = await instance.delete(`follow/${user.id}`);
         return res.data;
+    },
+    authMe: async () => {
+        return await instance.get<AuthResponseType>(`auth/me`)
     }
 }

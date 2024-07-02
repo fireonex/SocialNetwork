@@ -21,12 +21,20 @@ export const API = {
         const res = await instance.get<ProfileType>(`profile/${userId}`);
         return res.data;
     },
+    // followUser: async (user: userDataType) => {
+    //     const res = await instance.delete(`follow/${user.id}`)
+    //     return res.data
+    // },
+    // unfollowUser: async (user: userDataType) => {
+    //     const res = await instance.post(`follow/${user.id}`, {})
+    //     return res.data
+    // }
     followUser: async (user: userDataType) => {
-        const res = await instance.delete(`follow/${user.id}`)
-        return res.data
+        const res = await instance.post(`follow/${user.id}`, {});
+        return res.data;
     },
     unfollowUser: async (user: userDataType) => {
-        const res = await instance.post(`follow/${user.id}`, {})
-        return res.data
+        const res = await instance.delete(`follow/${user.id}`);
+        return res.data;
     }
 }

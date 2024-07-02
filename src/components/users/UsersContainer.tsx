@@ -1,50 +1,59 @@
-import {changeCurrentPage, follow, getUsersTC, toggleIsFollowingProgress, userDataType} from "../../redux/usersReducer";
 import React from "react";
-import {rootStateType} from "../../redux/redux-store";
-import {connect} from "react-redux";
-import {Users} from "./Users";
-import {Preloader} from "../common/preloader/Preloader";
-
+import { connect } from "react-redux";
+import { rootStateType } from "../../redux/redux-store";
+import { Users } from "./Users";
+import { Preloader } from "../common/preloader/Preloader";
+import {
+    getUsersTC,
+    followUserTC,
+    unfollowUserTC,
+    userDataType
+} from "../../redux/usersReducer";
 
 type UsersAPIPropsType = {
-    follow: (id: number) => void;
     users: Array<userDataType>;
     pageSize: number;
     totalCount: number;
     currentPage: number;
-    changeCurrentPage: (page: number) => void;
     isFetching: boolean;
-    followingInProgress: [];
-    toggleIsFollowingProgress: (followingInProgress: boolean, userId: number) => void
-    getUsersTC: (currentPage: number, pageSize: number) => void
+    followingInProgress: number[];
+    getUsersTC: (currentPage: number, pageSize: number) => void;
+    followUserTC: (user: userDataType) => void;
+    unfollowUserTC: (user: userDataType) => void;
 };
-
 
 type UsersStateType = {};
 
-
-export class UsersContainer extends React.Component<UsersAPIPropsType, UsersStateType> {
+class UsersContainer extends React.Component<UsersAPIPropsType, UsersStateType> {
     componentDidMount() {
-        this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
+        this.props.getUsersTC(this.props.currentPage, this.props.pageSize);
     }
 
     setCurrentPageHandler = (page: number) => {
-        this.props.getUsersTC(page, this.props.pageSize)
-    }
+        this.props.getUsersTC(page, this.props.pageSize);
+    };
+
+    followHandler = (user: userDataType) => {
+        this.props.followUserTC(user);
+    };
+
+    unfollowHandler = (user: userDataType) => {
+        this.props.unfollowUserTC(user);
+    };
 
     render() {
         return (
             <>
-                {this.props.isFetching && <Preloader/>}
-                {/*<Users totalCount={this.props.totalCount}*/}
-                <Users totalCount={60}
-                       users={this.props.users}
-                       pageSize={this.props.pageSize}
-                       currentPage={this.props.currentPage}
-                       follow={this.props.follow}
-                       setCurrentPage={this.setCurrentPageHandler}
-                       toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
-                       followingInProgress={this.props.followingInProgress}
+                {this.props.isFetching && <Preloader />}
+                <Users
+                    totalCount={this.props.totalCount}
+                    users={this.props.users}
+                    pageSize={this.props.pageSize}
+                    currentPage={this.props.currentPage}
+                    setCurrentPage={this.setCurrentPageHandler}
+                    followingInProgress={this.props.followingInProgress}
+                    followHandler={this.followHandler}
+                    unfollowHandler={this.unfollowHandler}
                 />
             </>
         );
@@ -62,10 +71,8 @@ const mapStateToProps = (state: rootStateType) => {
     };
 };
 
-
 export default connect(mapStateToProps, {
-    follow,
-    changeCurrentPage,
-    toggleIsFollowingProgress,
-    getUsersTC
+    getUsersTC,
+    followUserTC,
+    unfollowUserTC
 })(UsersContainer);

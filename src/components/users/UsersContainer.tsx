@@ -9,6 +9,7 @@ import {
     unfollowUserTC,
     userDataType
 } from "../../redux/usersReducer";
+import {compose} from "redux";
 
 type UsersAPIPropsType = {
     users: Array<userDataType>;
@@ -71,8 +72,12 @@ const mapStateToProps = (state: rootStateType) => {
     };
 };
 
-export default connect(mapStateToProps, {
-    getUsersTC,
-    followUserTC,
-    unfollowUserTC
-})(UsersContainer);
+
+
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {
+        getUsersTC,
+        followUserTC,
+        unfollowUserTC
+    })
+)(UsersContainer);

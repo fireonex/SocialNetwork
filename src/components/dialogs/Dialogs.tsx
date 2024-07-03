@@ -13,14 +13,14 @@ type DialogsPropsType = {
     sendMessage: () => void
     updateNewMessageText: (message: string) => void
     newMessageText: string
-    isAuth: boolean
+
 }
 
 
-export const Dialogs = withAuth(({dialogsData,
+export const Dialogs = ({dialogsData,
                             messagesInDialogsData,
                             sendMessage, updateNewMessageText,
-                            newMessageText, isAuth}: DialogsPropsType) => {
+                            newMessageText}: DialogsPropsType) => {
 
     const sendMessageHandler = () => {
         sendMessage();
@@ -48,4 +48,4 @@ export const Dialogs = withAuth(({dialogsData,
             </S.Messages>
         </S.Dialogs>
     )
-})
+}

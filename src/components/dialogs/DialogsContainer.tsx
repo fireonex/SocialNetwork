@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {rootStateType} from "../../redux/redux-store";
 import {sendMessageAC, updateNewMessageTextAC} from "../../redux/dialogsReducer";
 import {Dispatch} from "redux";
+import withAuth from "../../HOCs/withAuth";
 
 
 const mapStateToProps = (state: rootStateType)=> {
@@ -10,7 +11,6 @@ const mapStateToProps = (state: rootStateType)=> {
         dialogsData: state.dialogsPage.dialogsData,
         messagesInDialogsData: state.dialogsPage.messagesInDialogsData,
         newMessageText: state.dialogsPage.newMessageText,
-        isAuth: state.auth.isAuth
     }
 }
 
@@ -26,4 +26,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     }
 }
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(withAuth(Dialogs));

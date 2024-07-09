@@ -5,28 +5,24 @@ import {PostsContainer} from "./posts/PostsContainer";
 import {ProfileType} from "../../redux/profileReducer";
 
 type profilePropsType = {
-    avatarSrc: string;
-    avatarAlt: string;
-    description: string;
     profile: ProfileType;
-
+    status: string
+    updateStatus: (status: string) => void
 };
 
 export const Profile: React.FC<profilePropsType> = ({
-                                                        avatarSrc,
-                                                        avatarAlt,
-                                                        description,
                                                         profile,
+                                                        status,
+                                                        updateStatus
                                                         }) => {
 
 
     return (
         <S.Profile>
             <ProfileInfo
-                avatarSrc={avatarSrc}
-                avatarAlt={avatarAlt}
-                description={description}
+                status={status}
                 profile={profile}
+                updateStatus={updateStatus}
             />
             <PostsContainer />
         </S.Profile>

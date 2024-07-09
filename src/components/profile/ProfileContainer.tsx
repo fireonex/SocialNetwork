@@ -1,20 +1,22 @@
 import React from "react";
-import { Profile } from "./Profile";
-import { connect } from "react-redux";
-import { rootStateType } from "../../redux/redux-store";
-import { getUserProfileTC, ProfileType } from "../../redux/profileReducer";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import withAuth from "../../HOCs/withAuth";
-import { compose } from "redux";
+import {Profile} from "./Profile";
+import {connect} from "react-redux";
+import {rootStateType} from "../../redux/redux-store";
+import {getStatusTC, getUserProfileTC, ProfileType, updateStatusTC} from "../../redux/profileReducer";
+import {RouteComponentProps, withRouter} from "react-router-dom";
+import {compose} from "redux";
 
 type ProfileContainerPropsType = MapStatePropsType & MapDispatchPropsType
 
 type MapStatePropsType = {
     profile: ProfileType | null
+    status: string
 }
 
 type MapDispatchPropsType = {
     getUserProfileTC: (userId: number) => void
+    getStatusTC: (userId: number) => void
+    updateStatusTC: (status: string) => void
 }
 
 type PathParamsType = {
@@ -23,13 +25,14 @@ type PathParamsType = {
 
 type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType
 
-class ProfileContainer extends React.Component<PropsType> {
+class ProfileContainer extends React.Component<PropsType, MapDispatchPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId;
         if (!userId) {
-            userId = '2';
+            userId = '31083';
         }
         this.props.getUserProfileTC(Number(userId));
+        this.props.getStatusTC(Number(userId))
     }
 
     render() {
@@ -38,21 +41,21 @@ class ProfileContainer extends React.Component<PropsType> {
         }
         return (
             <Profile
-                avatarSrc={this.props.profile.photos?.small || 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg'}
-                avatarAlt="Profile photo"
-                description={this.props.profile.lookingForAJobDescription}
                 profile={this.props.profile}
+                status={this.props.status}
+                updateStatus={this.props.updateStatusTC}
             />
         );
     }
 }
 
 const mapStateToProps = (state: rootStateType): MapStatePropsType => ({
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    status: state.profilePage.status
 });
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, { getUserProfileTC }),
+    connect(mapStateToProps, { getUserProfileTC, getStatusTC, updateStatusTC }),
     withRouter,
     //withAuth
 )(ProfileContainer);

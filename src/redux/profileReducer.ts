@@ -1,10 +1,11 @@
 import {Dispatch} from "redux";
-import {API} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 import {toggleFetching} from "./usersReducer";
 
 export type addPostActionType = ReturnType<typeof addPostAC>
 export type updateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
 export type setUserProfileActionType = ReturnType<typeof setUserProfile>
+export type setStatusActionType = ReturnType<typeof setStatus>
 
 export type postDataType = {
     id: number
@@ -41,9 +42,14 @@ export type profilePageDataType = {
     messagesData: postDataType[]
     newPostText: string,
     profile: ProfileType | null
+    status: string
 }
 
-export type profilePageActionsType = addPostActionType | updateNewPostTextActionType | setUserProfileActionType
+export type profilePageActionsType = addPostActionType
+    | updateNewPostTextActionType
+    | setUserProfileActionType
+    | setStatusActionType
+
 
 let initialState: profilePageDataType = {
     messagesData: [
@@ -52,7 +58,8 @@ let initialState: profilePageDataType = {
         {id: 3, post: 'This is my first post', likesCount: 10},
     ],
     newPostText: 'hello',
-    profile: null // инициализируем profile как null
+    profile: null, // инициализируем profile как null
+    status: ''
 }
 
 export const profileReducer = (state = initialState, action: profilePageActionsType): profilePageDataType => {
@@ -73,6 +80,10 @@ export const profileReducer = (state = initialState, action: profilePageActionsT
             return {
                 ...state, profile: action.profile
             }
+        case "SET-STATUS":
+            return {
+                ...state, status: action.status
+            }
         default:
             return state;
     }
@@ -91,11 +102,38 @@ export const setUserProfile = (profile: ProfileType) => ({
     type: "SET-USER-PROFILE", profile
 }) as const
 
+export const setStatus = (status: string) => ({
+    type: "SET-STATUS", status
+}) as const
+
 
 export const getUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
     dispatch(toggleFetching(true));
-    API.getUserProfile(userId).then((data) => {
+    usersAPI.getUserProfile(userId).then((data) => {
         dispatch(setUserProfile(data));
+    })
+        .finally(() => {
+            dispatch(toggleFetching(false));
+        });
+}
+
+
+export const getStatusTC = (userId: number) => (dispatch: Dispatch) => {
+    dispatch(toggleFetching(true));
+    profileAPI.getStatus(userId).then((res) => {
+        dispatch(setStatus(res.data));
+    })
+        .finally(() => {
+            dispatch(toggleFetching(false));
+        });
+}
+
+export const updateStatusTC = (status: string) => (dispatch: Dispatch) => {
+    dispatch(toggleFetching(true));
+    profileAPI.updateStatus(status).then((res) => {
+        if (res.data.resultCode === 0) {
+            dispatch(setStatus(status));
+        }
     })
         .finally(() => {
             dispatch(toggleFetching(false));

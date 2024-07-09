@@ -1,4 +1,4 @@
-import { addPostAC, profileReducer, updateNewPostTextAC, setUserProfile } from "./profileReducer";
+import { addPostAC, profileReducer, updateNewPostTextAC, setUserProfile, setStatus } from "./profileReducer";
 import { ProfileType, profilePageDataType } from "./profileReducer";
 
 // Тест для проверки отправки нового сообщения
@@ -11,7 +11,8 @@ test('addPost should add new post to profile page', () => {
             { id: 3, post: 'This is my first post', likesCount: 10 },
         ],
         newPostText: 'hello',
-        profile: {} as ProfileType
+        profile: null,
+        status: ''
     };
 
     // создание экшена
@@ -37,7 +38,8 @@ test('updateNewPostText should change new post text', () => {
             { id: 3, post: 'This is my first post', likesCount: 10 },
         ],
         newPostText: 'hello',
-        profile: {} as ProfileType
+        profile: null,
+        status: ''
     };
 
     const newText = 'Updated message text';
@@ -63,7 +65,8 @@ test('setUserProfile should update profile data', () => {
             { id: 3, post: 'This is my first post', likesCount: 10 },
         ],
         newPostText: 'hello',
-        profile: {} as ProfileType
+        profile: null,
+        status: ''
     };
 
     const newProfile: ProfileType = {
@@ -95,4 +98,30 @@ test('setUserProfile should update profile data', () => {
 
     // ожидаем, что профиль обновится
     expect(newState.profile).toEqual(newProfile);
+});
+
+// Тест для проверки установки статуса пользователя
+test('setStatus should update status', () => {
+    // начальное состояние
+    const initialState: profilePageDataType = {
+        messagesData: [
+            { id: 1, post: 'How are you?', likesCount: 5 },
+            { id: 2, post: 'Hello!!!', likesCount: 8 },
+            { id: 3, post: 'This is my first post', likesCount: 10 },
+        ],
+        newPostText: 'hello',
+        profile: null,
+        status: ''
+    };
+
+    const newStatus = 'Updated status';
+
+    // создание экшена
+    const action = setStatus(newStatus);
+
+    // получение нового состояния
+    const newState = profileReducer(initialState, action);
+
+    // ожидаем, что статус обновится
+    expect(newState.status).toBe(newStatus);
 });

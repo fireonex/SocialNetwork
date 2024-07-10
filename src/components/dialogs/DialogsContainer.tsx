@@ -6,19 +6,21 @@ import { compose, Dispatch } from "redux";
 import withAuth from "../../HOCs/withAuth";
 import React from "react";
 
+
 const mapStateToProps = (state: rootStateType) => {
     return {
         dialogsData: state.dialogsPage.dialogsData,
         messagesInDialogsData: state.dialogsPage.messagesInDialogsData,
-        newMessageText: state.dialogsPage.newMessageText,
+        // newMessageText: state.dialogsPage.newMessageText,
     }
 }
 
+
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        sendMessage: () => {
-            dispatch(sendMessageAC());
-            dispatch(updateNewMessageTextAC(''));
+        sendMessage: (newMessageBody: string) => {
+            dispatch(sendMessageAC(newMessageBody));
+            // dispatch(updateNewMessageTextAC(''));
         },
         updateNewMessageText: (message: string) => {
             dispatch(updateNewMessageTextAC(message));

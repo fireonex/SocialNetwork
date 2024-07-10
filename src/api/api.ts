@@ -1,6 +1,7 @@
 import axios from "axios";
 import {ProfileType} from "../redux/profileReducer";
 import {userDataType} from "../redux/usersReducer";
+import {LoginFormDataType} from "../components/login/LoginForm";
 
 
 const instance = axios.create({
@@ -61,5 +62,9 @@ export const profileAPI = {
 export const authAPI = {
     authMe: async () => {
         return await instance.get<AuthResponseType>(`auth/me`)
+    },
+    login: async (formData: LoginFormDataType) => {
+        const res = await instance.post(`auth/login`, formData);
+        return res.data;
     }
 }

@@ -18,7 +18,6 @@ export type messagesInDialogsDataType = {
 export type dialogsPageType = {
     dialogsData: dialogsDataType[]
     messagesInDialogsData: messagesInDialogsDataType[]
-    newMessageText: string
 }
 
 export type dialogsPageActionsType = sendMessageActionType | updateNewMessageTextActionType
@@ -27,19 +26,19 @@ export type dialogsPageActionsType = sendMessageActionType | updateNewMessageTex
 
 let initialState: dialogsPageType = {
     dialogsData: [
-        {id: 1, personName: 'Sam'},
-        {id: 2, personName: 'John'},
-        {id: 3, personName: 'Sarah'},
-        {id: 4, personName: 'Tom'},
-        {id: 5, personName: 'Rebecca'}
+        // {id: 1, personName: 'Sam'},
+        // {id: 2, personName: 'John'},
+        // {id: 3, personName: 'Sarah'},
+        // {id: 4, personName: 'Tom'},
+        // {id: 5, personName: 'Rebecca'}
     ],
     messagesInDialogsData: [
-        {id: 1, text: 'Whats up bro??'},
-        {id: 2, text: 'I love you'},
-        {id: 3, text: 'Lets go to restaurant'},
-        {id: 4, text: 'Hey, Im online'}
+        // {id: 1, text: 'Whats up bro??'},
+        // {id: 2, text: 'I love you'},
+        // {id: 3, text: 'Lets go to restaurant'},
+        // {id: 4, text: 'Hey, Im online'}
     ],
-    newMessageText: ''
+
 }
 
 export const dialogsReducer = (state = initialState, action: dialogsPageActionsType) => {
@@ -47,11 +46,9 @@ export const dialogsReducer = (state = initialState, action: dialogsPageActionsT
 
     switch (action.type) {
         case 'SEND-MESSAGE':
-            const newMessage = {id: state.messagesInDialogsData.length + 1, text: state.newMessageText};
             return {
                 ...state,
-                messagesInDialogsData: [...state.messagesInDialogsData, newMessage],
-                newMessageText: ''
+                messagesInDialogsData: [...state.messagesInDialogsData, action.newMessageBody],
             }
         case 'UPDATE-NEW-MESSAGE-TEXT':
             return {
@@ -64,8 +61,8 @@ export const dialogsReducer = (state = initialState, action: dialogsPageActionsT
 }
 
 
-export const sendMessageAC = () => ({
-    type: 'SEND-MESSAGE'
+export const sendMessageAC = (newMessageBody: string) => ({
+    type: 'SEND-MESSAGE', newMessageBody
 }) as const
 
 export const updateNewMessageTextAC = (text: string) => ({

@@ -1,14 +1,17 @@
-import {FormDataType, ReduxLoginForm} from "./LoginForm";
+import {LoginFormDataType, ReduxLoginForm} from "./LoginForm";
+import React from "react";
 
 type Props = {
 
 };
 
-export const Login = (props: Props) => {
 
-    const onSubmitHandler = (formData: FormDataType) => {
+export const Login = () => {
 
+    const onSubmitHandler = (formData: LoginFormDataType) => {
+        //dispatch собранных данных
     }
+
 
     return (
         <div style={{margin: '10%'}}>
@@ -16,4 +19,5 @@ export const Login = (props: Props) => {
             <ReduxLoginForm onSubmit={onSubmitHandler}/>
         </div>
     );
-};
+
+}

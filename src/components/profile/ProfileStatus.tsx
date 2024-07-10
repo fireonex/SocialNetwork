@@ -53,5 +53,4 @@ export class ProfileStatus extends React.Component<StatusPropsType> {
             </div>}
         </>;
     }
-
 }

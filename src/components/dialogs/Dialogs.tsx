@@ -12,7 +12,6 @@ type DialogsPropsType = {
     sendMessage: (message: string) => void
     updateNewMessageText: (message: string) => void
     newMessageText: string
-
 }
 
 
@@ -22,15 +21,9 @@ export const Dialogs = ({
                             sendMessage,
                         }: DialogsPropsType) => {
 
-
-    // const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    //     updateNewMessageText(e.currentTarget.value);
-    // }
-
     const onSubmitHandler = (formData: DialogsFormDataType) => {
         sendMessage(formData.newMessageText);
     }
-
 
     //if (!isAuth) return <Redirect to={'/login'}/>
 

@@ -1,31 +1,24 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import {Post} from "./post/Post";
 import {postDataType} from "../../../redux/profileReducer";
+import {PostsFormDataType, ReduxAddPostForm} from "./AddPostForm";
 
 
 type postsPropsType = {
     messagesData: Array<postDataType>
-    updateNewPostText: (text: string) => void;
-    addPost: () => void;
-    newPostText: string;
+    addPost: (newPostText: string) => void;
 }
 
-export const Posts = ({messagesData, updateNewPostText, addPost, newPostText}: postsPropsType) => {
-    const addPostHandler = () => {
-        addPost();
-    };
-
-    const onChangePostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewPostText(e.currentTarget.value);
+export const Posts = ({messagesData, addPost}: postsPropsType) => {
+    const onSubmitHandler = (formData: PostsFormDataType) => {
+        addPost(formData.newPostText);
+        //alert(formData.newPostText)
     };
 
     return (
         <div>
             my posts
-            <div>
-                <textarea value={newPostText} onChange={onChangePostHandler} /> {/* Здесь используем value */}
-                <button onClick={addPostHandler}>Add post</button>
-            </div>
+            <ReduxAddPostForm onSubmit={onSubmitHandler}/>
             {messagesData.map(el =>
                 <Post key={el.id} message={el.post} count={el.likesCount} />
             )}

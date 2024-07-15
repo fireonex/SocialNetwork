@@ -11,7 +11,6 @@ const mapStateToProps = (state: rootStateType) => {
     return {
         dialogsData: state.dialogsPage.dialogsData,
         messagesInDialogsData: state.dialogsPage.messagesInDialogsData,
-        // newMessageText: state.dialogsPage.newMessageText,
     }
 }
 
@@ -22,9 +21,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             dispatch(sendMessageAC(newMessageBody));
             // dispatch(updateNewMessageTextAC(''));
         },
-        // updateNewMessageText: (message: string) => {
-        //     dispatch(updateNewMessageTextAC(message));
-        // }
     }
 }
 

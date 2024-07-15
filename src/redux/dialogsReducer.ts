@@ -1,9 +1,10 @@
 import {actionType} from "./redux-store";
+import {v1} from "uuid";
 
 //---------types----------------------------------------------------//
 export type sendMessageActionType = ReturnType<typeof sendMessageAC>
 
-export type updateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
+// export type updateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
 
 export type dialogsDataType = {
     id: number
@@ -20,7 +21,7 @@ export type dialogsPageType = {
     messagesInDialogsData: messagesInDialogsDataType[]
 }
 
-export type dialogsPageActionsType = sendMessageActionType | updateNewMessageTextActionType
+export type dialogsPageActionsType = sendMessageActionType
 
 //-------------------------------------------------------------------//
 
@@ -38,34 +39,34 @@ let initialState: dialogsPageType = {
         // {id: 3, text: 'Lets go to restaurant'},
         // {id: 4, text: 'Hey, Im online'}
     ],
-
 }
 
 export const dialogsReducer = (state = initialState, action: dialogsPageActionsType) => {
-
-
     switch (action.type) {
         case 'SEND-MESSAGE':
             return {
                 ...state,
-                messagesInDialogsData: [...state.messagesInDialogsData, action.newMessageBody],
+                messagesInDialogsData: [...state.messagesInDialogsData, action.payload], // Добавляем объект
             }
-        case 'UPDATE-NEW-MESSAGE-TEXT':
-            return {
-                ...state,
-                newMessageText: action.newText
-            };
+        // case 'UPDATE-NEW-MESSAGE-TEXT':
+        //     return {
+        //         ...state,
+        //         newMessageText: action.newText
+        //     };
         default:
             return state;
     }
 }
 
 
+
 export const sendMessageAC = (newMessageBody: string) => ({
-    type: 'SEND-MESSAGE', newMessageBody
+    type: 'SEND-MESSAGE',
+    payload: { id: v1(), text: newMessageBody }  // Добавляем объект с id и text
 }) as const
 
-export const updateNewMessageTextAC = (text: string) => ({
-    type: 'UPDATE-NEW-MESSAGE-TEXT',
-    newText: text
-}) as const
+
+// export const updateNewMessageTextAC = (text: string) => ({
+//     type: 'UPDATE-NEW-MESSAGE-TEXT',
+//     newText: text
+// }) as const

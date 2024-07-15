@@ -1,7 +1,7 @@
 import { Dialogs } from "./Dialogs";
 import { connect } from "react-redux";
 import { rootStateType } from "../../redux/redux-store";
-import { sendMessageAC, updateNewMessageTextAC } from "../../redux/dialogsReducer";
+import { sendMessageAC} from "../../redux/dialogsReducer";
 import { compose, Dispatch } from "redux";
 import withAuth from "../../HOCs/withAuth";
 import React from "react";
@@ -22,9 +22,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             dispatch(sendMessageAC(newMessageBody));
             // dispatch(updateNewMessageTextAC(''));
         },
-        updateNewMessageText: (message: string) => {
-            dispatch(updateNewMessageTextAC(message));
-        }
+        // updateNewMessageText: (message: string) => {
+        //     dispatch(updateNewMessageTextAC(message));
+        // }
     }
 }
 

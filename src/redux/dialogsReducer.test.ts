@@ -1,4 +1,4 @@
-import { dialogsReducer, sendMessageAC, updateNewMessageTextAC } from './dialogsReducer';
+import { dialogsReducer, sendMessageAC } from './dialogsReducer';
 
 // Тест для проверки отправки нового сообщения
 test('sendMessage should add new message to dialogs page', () => {

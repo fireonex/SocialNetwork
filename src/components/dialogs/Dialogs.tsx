@@ -1,6 +1,6 @@
 import {S} from './Dialogs.styles'
 import {Dialog} from "./dialog/Dialog";
-import React, {ChangeEvent} from "react";
+import React from "react";
 import {dialogsDataType, messagesInDialogsDataType} from "../../redux/dialogsReducer";
 import {DialogsFormDataType, ReduxAddMessageForm} from "./AddMessageForm";
 import {Message} from "./dialog/Message";
@@ -19,20 +19,18 @@ type DialogsPropsType = {
 export const Dialogs = ({
                             dialogsData,
                             messagesInDialogsData,
-                            sendMessage, updateNewMessageText,
-                            newMessageText
+                            sendMessage,
                         }: DialogsPropsType) => {
 
 
-    const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewMessageText(e.currentTarget.value);
-    }
+    // const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    //     updateNewMessageText(e.currentTarget.value);
+    // }
 
     const onSubmitHandler = (formData: DialogsFormDataType) => {
-        //dispatch собранных данных
-        //alert(formData.newMessageText)
         sendMessage(formData.newMessageText);
     }
+
 
     //if (!isAuth) return <Redirect to={'/login'}/>
 

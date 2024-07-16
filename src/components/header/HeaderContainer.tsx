@@ -19,6 +19,7 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId;
 
+        //need to fix
         if (!userId) {
             userId = '2';
         }

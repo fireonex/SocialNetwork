@@ -1,63 +1,82 @@
-import {Dispatch} from "redux";
-import {authAPI} from "../api/api";
-import {LoginFormDataType} from "../components/login/LoginForm";
+import {AnyAction, Dispatch} from "redux";
+import { authAPI } from "../api/api";
+import { LoginFormDataType } from "../components/login/LoginForm";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {rootStateType} from "./redux-store";
 
-export type authActionsType = ReturnType<typeof setAuthUserDataAC> | ReturnType<typeof setIsLoggedInAC>
+export type authActionsType = ReturnType<typeof setAuthUserDataAC> | ReturnType<typeof setIsLoggedInAC>;
 
 export type authStateType = {
-    id: number | null
-    email: string | null
-    login: string | null
-    isAuth: boolean
-}
+    id: number | null;
+    email: string | null;
+    login: string | null;
+    isAuth: boolean;
+};
 
 let initialState: authStateType = {
     id: null,
     email: null,
     login: null,
     isAuth: false
-}
+};
 
-export const authReducer = (state = initialState, action: authActionsType): authStateType=> {
+type ThunkType = ThunkAction<void, rootStateType, unknown, authActionsType>;
+
+export const authReducer = (state = initialState, action: authActionsType): authStateType => {
     switch (action.type) {
         case "SET-USER-DATA":
             return {
                 ...state,
-                ...action.data,
-                isAuth: true
-            }
+                ...action.payload,
+            };
         case "SET-IS-LOGGED-IN":
             return {
                 ...state,
-                ...action.data
-            }
+                isAuth: true // Установить isAuth в true при логине
+            };
         default:
             return state;
     }
-}
+};
 
-export const setAuthUserDataAC = (id: number, email: string, login: string) => ({
-    type: "SET-USER-DATA", data: {id, email, login}
-}) as const
+
+export const setAuthUserDataAC = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
+    type: "SET-USER-DATA",
+    payload: { id, email, login, isAuth }
+}) as const;
 
 export const setIsLoggedInAC = (formData: LoginFormDataType) => ({
-    type: "SET-IS-LOGGED-IN", data: formData
-}) as const
+    type: "SET-IS-LOGGED-IN",
+    data: formData
+}) as const;
 
 
-export const getAuthMeTC = () => (dispatch: Dispatch) => {
-     authAPI.authMe().then((response) => {
+
+export const getAuthMeTC = () => (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
+    authAPI.authMe().then((response) => {
         if (response.data.resultCode === 0) {
             let { id, login, email } = response.data.data;
-            dispatch(setAuthUserDataAC(id, email, login));
+            dispatch(setAuthUserDataAC(id, email, login, true));
         }
     });
-}
+};
 
-export const loggedInTC = (formData: LoginFormDataType) => (dispatch: Dispatch) => {
+export const loggedInTC = (formData: LoginFormDataType): ThunkType => (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
     authAPI.login(formData).then((response) => {
-        if (response.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC(formData));
+        if (response.resultCode === 0) {
+            //dispatch(setIsLoggedInAC(formData));
+            dispatch(getAuthMeTC()); // Обновить данные пользователя после логинизации
+        } else {
+            // обработать ошибки логинизации
+            console.error(response.messages);
         }
     });
-}
+};
+
+export const loggedOutTC = () => (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
+    authAPI.logout().then((response) => {
+        if (response.resultCode === 0) {
+            dispatch(setAuthUserDataAC(null, null, null, false));
+        }
+    });
+};

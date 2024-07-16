@@ -1,23 +1,32 @@
 import {LoginFormDataType, ReduxLoginForm} from "./LoginForm";
 import React from "react";
+import {Redirect} from "react-router-dom";
 
-type Props = {
-
+type LoginProps = {
+    loggedInTC: (formData: LoginFormDataType) => void
+    isAuth: boolean
 };
 
 
-export const Login = () => {
+export const Login = ({loggedInTC, isAuth}: LoginProps) => {
 
     const onSubmitHandler = (formData: LoginFormDataType) => {
-        //dispatch собранных данных
+        loggedInTC(formData)
     }
 
+    //     login: string
+    //     password: string
+    //     rememberMe: boolean
 
-    return (
-        <div style={{margin: '10%'}}>
-            <h1>Login</h1>
-            <ReduxLoginForm onSubmit={onSubmitHandler}/>
-        </div>
-    );
+    if (isAuth) {
+        return <Redirect to={'/profile'}/>
+    } else {
+        return (
+            <div style={{margin: '10%'}}>
+                <h1>Login</h1>
+                <ReduxLoginForm onSubmit={onSubmitHandler}/>
+            </div>
+        );
+    }
 
 }

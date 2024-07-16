@@ -3,32 +3,32 @@ import React from "react";
 import {Login} from "./Login";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {rootStateType} from "../../redux/redux-store";
 import {loggedInTC} from "../../redux/authReducer";
+import {rootStateType} from "../../redux/redux-store";
 
-type MapStatePropsType = {
-
-};
 
 type MapDispatchPropsType = {
     loggedInTC: (formData: LoginFormDataType) => void
 }
 
-export class LoginContainer extends React.Component<MapStatePropsType, MapDispatchPropsType>{
+type MapStatePropsType = {
+    isAuth: boolean
+}
 
-    // componentDidMount() {
-    //     this.props.loggedInTC(formData)
-    // }
+type LoginContainerPropsType = MapStatePropsType & MapDispatchPropsType;
+
+export class LoginContainer extends React.Component<LoginContainerPropsType> {
 
     render() {
         return (
-            <Login/>
+            <Login loggedInTC={this.props.loggedInTC} isAuth={this.props.isAuth}/>
         );
     }
 }
 
-const mapStateToProps = (state: rootStateType): MapStatePropsType => ({
 
+const mapStateToProps = (state: rootStateType): MapStatePropsType => ({
+    isAuth: state.auth.isAuth
 });
 
 export default compose<React.ComponentType>(

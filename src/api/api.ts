@@ -46,6 +46,7 @@ export const usersAPI = {
 
 }
 
+
 export const profileAPI = {
     getProfile: async (userId: number) => {
         const res = await instance.get<ProfileType>(`profile/${userId}`);
@@ -59,12 +60,22 @@ export const profileAPI = {
     }
 }
 
+
 export const authAPI = {
     authMe: async () => {
         return await instance.get<AuthResponseType>(`auth/me`)
     },
     login: async (formData: LoginFormDataType) => {
-        const res = await instance.post(`auth/login`, formData);
+        const res = await instance.post<AuthResponseType>("auth/login", {
+            email: formData.login,
+            password: formData.password,
+            rememberMe: formData.rememberMe,
+            captcha: formData.captcha
+        });
+        return res.data;
+    },
+    logout: async () => {
+        const res = await instance.delete(`auth/login`);
         return res.data;
     }
 }

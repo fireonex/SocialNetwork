@@ -6,7 +6,7 @@ import DialogsContainer from "./components/dialogs/DialogsContainer";
 import UsersContainer from "./components/users/UsersContainer";
 import {News} from "./components/news/News";
 import {Music} from "./components/music/Music";
-import {Login} from "./components/login/Login";
+import Login from "./components/login/LoginContainer";
 import {S} from './App.styles'
 
 

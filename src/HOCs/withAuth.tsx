@@ -16,6 +16,7 @@ const mapStateToPropsForRedirect = (state: rootStateType): MapStatePropsType => 
 
 // HOC named withAuth
 const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
+
     class WithAuth extends React.Component<PropsType & P> {
         render() {
             if (!this.props.isAuth) {

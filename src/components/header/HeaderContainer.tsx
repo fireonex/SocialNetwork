@@ -2,7 +2,7 @@ import React from "react";
 import {Header} from "./Header";
 import {connect, ConnectedProps} from "react-redux";
 import {rootStateType} from "../../redux/redux-store";
-import {getAuthMeTC} from "../../redux/authReducer";
+import {getAuthMeTC, loggedOutTC} from "../../redux/authReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 
 
@@ -28,8 +28,8 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     }
 
     render() {
-        const { isAuth, login } = this.props;
-        return <Header isAuth={isAuth} login={login} />;
+        const { isAuth, loggedOutTC, login } = this.props;
+        return <Header isAuth={isAuth} loggedOutTC={loggedOutTC} login={login}/>;
     }
 }
 
@@ -38,6 +38,9 @@ const mapStateToProps = (state: rootStateType) => ({
     login: state.auth.login
 });
 
-const connector = connect(mapStateToProps, { authMeTC: getAuthMeTC });
+const connector = connect(mapStateToProps, {
+    authMeTC: getAuthMeTC,
+    loggedOutTC
+});
 
 export default connector(withRouter(HeaderContainer));

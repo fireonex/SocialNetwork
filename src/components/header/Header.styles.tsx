@@ -12,7 +12,7 @@ const Logo = styled.img `
 
 const LoginBlock = styled.div `
     float: right;
-    margin: 20px;
+    margin: 10px;
     a {
         color: aliceblue; 
     } 

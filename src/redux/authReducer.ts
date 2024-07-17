@@ -1,8 +1,9 @@
 import {AnyAction, Dispatch} from "redux";
-import { authAPI } from "../api/api";
-import { LoginFormDataType } from "../components/login/LoginForm";
+import {authAPI} from "../api/api";
+import {LoginFormDataType} from "../components/login/LoginForm";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {rootStateType} from "./redux-store";
+import {stopSubmit} from "redux-form";
 
 export type authActionsType = ReturnType<typeof setAuthUserDataAC> | ReturnType<typeof setIsLoggedInAC>;
 
@@ -42,7 +43,7 @@ export const authReducer = (state = initialState, action: authActionsType): auth
 
 export const setAuthUserDataAC = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
     type: "SET-USER-DATA",
-    payload: { id, email, login, isAuth }
+    payload: {id, email, login, isAuth}
 }) as const;
 
 export const setIsLoggedInAC = (formData: LoginFormDataType) => ({
@@ -51,11 +52,10 @@ export const setIsLoggedInAC = (formData: LoginFormDataType) => ({
 }) as const;
 
 
-
 export const getAuthMeTC = () => (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
     authAPI.authMe().then((response) => {
         if (response.data.resultCode === 0) {
-            let { id, login, email } = response.data.data;
+            let {id, login, email} = response.data.data;
             dispatch(setAuthUserDataAC(id, email, login, true));
         }
     });
@@ -67,8 +67,9 @@ export const loggedInTC = (formData: LoginFormDataType): ThunkType => (dispatch:
             //dispatch(setIsLoggedInAC(formData));
             dispatch(getAuthMeTC()); // Обновить данные пользователя после логинизации
         } else {
-            // обработать ошибки логинизации
-            console.error(response.messages);
+            //dispatch(stopSubmit('login', { _error: 'Email or password is wrong'}))
+            let errorMessage = response.messages.length ? response.messages : 'Some Error'
+            dispatch(stopSubmit('login', {_error: errorMessage}))
         }
     });
 };

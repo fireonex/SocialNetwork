@@ -25,6 +25,9 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
         <div>
             <Field type={"checkbox"} name={'rememberMe'} component={'input'}/> remember me
         </div>
+        <div style={{color: '#971f1f'}}>
+            {props.error}
+        </div>
         <div>
             <button>Login</button>
         </div>

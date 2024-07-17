@@ -15,6 +15,7 @@ const FormControl = styled.div<{ error: boolean }>`
     span {
         color: #971f1f;
     }
+    
 `;
 
 export const FormControlComponent: React.FC<TextareaProps & { children: React.ReactNode }> =

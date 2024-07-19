@@ -2,7 +2,7 @@ import React from "react";
 import {Header} from "./Header";
 import {connect, ConnectedProps} from "react-redux";
 import {rootStateType} from "../../redux/redux-store";
-import {getAuthMeTC, loggedOutTC} from "../../redux/authReducer";
+import {loggedOutTC} from "../../redux/authReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 
 
@@ -16,15 +16,19 @@ type MatchParams = {
 type HeaderContainerPropsType = ConnectedProps<typeof connector> & RouteComponentProps<MatchParams>;
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
+
     componentDidMount() {
+
         let userId = this.props.match.params.userId;
-
         //need to fix
-        if (!userId) {
-            userId = '2';
+        if (!userId && this.props.isAuth) {
+            userId = String(this.props.loggedInUserID);
         }
+        // if (!userId && !this.props.isAuth) {
+        //     <Redirect to={'/login'}/>
+        // }
 
-        this.props.authMeTC()
+        //this.props.authMeTC()
     }
 
     render() {
@@ -35,11 +39,12 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
 
 const mapStateToProps = (state: rootStateType) => ({
     isAuth: state.auth.isAuth,
-    login: state.auth.login
+    login: state.auth.login,
+    loggedInUserID: state.auth.id
 });
 
 const connector = connect(mapStateToProps, {
-    authMeTC: getAuthMeTC,
+    // authMeTC: getAuthMeTC,
     loggedOutTC
 });
 

@@ -6,7 +6,7 @@ import {usersAPI} from "../api/api";
 export type usersPageActionsType = ReturnType<typeof follow>
     | ReturnType<typeof unfollow>
     | ReturnType<typeof setUsers>
-    | ReturnType<typeof changeCurrentPage>
+    | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof toggleFetching>
     | ReturnType<typeof toggleIsFollowingProgress>
@@ -69,7 +69,7 @@ export const usersReducer = (state = initialState, action: usersPageActionsType)
                 ...state,
                 users: action.users
             };
-        case 'CHANGE-CURRENT-PAGE':
+        case 'SET-CURRENT-PAGE':
             return {
                 ...state,
                 currentPage: action.currentPage
@@ -111,8 +111,8 @@ export const setUsers = (users: Array<userDataType>) => ({
 }) as const
 
 
-export const changeCurrentPage = (currentPage: number) => ({
-    type: "CHANGE-CURRENT-PAGE", currentPage
+export const setCurrentPage = (currentPage: number) => ({
+    type: "SET-CURRENT-PAGE", currentPage
 }) as const
 
 export const setTotalUsersCount = (totalUsersCount: number) => ({
@@ -133,6 +133,7 @@ export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: 
     usersAPI.getUsers(currentPage, pageSize).then((data) => {
         dispatch(setUsers(data.items));
         dispatch(setTotalUsersCount(data.totalCount));
+        dispatch(setCurrentPage(currentPage))
     })
         .finally(() => {
             dispatch(toggleFetching(false));

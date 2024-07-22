@@ -1,4 +1,4 @@
-import { usersReducer, follow, setUsers, changeCurrentPage, setTotalUsersCount, toggleFetching, userDataType } from './usersReducer';
+import { usersReducer, follow, setUsers, setCurrentPage, setTotalUsersCount, toggleFetching, userDataType } from './usersReducer';
 
 describe('usersReducer', () => {
     let initialState: any;
@@ -40,7 +40,7 @@ describe('usersReducer', () => {
     });
 
     it('should handle CHANGE_CURRENT_PAGE action', () => {
-        const action = changeCurrentPage(2);
+        const action = setCurrentPage(2);
         const newState = usersReducer(initialState, action);
 
         expect(newState.currentPage).toBe(2);

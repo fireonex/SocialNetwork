@@ -52,9 +52,9 @@ export type profilePageActionsType = addPostActionType
 
 let initialState: profilePageDataType = {
     messagesData: [
-        // {id: 1, post: 'How are you?', likesCount: 5},
-        // {id: 2, post: 'Hello!!!', likesCount: 8},
-        // {id: 3, post: 'This is my first post', likesCount: 10},
+        {id: '1', post: 'How are you?', likesCount: 5},
+        {id: '2', post: 'Hello!!!', likesCount: 8},
+        {id: '3', post: 'This is my first post', likesCount: 10},
     ],
     profile: null, // инициализируем profile как null
     status: ''

@@ -10,6 +10,7 @@ type postsPropsType = {
 }
 
 export const Posts = ({messagesData, addPost}: postsPropsType) => {
+
     const onSubmitHandler = (formData: PostsFormDataType) => {
         addPost(formData.newPostText);
         //alert(formData.newPostText)

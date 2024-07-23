@@ -16,7 +16,6 @@ export const Profile: React.FC<profilePropsType> = ({
                                                         updateStatus
                                                         }) => {
 
-
     return (
         <S.Profile>
             <ProfileInfo

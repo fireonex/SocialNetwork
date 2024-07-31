@@ -67,7 +67,7 @@ export const authAPI = {
     },
     login: async (formData: LoginFormDataType) => {
         const res = await instance.post<AuthResponseType>("auth/login", {
-            email: formData.login,
+            email: formData.email,
             password: formData.password,
             rememberMe: formData.rememberMe,
             captcha: formData.captcha

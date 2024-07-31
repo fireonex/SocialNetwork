@@ -4,7 +4,6 @@ describe('authReducer', () => {
     const initialState: authStateType = {
         id: null,
         email: null,
-        login: null,
         isAuth: false
     };
 
@@ -13,11 +12,10 @@ describe('authReducer', () => {
     });
 
     it('should handle SET-USER-DATA action', () => {
-        const action = setAuthUserDataAC(1, 'test@example.com', 'testuser', true);
+        const action = setAuthUserDataAC(1, 'test@example.com', true);
         const expectedState = {
             id: 1,
             email: 'test@example.com',
-            login: 'testuser',
             isAuth: true
         };
 
@@ -25,20 +23,20 @@ describe('authReducer', () => {
     });
 
     it('should handle SET-IS-LOGGED-IN action', () => {
-        const formData = { email: 'test2@example.com', password: 'password', login: 'testuser', rememberMe: false };
+        const formData = { email: 'test2@example.com', password: 'password', rememberMe: false };
         const action = setIsLoggedInAC(formData);
         const expectedState = {
             ...initialState,
             email: 'test2@example.com',
-            login: 'testuser',
             isAuth: true // isAuth должно быть true, если пользователь залогинен
         };
 
         expect(authReducer(initialState, action)).toEqual(expectedState);
     });
 
+
     it('should not mutate the initial state', () => {
-        const action = setAuthUserDataAC(2, 'test2@example.com', 'testuser2', true);
+        const action = setAuthUserDataAC(2, 'test2@example.com', true);
         const initialStateCopy = { ...initialState };
         authReducer(initialState, action);
 

@@ -5,19 +5,19 @@ import {RequiredField} from "../../utils/validators";
 
 
 export type LoginFormDataType = {
-    login: string
-    password: string
-    rememberMe: boolean
-    captcha?: boolean | string
+    id?: number;
+    email: string;
+    password: string;
+    rememberMe: boolean;
+    captcha?: boolean | string;
 }
-
 
 
 const LoginForm: React.FC<InjectedFormProps<LoginFormDataType>> = (props) => {
 
     return <form onSubmit={props.handleSubmit}>
         <div>
-            <Field placeholder={'login'} name={'login'} component={Input} validate={[RequiredField]}/>
+            <Field placeholder={'email'} name={'email'} component={Input} validate={[RequiredField]}/>
         </div>
         <div>
             <Field placeholder={'password'} name={'password'} component={Input} validate={[RequiredField]}/>

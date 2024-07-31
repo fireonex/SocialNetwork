@@ -1,4 +1,4 @@
-import { addPostAC, profileReducer, setUserProfile, setStatus } from "./profileReducer";
+import {addPostAC, profileReducer, setUserProfile, setStatus, deletePostAC} from "./profileReducer";
 import { ProfileType, profilePageDataType } from "./profileReducer";
 
 // Тест для проверки отправки нового сообщения
@@ -27,6 +27,34 @@ test('addPost should add new post to profile page', () => {
     expect(newState.messagesData.length).toBe(initialState.messagesData.length + 1);
     // и последний пост будет иметь текст 'hello'
     expect(newState.messagesData[newState.messagesData.length - 1].post).toBe(newPostText);
+});
+
+
+// Тест для проверки удаления сообщения
+test('deletePost should delete post from profile page', () => {
+    // начальное состояние
+    const initialState: profilePageDataType = {
+        messagesData: [
+            { id: '1', post: 'How are you?', likesCount: 5 },
+            { id: '2', post: 'Hello!!!', likesCount: 8 },
+            { id: '3', post: 'This is my first post', likesCount: 10 },
+        ],
+        profile: null,
+        status: ''
+    };
+
+    let postId = '2'
+
+    // создание экшена
+    const action = deletePostAC(postId);
+
+    // получение нового состояния
+    const newState = profileReducer(initialState, action);
+
+    // ожидаем, что количество постов уменьшится
+    expect(newState.messagesData.length).toBe(initialState.messagesData.length - 1);
+    // ожидаем, что сообщение с указанным id удалено
+    expect(newState.messagesData.find(post => post.id === postId)).toBeUndefined();
 });
 
 

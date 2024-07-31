@@ -29,9 +29,10 @@ test('sendMessage should add new message to dialogs page', () => {
 
     // ожидаем, что количество сообщений увеличится
     expect(newState.messagesInDialogsData.length).toBe(initialState.messagesInDialogsData.length + 1);
-    // и последнее сообщение будет иметь текст newMessageText
-    expect(newState.messagesInDialogsData[newState.messagesInDialogsData.length - 1]).toBe(newMessageText);
+
+    // и последнее сообщение будет объектом с полями id и text
+    expect(newState.messagesInDialogsData[newState.messagesInDialogsData.length - 1]).toEqual({
+        id: expect.any(String),  // id будет строкой
+        text: newMessageText  // текст сообщения должен совпадать с newMessageText
+    });
 });
-
-
-

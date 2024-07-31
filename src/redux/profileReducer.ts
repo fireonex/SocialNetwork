@@ -3,9 +3,7 @@ import {profileAPI, usersAPI} from "../api/api";
 import {toggleFetching} from "./usersReducer";
 import {v1} from "uuid";
 
-export type addPostActionType = ReturnType<typeof addPostAC>
-export type setUserProfileActionType = ReturnType<typeof setUserProfile>
-export type setStatusActionType = ReturnType<typeof setStatus>
+//---------types----------------------------------------------------//
 
 export type postDataType = {
     id: string
@@ -45,9 +43,17 @@ export type profilePageDataType = {
     status: string
 }
 
+
+export type addPostActionType = ReturnType<typeof addPostAC>
+export type setUserProfileActionType = ReturnType<typeof setUserProfile>
+export type setStatusActionType = ReturnType<typeof setStatus>
+export type deletePostActionType = ReturnType<typeof deletePostAC>
+
 export type profilePageActionsType = addPostActionType
     | setUserProfileActionType
     | setStatusActionType
+    | deletePostActionType
+//-------------------------------------------------------------------//
 
 
 let initialState: profilePageDataType = {
@@ -68,6 +74,11 @@ export const profileReducer = (state = initialState, action: profilePageActionsT
                 ...state,
                 messagesData: [...state.messagesData, newPost],
             }
+        case 'DELETE-POST':
+            return {
+                ...state,
+                messagesData: state.messagesData.filter(post => post.id !== action.postId)
+            }
         case "SET-USER-PROFILE":
             return {
                 ...state, profile: action.profile
@@ -84,6 +95,12 @@ export const profileReducer = (state = initialState, action: profilePageActionsT
 export const addPostAC = (newPostText: string) => ({
     type: "ADD-POST", newPostText
 }) as const
+
+export const deletePostAC = (postId: string) => ({
+    type: "DELETE-POST", postId
+}) as const
+
+
 
 
 export const setUserProfile = (profile: ProfileType) => ({

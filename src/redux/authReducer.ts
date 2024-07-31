@@ -1,4 +1,4 @@
-import {AnyAction, Dispatch} from "redux";
+import {AnyAction} from "redux";
 import {authAPI} from "../api/api";
 import {LoginFormDataType} from "../components/login/LoginForm";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
@@ -10,14 +10,12 @@ export type authActionsType = ReturnType<typeof setAuthUserDataAC> | ReturnType<
 export type authStateType = {
     id: number | null;
     email: string | null;
-    login: string | null;
     isAuth: boolean;
 };
 
 let initialState: authStateType = {
     id: null,
     email: null,
-    login: null,
     isAuth: false
 };
 
@@ -33,6 +31,7 @@ export const authReducer = (state = initialState, action: authActionsType): auth
         case "SET-IS-LOGGED-IN":
             return {
                 ...state,
+                ...action.data,  // добавляем данные из формы
                 isAuth: true // Установить isAuth в true при логине
             };
         default:
@@ -41,22 +40,28 @@ export const authReducer = (state = initialState, action: authActionsType): auth
 };
 
 
-export const setAuthUserDataAC = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
+
+export const setAuthUserDataAC = (id: number | null, email: string | null, isAuth: boolean) => ({
     type: "SET-USER-DATA",
-    payload: {id, email, login, isAuth}
+    payload: {id, email, isAuth}
 }) as const;
 
 export const setIsLoggedInAC = (formData: LoginFormDataType) => ({
     type: "SET-IS-LOGGED-IN",
-    data: formData
+    data: {
+        id: formData.id || null,
+        email: formData.email,
+    }
 }) as const;
+
+
 
 
 export const getAuthMeTC = () => (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
     authAPI.authMe().then((response) => {
         if (response.data.resultCode === 0) {
             let {id, login, email} = response.data.data;
-            dispatch(setAuthUserDataAC(id, email, login, true));
+            dispatch(setAuthUserDataAC(id, email, true));
         }
     });
 };
@@ -77,7 +82,7 @@ export const loggedInTC = (formData: LoginFormDataType): ThunkType => (dispatch:
 export const loggedOutTC = () => (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
     authAPI.logout().then((response) => {
         if (response.resultCode === 0) {
-            dispatch(setAuthUserDataAC(null, null, null, false));
+            dispatch(setAuthUserDataAC(null, null, false));
         }
     });
 };

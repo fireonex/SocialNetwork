@@ -1,6 +1,7 @@
 import {usersAPI} from "../api/api";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {rootStateType} from "./redux-store";
+import {updateObjectInArray} from "../utils/object-helpers";
 
 // Actions
 const FOLLOW_USER = 'social-network/users/FOLLOW-USER';
@@ -60,16 +61,12 @@ export const usersReducer = (state = initialState, action: usersPageActionsType)
         case FOLLOW_USER:
             return {
                 ...state,
-                users: state.users.map(user =>
-                    user.id === action.id ? { ...user, followed: true } : user
-                )
+                users: updateObjectInArray(state.users, action.id, 'id', { followed: true })
             };
         case UNFOLLOW_USER:
             return {
                 ...state,
-                users: state.users.map(user =>
-                    user.id === action.id ? { ...user, followed: false } : user
-                )
+                users: updateObjectInArray(state.users, action.id, 'id', { followed: false })
             };
         case SET_USERS:
             return {

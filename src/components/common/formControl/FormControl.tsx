@@ -19,17 +19,19 @@ const FormControl = styled.div<{ error: boolean }>`
 `;
 
 export const FormControlComponent: React.FC<TextareaProps & { children: React.ReactNode }> =
-    ({meta, children }) => {
+    ({meta: {touched, error}, children }) => {
 
-    const hasError = meta.touched && meta.error;
+    const hasError = touched && error;
     return (
         <FormControl error={!!hasError}>
             <div>
                 {children}
             </div>
-            {hasError && <span>{meta.error}</span>}
+            {hasError && <span>{error}</span>}
         </FormControl>
     );
 }
+
+
 
 

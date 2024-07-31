@@ -43,7 +43,6 @@ export const usersAPI = {
         const res = await instance.delete(`follow/${user.id}`);
         return res.data;
     },
-
 }
 
 

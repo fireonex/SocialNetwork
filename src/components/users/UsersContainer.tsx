@@ -35,11 +35,13 @@ type UsersStateType = {};
 
 class UsersContainer extends React.Component<UsersAPIPropsType, UsersStateType> {
     componentDidMount() {
-        this.props.getUsersTC(this.props.currentPage, this.props.pageSize);
+        let {currentPage, pageSize} = this.props
+        this.props.getUsersTC(currentPage, pageSize);
     }
 
     setCurrentPageHandler = (page: number) => {
-        this.props.getUsersTC(page, this.props.pageSize);
+        let {pageSize} = this.props
+        this.props.getUsersTC(page, pageSize);
     };
 
     followHandler = (user: userDataType) => {
@@ -68,17 +70,6 @@ class UsersContainer extends React.Component<UsersAPIPropsType, UsersStateType> 
         );
     }
 }
-
-// const mapStateToProps = (state: rootStateType) => {
-//     return {
-//         users: state.usersPage.users,
-//         pageSize: state.usersPage.pageSize,
-//         totalCount: state.usersPage.totalCount,
-//         currentPage: state.usersPage.currentPage,
-//         isFetching: state.usersPage.isFetching,
-//         followingInProgress: state.usersPage.followingInProgress
-//     };
-// };
 
 const mapStateToProps = (state: rootStateType) => {
     return {

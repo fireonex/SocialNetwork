@@ -2,6 +2,7 @@ import React from 'react';
 import {ProfileType} from "../../redux/profileReducer";
 import {Preloader} from "../common/preloader/Preloader";
 import {ProfileStatus} from "./ProfileStatus";
+import examplePhoto from "../../assets/defaultSmallUserImg.png";
 
 type ProfilePropsType = {
     status: string;
@@ -19,8 +20,9 @@ export const ProfileInfo: React.FC<ProfilePropsType> = ({
                 <>
                     <div>
                         <img
-                            src={profile.photos?.large || 'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg'}
+                            src={profile.photos?.large || examplePhoto}
                             alt={'Profile photo'}/>
+                        <h3>{profile.fullName}</h3>
                         <ProfileStatus status={status} updateStatus={updateStatus}/>
                     </div>
                 </>

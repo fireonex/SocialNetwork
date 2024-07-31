@@ -14,7 +14,7 @@ export const Login = ({loggedInTC, isAuth}: LoginProps) => {
         loggedInTC(formData)
     }
 
-    //     login: string
+    //     email: string
     //     password: string
     //     rememberMe: boolean
 

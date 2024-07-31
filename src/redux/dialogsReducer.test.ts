@@ -5,17 +5,17 @@ test('sendMessage should add new message to dialogs page', () => {
     // начальное состояние
     const initialState = {
         dialogsData: [
-            {id: 1, personName: 'Sam'},
-            {id: 2, personName: 'John'},
-            {id: 3, personName: 'Sarah'},
-            {id: 4, personName: 'Tom'},
-            {id: 5, personName: 'Rebecca'}
+            {id: '1', personName: 'Sam'},
+            {id: '2', personName: 'John'},
+            {id: '3', personName: 'Sarah'},
+            {id: '4', personName: 'Tom'},
+            {id: '5', personName: 'Rebecca'}
         ],
         messagesInDialogsData: [
-            {id: 1, text: 'Whats up bro??'},
-            {id: 2, text: 'I love you'},
-            {id: 3, text: 'Lets go to restaurant'},
-            {id: 4, text: 'Hey, Im online'}
+            {id: '1', text: 'Whats up bro??'},
+            {id: '2', text: 'I love you'},
+            {id: '3', text: 'Lets go to restaurant'},
+            {id: '4', text: 'Hey, Im online'}
         ]
     };
 

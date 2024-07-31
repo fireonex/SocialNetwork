@@ -2,7 +2,7 @@ import {NavLink} from "react-router-dom";
 import {S} from "../Dialogs.styles";
 
 type DialogPropsType = {
-    id: number
+    id: string
     personName: string
 }
 

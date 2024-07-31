@@ -44,103 +44,110 @@ export type profilePageDataType = {
 }
 
 
-export type addPostActionType = ReturnType<typeof addPostAC>
-export type setUserProfileActionType = ReturnType<typeof setUserProfile>
-export type setStatusActionType = ReturnType<typeof setStatus>
-export type deletePostActionType = ReturnType<typeof deletePostAC>
+// Actions
+const ADD_POST = 'social-network/profile/ADD-POST';
+const DELETE_POST = 'social-network/profile/DELETE-POST';
+const SET_USER_PROFILE = 'social-network/profile/SET-USER-PROFILE';
+const SET_STATUS = 'social-network/profile/SET-STATUS';
 
-export type profilePageActionsType = addPostActionType
-    | setUserProfileActionType
-    | setStatusActionType
+// Action Creators
+export const addPostAC = (newPostText: string) => ({
+    type: ADD_POST, newPostText
+}) as const;
+
+export const deletePostAC = (postId: string) => ({
+    type: DELETE_POST, postId
+}) as const;
+
+export const setUserProfile = (profile: ProfileType) => ({
+    type: SET_USER_PROFILE, profile
+}) as const;
+
+export const setStatus = (status: string) => ({
+    type: SET_STATUS, status
+}) as const;
+
+// Action Types
+export type addPostActionType = ReturnType<typeof addPostAC>;
+export type deletePostActionType = ReturnType<typeof deletePostAC>;
+export type setUserProfileActionType = ReturnType<typeof setUserProfile>;
+export type setStatusActionType = ReturnType<typeof setStatus>;
+
+export type profilePageActionsType =
+    | addPostActionType
     | deletePostActionType
-//-------------------------------------------------------------------//
+    | setUserProfileActionType
+    | setStatusActionType;
 
-
+// Initial State
 let initialState: profilePageDataType = {
     messagesData: [
-        {id: '1', post: 'How are you?', likesCount: 5},
-        {id: '2', post: 'Hello!!!', likesCount: 8},
-        {id: '3', post: 'This is my first post', likesCount: 10},
+        // {id: '1', post: 'How are you?', likesCount: 5},
+        // {id: '2', post: 'Hello!!!', likesCount: 8},
+        // {id: '3', post: 'This is my first post', likesCount: 10},
     ],
-    profile: null, // инициализируем profile как null
+    profile: null,
     status: ''
-}
+};
 
+// Reducer
 export const profileReducer = (state = initialState, action: profilePageActionsType): profilePageDataType => {
     switch (action.type) {
-        case 'ADD-POST':
+        case ADD_POST:
             const newPost = {id: v1(), post: action.newPostText, likesCount: 0};
             return {
                 ...state,
                 messagesData: [...state.messagesData, newPost],
-            }
-        case 'DELETE-POST':
+            };
+        case DELETE_POST:
             return {
                 ...state,
                 messagesData: state.messagesData.filter(post => post.id !== action.postId)
-            }
-        case "SET-USER-PROFILE":
+            };
+        case SET_USER_PROFILE:
             return {
                 ...state, profile: action.profile
-            }
-        case "SET-STATUS":
+            };
+        case SET_STATUS:
             return {
                 ...state, status: action.status
-            }
+            };
         default:
             return state;
     }
-}
-
-export const addPostAC = (newPostText: string) => ({
-    type: "ADD-POST", newPostText
-}) as const
-
-export const deletePostAC = (postId: string) => ({
-    type: "DELETE-POST", postId
-}) as const
+};
 
 
+//thunks
 
-
-export const setUserProfile = (profile: ProfileType) => ({
-    type: "SET-USER-PROFILE", profile
-}) as const
-
-export const setStatus = (status: string) => ({
-    type: "SET-STATUS", status
-}) as const
-
-
-export const getUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
+export const getUserProfileTC = (userId: number) => async (dispatch: Dispatch) => {
     dispatch(toggleFetching(true));
-    usersAPI.getUserProfile(userId).then((data) => {
+    try {
+        const data = await usersAPI.getUserProfile(userId);
         dispatch(setUserProfile(data));
-    })
-        .finally(() => {
-            dispatch(toggleFetching(false));
-        });
-}
+    } finally {
+        dispatch(toggleFetching(false));
+    }
+};
 
-
-export const getStatusTC = (userId: number) => (dispatch: Dispatch) => {
+export const getStatusTC = (userId: number) => async (dispatch: Dispatch) => {
     dispatch(toggleFetching(true));
-    profileAPI.getStatus(userId).then((res) => {
+    try {
+        const res = await profileAPI.getStatus(userId);
         dispatch(setStatus(res.data));
-    })
-        .finally(() => {
-            dispatch(toggleFetching(false));
-        });
-}
+    } finally {
+        dispatch(toggleFetching(false));
+    }
+};
 
-export const updateStatusTC = (status: string) => (dispatch: Dispatch) => {
+export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => {
     dispatch(toggleFetching(true));
-    profileAPI.updateStatus(status).then((res) => {
+    try {
+        const res = await profileAPI.updateStatus(status);
         if (res.data.resultCode === 0) {
             dispatch(setStatus(status));
         }
-    })
-        .finally(() => {
-            dispatch(toggleFetching(false));
-        });
-}
+    } finally {
+        dispatch(toggleFetching(false));
+    }
+};

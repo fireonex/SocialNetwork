@@ -1,29 +1,30 @@
 import {v1} from "uuid";
 
-//---------types----------------------------------------------------//
-export type sendMessageActionType = ReturnType<typeof sendMessageAC>
 
-// export type updateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>
+// Actions
+const SEND_MESSAGE = 'social-network/dialogs/SEND-MESSAGE';
+
+// Types
+export type sendMessageActionType = ReturnType<typeof sendMessageAC>;
 
 export type dialogsDataType = {
-    id: number
-    personName: string
-}
+    id: string;
+    personName: string;
+};
 
 export type messagesInDialogsDataType = {
-    id: number
-    text: string
-}
+    id: string;
+    text: string;
+};
 
 export type dialogsPageType = {
-    dialogsData: dialogsDataType[]
-    messagesInDialogsData: messagesInDialogsDataType[]
-}
+    dialogsData: dialogsDataType[];
+    messagesInDialogsData: messagesInDialogsDataType[];
+};
 
-export type dialogsPageActionsType = sendMessageActionType
+export type dialogsPageActionsType = sendMessageActionType;
 
-//-------------------------------------------------------------------//
-
+// Initial State
 let initialState: dialogsPageType = {
     dialogsData: [
         // {id: 1, personName: 'Sam'},
@@ -38,34 +39,23 @@ let initialState: dialogsPageType = {
         // {id: 3, text: 'Lets go to restaurant'},
         // {id: 4, text: 'Hey, Im online'}
     ],
-}
+};
 
-export const dialogsReducer = (state = initialState, action: dialogsPageActionsType) => {
+// Reducer
+export const dialogsReducer = (state = initialState, action: dialogsPageActionsType): dialogsPageType => {
     switch (action.type) {
-        case 'SEND-MESSAGE':
+        case SEND_MESSAGE:
             return {
-                ...state,
+        ...state,
                 messagesInDialogsData: [...state.messagesInDialogsData, action.payload], // Добавляем объект
-            }
-        // case 'UPDATE-NEW-MESSAGE-TEXT':
-        //     return {
-        //         ...state,
-        //         newMessageText: action.newText
-        //     };
+        }
         default:
             return state;
     }
-}
+};
 
-
-
+// Action Creators
 export const sendMessageAC = (newMessageBody: string) => ({
-    type: 'SEND-MESSAGE',
-    payload: { id: v1(), text: newMessageBody }  // Добавляем объект с id и text
-}) as const
-
-
-// export const updateNewMessageTextAC = (text: string) => ({
-//     type: 'UPDATE-NEW-MESSAGE-TEXT',
-//     newText: text
-// }) as const
+    type: SEND_MESSAGE,
+    payload: { id: v1(), text: newMessageBody }
+}) as const;

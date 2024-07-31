@@ -5,7 +5,14 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {rootStateType} from "./redux-store";
 import {stopSubmit} from "redux-form";
 
-export type authActionsType = ReturnType<typeof setAuthUserDataAC> | ReturnType<typeof setIsLoggedInAC>;
+// Actions
+const SET_USER_DATA = 'social-network/auth/SET-USER-DATA';
+const SET_IS_LOGGED_IN = 'social-network/auth/SET-IS-LOGGED-IN';
+
+// Types
+export type authActionsType =
+    | ReturnType<typeof setAuthUserDataAC>
+    | ReturnType<typeof setIsLoggedInAC>;
 
 export type authStateType = {
     id: number | null;
@@ -13,22 +20,24 @@ export type authStateType = {
     isAuth: boolean;
 };
 
+type ThunkType = ThunkAction<void, rootStateType, unknown, authActionsType>;
+
+// Initial State
 let initialState: authStateType = {
     id: null,
     email: null,
     isAuth: false
 };
 
-type ThunkType = ThunkAction<void, rootStateType, unknown, authActionsType>;
-
+// Reducer
 export const authReducer = (state = initialState, action: authActionsType): authStateType => {
     switch (action.type) {
-        case "SET-USER-DATA":
+        case SET_USER_DATA:
             return {
                 ...state,
                 ...action.payload,
             };
-        case "SET-IS-LOGGED-IN":
+        case SET_IS_LOGGED_IN:
             return {
                 ...state,
                 ...action.data,  // добавляем данные из формы
@@ -39,15 +48,14 @@ export const authReducer = (state = initialState, action: authActionsType): auth
     }
 };
 
-
-
+// Action Creators
 export const setAuthUserDataAC = (id: number | null, email: string | null, isAuth: boolean) => ({
-    type: "SET-USER-DATA",
-    payload: {id, email, isAuth}
+    type: SET_USER_DATA,
+    payload: { id, email, isAuth }
 }) as const;
 
 export const setIsLoggedInAC = (formData: LoginFormDataType) => ({
-    type: "SET-IS-LOGGED-IN",
+    type: SET_IS_LOGGED_IN,
     data: {
         id: formData.id || null,
         email: formData.email,
@@ -56,33 +64,40 @@ export const setIsLoggedInAC = (formData: LoginFormDataType) => ({
 
 
 
-
-export const getAuthMeTC = () => (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
-    authAPI.authMe().then((response) => {
+// Thunks
+export const getAuthMeTC = (): ThunkType => async (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
+    try {
+        const response = await authAPI.authMe();
         if (response.data.resultCode === 0) {
-            let {id, login, email} = response.data.data;
+            const { id, email } = response.data.data;
             dispatch(setAuthUserDataAC(id, email, true));
         }
-    });
+    } catch (error) {
+        console.error("Error in getAuthMeTC:", error);
+    }
 };
 
-export const loggedInTC = (formData: LoginFormDataType): ThunkType => (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
-    authAPI.login(formData).then((response) => {
+export const loggedInTC = (formData: LoginFormDataType): ThunkType => async (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
+    try {
+        const response = await authAPI.login(formData);
         if (response.resultCode === 0) {
-            //dispatch(setIsLoggedInAC(formData));
             dispatch(getAuthMeTC()); // Обновить данные пользователя после логинизации
         } else {
-            //dispatch(stopSubmit('login', { _error: 'Email or password is wrong'}))
-            let errorMessage = response.messages.length ? response.messages : 'Some Error'
-            dispatch(stopSubmit('login', {_error: errorMessage}))
+            const errorMessage = response.messages.length ? response.messages : 'Some Error';
+            dispatch(stopSubmit('login', { _error: errorMessage }));
         }
-    });
+    } catch (error) {
+        console.error("Error in loggedInTC:", error);
+    }
 };
 
-export const loggedOutTC = () => (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
-    authAPI.logout().then((response) => {
+export const loggedOutTC = (): ThunkType => async (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
+    try {
+        const response = await authAPI.logout();
         if (response.resultCode === 0) {
             dispatch(setAuthUserDataAC(null, null, false));
         }
-    });
+    } catch (error) {
+        console.error("Error in loggedOutTC:", error);
+    }
 };

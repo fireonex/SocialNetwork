@@ -1,6 +1,6 @@
 import HeaderContainer from "./components/header/HeaderContainer";
 import {Navbar} from "./components/navbar/Navbar";
-import {Route, RouteComponentProps, withRouter} from "react-router-dom";
+import {BrowserRouter, Route, RouteComponentProps, withRouter} from "react-router-dom";
 import ProfileContainer from "./components/profile/ProfileContainer";
 import DialogsContainer from "./components/dialogs/DialogsContainer";
 import UsersContainer from "./components/users/UsersContainer";
@@ -9,9 +9,9 @@ import {Music} from "./components/music/Music";
 import Login from "./components/login/LoginContainer";
 import {S} from './App.styles'
 import React, {Component} from "react";
-import {connect, ConnectedProps} from "react-redux";
+import {connect, ConnectedProps, Provider} from "react-redux";
 import {initializeAppTC} from "./redux/appReducer";
-import {rootStateType} from "./redux/redux-store";
+import {rootStateType, store} from "./redux/redux-store";
 import {Preloader} from "./components/common/preloader/Preloader";
 
 // Типизация параметров маршрута
@@ -62,4 +62,15 @@ class App extends Component<AppContainerPropsType> {
     }
 }
 
-export default withRouter(connector(App));
+
+const AppContainer = withRouter(connector(App));
+
+export const SocialNetworkApp: React.FC = () => {
+    return <BrowserRouter>
+        <Provider store={store}>
+            <AppContainer/>
+        </Provider>
+    </BrowserRouter>
+}
+
+

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import {S} from "../../users/Users.styles";
 
@@ -7,36 +7,54 @@ type PaginationPropsType = {
     totalCount: number;
     currentPage: number;
     setCurrentPage: (page: number) => void;
+    portionSize: number;
 };
 
 export const Pagination = ({
-                              pageSize,
-                              totalCount,
-                              currentPage,
-                              setCurrentPage,
-                          }: PaginationPropsType) => {
+                               pageSize,
+                               totalCount,
+                               currentPage,
+                               setCurrentPage,
+                               portionSize = 10
+                           }: PaginationPropsType) => {
 
-    //let pagesCount = Math.ceil(totalCount / pageSize);
-    let pagesCount = 10;
+    let [portionNumber, setPortionNumber] = useState(1)
+    let leftPortionSizeNum = (portionNumber - 1) * portionSize + 1;
+    let rightPortionSizeNum = portionNumber * portionSize
+
+    let pagesCount = Math.ceil(totalCount / pageSize);
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
 
+    let portionCount = Math.ceil(pagesCount / portionSize)
+
+
     return (
         <S.PaginationContainer>
-            {pages.map(page => (
-                <PageNumber
-                    key={page}
-                    active={currentPage === page}
-                    onClick={() => setCurrentPage(page)}
-                >
-                    {page}
-                </PageNumber>
-            ))}
+            {portionNumber > 1 && (
+                <button onClick={() => setPortionNumber(portionNumber - 1)}>
+                    PREV
+                </button>
+            )}
+            {pages
+                .filter(p => p >= leftPortionSizeNum && p <= rightPortionSizeNum)
+                .map(page => (
+                    <PageNumber
+                        key={page}
+                        active={currentPage === page}
+                        onClick={() => setCurrentPage(page)}
+                    >
+                        {page}
+                    </PageNumber>
+                ))}
+            {portionCount > portionNumber &&
+                <button onClick={() => setPortionNumber(portionNumber + 1)}>NEXT</button>
+            }
         </S.PaginationContainer>
     );
-};
+}
 
 
 const PageNumber = styled.span<{ active?: boolean }>`

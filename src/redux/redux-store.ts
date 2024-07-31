@@ -8,6 +8,7 @@ import thunkMiddleware from 'redux-thunk'
 import {FormStateMap, reducer as formReducer} from "redux-form";
 import {appReducer, appStateType} from "./appReducer";
 
+
 export type rootStateType = {
     profilePage: profilePageDataType
     dialogsPage: dialogsPageType
@@ -35,7 +36,7 @@ let reducers = combineReducers({
     form: formReducer,
 });
 
-export let store: Store<rootStateType, actionType> = createStore(reducers,  applyMiddleware(thunkMiddleware))
+export let store: Store<rootStateType, actionType> = createStore(reducers, applyMiddleware(thunkMiddleware))
 
 //@ts-ignore
 window.store = store

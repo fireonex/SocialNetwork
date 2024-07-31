@@ -1,13 +1,18 @@
-import React, {ChangeEvent} from "react";
+import React, { ChangeEvent } from "react";
 
 type StatusPropsType = {
     status: string;
     updateStatus: (status: string) => void;
 }
 
-export class ProfileStatus extends React.Component<StatusPropsType> {
+type StateType = {
+    editMode: boolean;
+    status: string;
+}
 
-    state = {
+export class ProfileStatus extends React.Component<StatusPropsType, StateType> {
+
+    state: StateType = {
         editMode: false,
         status: this.props.status
     }
@@ -16,7 +21,6 @@ export class ProfileStatus extends React.Component<StatusPropsType> {
         this.setState({
             editMode: true
         })
-        //this.forceUpdate() //используется для принудительного обновления компонента
     }
 
     deactivateModeHandler = () => {
@@ -33,10 +37,9 @@ export class ProfileStatus extends React.Component<StatusPropsType> {
     }
 
     componentDidUpdate(prevProps: StatusPropsType) {
-        let {status} = this.props
-        if (prevProps.status !== status) {
+        if (prevProps.status !== this.props.status) {
             this.setState({
-                status: status
+                status: this.props.status
             });
         }
     }
@@ -44,13 +47,13 @@ export class ProfileStatus extends React.Component<StatusPropsType> {
     render() {
         return <>
             {!this.state.editMode && <div onDoubleClick={this.activateModeHandler}>
-                {!this.props.status ? 'user status' : this.props.status}
+                {this.props.status || 'user status'}
             </div>}
             {this.state.editMode && <div>
                 <input value={this.state.status}
                        onChange={this.onStatusChange}
                        onBlur={this.deactivateModeHandler}
-                       autoFocus={true}/>
+                       autoFocus={true} />
             </div>}
         </>;
     }

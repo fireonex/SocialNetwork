@@ -29,7 +29,7 @@ export const Users = ({
     return (
         <div>
             <Pagination pageSize={pageSize} totalCount={totalCount} currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}/>
+                        setCurrentPage={setCurrentPage} portionSize={15}/>
             {users.map(user => (
                 <User key={user.id}
                       user={user}

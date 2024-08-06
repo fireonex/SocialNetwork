@@ -76,6 +76,7 @@ test('setUserProfile should update profile data', () => {
         lookingForAJob: true,
         lookingForAJobDescription: 'Looking for a React developer job',
         fullName: 'John Doe',
+        aboutMe: 'nothing about me',
         contacts: {
             github: 'github.com/johndoe',
             vk: 'vk.com/johndoe',

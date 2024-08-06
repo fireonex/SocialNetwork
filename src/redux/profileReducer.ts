@@ -3,6 +3,7 @@ import {profileAPI, usersAPI} from "../api/api";
 import {toggleFetching} from "./usersReducer";
 import {v1} from "uuid";
 
+
 //---------types----------------------------------------------------//
 
 export type postDataType = {
@@ -13,6 +14,7 @@ export type postDataType = {
 
 export type ProfileType = {
     userId: number;
+    aboutMe: string;
     lookingForAJob: boolean;
     lookingForAJobDescription: string;
     fullName: string;
@@ -49,6 +51,7 @@ const ADD_POST = 'social-network/profile/ADD-POST';
 const DELETE_POST = 'social-network/profile/DELETE-POST';
 const SET_USER_PROFILE = 'social-network/profile/SET-USER-PROFILE';
 const SET_STATUS = 'social-network/profile/SET-STATUS';
+const SET_PHOTO = 'social-network/profile/SET-PHOTO';
 
 // Action Creators
 export const addPostAC = (newPostText: string) => ({
@@ -67,17 +70,25 @@ export const setStatus = (status: string) => ({
     type: SET_STATUS, status
 }) as const;
 
+export const setPhoto = (photos: PhotosType) => ({
+    type: SET_PHOTO, photos
+}) as const;
+
+
+
 // Action Types
 export type addPostActionType = ReturnType<typeof addPostAC>;
 export type deletePostActionType = ReturnType<typeof deletePostAC>;
 export type setUserProfileActionType = ReturnType<typeof setUserProfile>;
 export type setStatusActionType = ReturnType<typeof setStatus>;
+export type setPhotoActionType = ReturnType<typeof setPhoto>;
 
 export type profilePageActionsType =
     | addPostActionType
     | deletePostActionType
     | setUserProfileActionType
-    | setStatusActionType;
+    | setStatusActionType
+    | setPhotoActionType;
 
 // Initial State
 let initialState: profilePageDataType = {
@@ -112,6 +123,10 @@ export const profileReducer = (state = initialState, action: profilePageActionsT
             return {
                 ...state, status: action.status
             };
+        case SET_PHOTO:
+            return {
+                ...state, profile: {...state.profile, photos: action.photos} as ProfileType
+            }
         default:
             return state;
     }
@@ -151,3 +166,21 @@ export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => 
         dispatch(toggleFetching(false));
     }
 };
+
+
+export const updatePhotoTC = (file: File) => async (dispatch: Dispatch) => {
+    dispatch(toggleFetching(true));
+    try {
+        const res = await profileAPI.updateProfilePhoto(file);
+        if (res.data.resultCode === 0) {
+            dispatch(setPhoto(res.data.data.photos));
+        } else {
+            console.error("Failed to update photo:", res.data.messages);
+        }
+    } catch (error) {
+        console.error("Network error:", error);
+    } finally {
+        dispatch(toggleFetching(false));
+    }
+};
+

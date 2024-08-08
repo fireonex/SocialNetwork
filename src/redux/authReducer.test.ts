@@ -4,7 +4,8 @@ describe('authReducer', () => {
     const initialState: authStateType = {
         id: null,
         email: null,
-        isAuth: false
+        isAuth: false,
+        captchaUrl: null
     };
 
     it('should return the initial state when action type is unknown', () => {

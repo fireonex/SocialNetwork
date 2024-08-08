@@ -90,3 +90,9 @@ export const authAPI = {
         return res.data;
     }
 }
+
+export const sequrityAPI = {
+    getCaptchaUrl: async () => {
+        return await instance.get('security/get-captcha-url')
+    }
+}

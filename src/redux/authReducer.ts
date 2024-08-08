@@ -1,5 +1,5 @@
 import {AnyAction} from "redux";
-import {authAPI} from "../api/api";
+import {authAPI, sequrityAPI} from "../api/api";
 import {LoginFormDataType} from "../components/login/LoginForm";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {rootStateType} from "./redux-store";
@@ -8,16 +8,19 @@ import {stopSubmit} from "redux-form";
 // Actions
 const SET_USER_DATA = 'social-network/auth/SET-USER-DATA';
 const SET_IS_LOGGED_IN = 'social-network/auth/SET-IS-LOGGED-IN';
+const SET_CAPTCHA_URL = 'social-network/auth/SET-CAPTCHA-URL';
 
 // Types
 export type authActionsType =
     | ReturnType<typeof setAuthUserDataAC>
-    | ReturnType<typeof setIsLoggedInAC>;
+    | ReturnType<typeof setIsLoggedInAC>
+    | ReturnType<typeof setCaptchaUrlAC>;
 
 export type authStateType = {
     id: number | null;
     email: string | null;
     isAuth: boolean;
+    captchaUrl: null | string;
 };
 
 type ThunkType = ThunkAction<void, rootStateType, unknown, authActionsType>;
@@ -26,7 +29,8 @@ type ThunkType = ThunkAction<void, rootStateType, unknown, authActionsType>;
 let initialState: authStateType = {
     id: null,
     email: null,
-    isAuth: false
+    isAuth: false,
+    captchaUrl: null
 };
 
 // Reducer
@@ -43,6 +47,10 @@ export const authReducer = (state = initialState, action: authActionsType): auth
                 ...action.data,  // добавляем данные из формы
                 isAuth: true // Установить isAuth в true при логине
             };
+        case SET_CAPTCHA_URL:
+            return {
+                ...state, captchaUrl: action.url
+            }
         default:
             return state;
     }
@@ -62,6 +70,10 @@ export const setIsLoggedInAC = (formData: LoginFormDataType) => ({
     }
 }) as const;
 
+export const setCaptchaUrlAC = (url: string) => ({
+    type: SET_CAPTCHA_URL,
+    url
+}) as const;
 
 
 // Thunks
@@ -81,8 +93,12 @@ export const loggedInTC = (formData: LoginFormDataType): ThunkType => async (dis
     try {
         const response = await authAPI.login(formData);
         if (response.resultCode === 0) {
-            dispatch(getAuthMeTC()); // Обновить данные пользователя после логинизации
+            dispatch(getAuthMeTC());
         } else {
+            if (response.resultCode === 10) {
+                dispatch(getCaptchaUrlTC())
+            }
+
             const errorMessage = response.messages.length ? response.messages : 'Some Error';
             dispatch(stopSubmit('login', { _error: errorMessage }));
         }
@@ -97,6 +113,16 @@ export const loggedOutTC = (): ThunkType => async (dispatch: ThunkDispatch<rootS
         if (response.resultCode === 0) {
             dispatch(setAuthUserDataAC(null, null, false));
         }
+    } catch (error) {
+        console.error("Error in loggedOutTC:", error);
+    }
+};
+
+export const getCaptchaUrlTC = (): ThunkType => async (dispatch: ThunkDispatch<rootStateType, unknown, AnyAction>) => {
+    try {
+        const response = await sequrityAPI.getCaptchaUrl();
+        const captchaURL = response.data.url
+        dispatch(setCaptchaUrlAC(captchaURL))
     } catch (error) {
         console.error("Error in loggedOutTC:", error);
     }

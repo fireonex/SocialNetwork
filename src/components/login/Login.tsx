@@ -5,10 +5,11 @@ import {Redirect} from "react-router-dom";
 type LoginProps = {
     loggedInTC: (formData: LoginFormDataType) => void
     isAuth: boolean
+    captchaUrl: string | null
 };
 
 
-export const Login = ({loggedInTC, isAuth}: LoginProps) => {
+export const Login = ({loggedInTC, isAuth, captchaUrl}: LoginProps) => {
 
     const onSubmitHandler = (formData: LoginFormDataType) => {
         loggedInTC(formData)
@@ -24,7 +25,7 @@ export const Login = ({loggedInTC, isAuth}: LoginProps) => {
         return (
             <div style={{margin: '10%'}}>
                 <h1>Login</h1>
-                <ReduxLoginForm onSubmit={onSubmitHandler}/>
+                <ReduxLoginForm onSubmit={onSubmitHandler} captchaUrl={captchaUrl}/>
             </div>
         );
     }

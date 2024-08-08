@@ -1,23 +1,21 @@
 import React from "react";
-import {InputProps} from "./Input";
-import {FormControlComponent} from "./FormControl";
 
-export type TextareaProps = {
-    input: InputProps;
-    meta: MetaProps;
-}
+import {WrappedFieldProps} from "redux-form";
+import {FormControl} from "./FormControl";
 
-type MetaProps = {
-    touched: boolean;
-    error?: string;
-    warning?: string;
-}
+// export type TextareaProps = {
+//     input: InputProps;
+//     meta: MetaProps;
+// }
 
-export const Textarea: React.FC<TextareaProps> = (props) => {
+// type MetaProps = {
+//     touched: boolean;
+//     error?: string;
+//     warning?: string;
+// }
+
+export const Textarea: React.FC<WrappedFieldProps> = (props) => {
+    //const {input, meta, child, ...restProps} = props;
     const {input, meta, ...restProps} = props;
-    return (
-        <FormControlComponent input={input} meta={meta}>
-            <textarea {...input} {...restProps} />
-        </FormControlComponent>
-    );
+    return <FormControl {...props}><textarea {...input} {...restProps} /></FormControl>
 }

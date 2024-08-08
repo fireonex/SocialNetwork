@@ -47,9 +47,9 @@ export class ProfileStatus extends React.Component<StatusPropsType, StateType> {
     render() {
         return <>
             {!this.state.editMode && <div onDoubleClick={this.activateModeHandler}>
-                <h5>
+                <b>
                     My status: {this.props.status || 'no status'}
-                </h5>
+                </b>
             </div>}
             {this.state.editMode && <div>
                 <input value={this.state.status}

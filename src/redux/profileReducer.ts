@@ -2,6 +2,9 @@ import {Dispatch} from "redux";
 import {profileAPI, usersAPI} from "../api/api";
 import {toggleFetching} from "./usersReducer";
 import {v1} from "uuid";
+import {BaseThunkType, InferActionsTypes} from "./redux-store";
+import {FormAction, stopSubmit} from "redux-form";
+import actions from "redux-form/lib/actions";
 
 
 //---------types----------------------------------------------------//
@@ -22,15 +25,15 @@ export type ProfileType = {
     photos: PhotosType;
 };
 
-type ContactsType = {
-    github: string;
-    vk: string;
-    facebook: string;
-    instagram: string;
-    twitter: string;
-    website: string;
-    youtube: string;
-    mainLink: string;
+export type ContactsType = {
+    github: string | null;
+    vk: string | null;
+    facebook: string | null;
+    instagram: string | null;
+    twitter: string | null;
+    website: string | null;
+    youtube: string | null;
+    mainLink: string | null;
 };
 
 type PhotosType = {
@@ -73,7 +76,6 @@ export const setStatus = (status: string) => ({
 export const setPhoto = (photos: PhotosType) => ({
     type: SET_PHOTO, photos
 }) as const;
-
 
 
 // Action Types
@@ -184,3 +186,21 @@ export const updatePhotoTC = (file: File) => async (dispatch: Dispatch) => {
     }
 };
 
+
+export const updateProfileInfoTC = (profile: ProfileType): ThunkType => async (dispatch, getState) => {
+    const userId = getState().auth.id
+    const data = await profileAPI.updateProfileInfo(profile).then(res => res.data)
+
+    if (data.resultCode === 0) {
+        if (userId != null) {
+            await dispatch(getUserProfileTC(userId))
+        } else {
+            throw new Error("userId can't be null")
+        }
+    } else {
+        dispatch(stopSubmit("edit-profile", {_error: data.messages[0] }))
+        return Promise.reject(data.messages[0])
+    }
+}
+type ActionsType = InferActionsTypes<typeof actions>
+type ThunkType = BaseThunkType<ActionsType | FormAction>

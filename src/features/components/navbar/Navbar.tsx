@@ -1,6 +1,7 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import {S} from './Navbar.styles'
+import {StyledButton} from "../../../common/commonComponents/antdComponents/StyledButton";
 
 
 type Props = {

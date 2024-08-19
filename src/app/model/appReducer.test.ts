@@ -1,5 +1,5 @@
 import { appReducer, setIsInitializedAC } from './appReducer';
-import {appState} from "../common/types/types";
+import {appState} from "../../common/types/types";
 
 // Определение типа для неизвестного действия
 type UnknownAction = {

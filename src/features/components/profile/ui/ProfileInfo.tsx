@@ -5,7 +5,11 @@ import examplePhoto from "../../../../common/assets/defaultSmallUserImg.png";
 import {ProfileData} from "./ProfileData";
 import {ReduxProfileDataForm} from "./ProfileDataForm";
 import {ProfileStructure} from "../types";
-
+import frame from "../../../../common/assets/avatar-frame.jpg"
+import {Button} from "antd";
+import styled from "styled-components";
+import { UploadOutlined } from '@ant-design/icons';
+import {StyledButton} from "../../../../common/commonComponents/antdComponents/StyledButton";
 
 type Props = {
     status: string;
@@ -17,29 +21,34 @@ type Props = {
 };
 
 
-export const ProfileInfo: React.FC<Props> = ({
-                                                            status,
-                                                            profile,
-                                                            updateStatus,
-                                                            isOwner,
-                                                            savePhoto,
-                                                            updateProfileInfo
-                                                        }) => {
+const UploadWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 
+  .upload-button {
+    margin-top: 10px;
+  }
+`;
+
+export const ProfileInfo = ({
+                                                 status,
+                                                 profile,
+                                                 updateStatus,
+                                                 isOwner,
+                                                 savePhoto,
+                                                 updateProfileInfo
+                                             }: Props) => {
     const [editMode, setEditMode] = useState(false);
 
     if (!profile) {
-        return <Preloader/>
+        return <Preloader />;
     }
 
     const onSubmitHandler = (formData: ProfileStructure) => {
-        //setEditMode(false);
-        //updateProfileInfo(formData)
-        updateProfileInfo(formData).then(
-            () => {
-                setEditMode(false);
-            }
-        );
+        updateProfileInfo(formData).then(() => {
+            setEditMode(false);
+        });
     };
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -48,38 +57,35 @@ export const ProfileInfo: React.FC<Props> = ({
         }
     };
 
-
-    // const initialValues = {
-    //     newFullName: profile.fullName,
-    //     newLookingForAJob: profile.lookingForAJob,
-    //     newProfessionalSkills: profile.lookingForAJobDescription || "",
-    //     newAboutMe: profile.aboutMe || "",
-    //     contacts: Object.keys(profile.contacts).map(key => ({
-    //         contactTitle: key,
-    //         contactValue: profile.contacts[key as keyof ContactsType]
-    //     }))
-    // };
-
-
     return (
         <div>
-            <>
-                <div>
-                    <img
-                        src={profile.photos?.large || examplePhoto}
-                        alt={'Profile photo'}/>
-                    {isOwner && <div>
-                        <input type={'file'} onChange={onMainPhotoSelected}/>
-                    </div>}
-                    {editMode ?
-                        <ReduxProfileDataForm initialValues={profile} onSubmit={onSubmitHandler} profile={profile}/>
-                        : <ProfileData profile={profile} isOwner={isOwner} setEditMode={() => {
-                            setEditMode(true)
-                        }}/>
-                    }
-                </div>
-                <ProfileStatus status={status} updateStatus={updateStatus}/>
-            </>
+            <img
+                src={profile.photos?.large || examplePhoto}
+                alt={'Profile photo'}
+                style={{ width: '200px', height: '200px'}}
+            />
+            {isOwner && (
+                <UploadWrapper>
+                    <label htmlFor="file-upload">
+                        <StyledButton icon={<UploadOutlined />} className="upload-button">
+                            Change Profile Photo
+                        </StyledButton>
+                    </label>
+                    <input
+                        id="file-upload"
+                        type="file"
+                        onChange={onMainPhotoSelected}
+                        style={{ display: 'none' }}
+                    />
+                </UploadWrapper>
+            )}
+            {editMode ? (
+                <ReduxProfileDataForm initialValues={profile} onSubmit={onSubmitHandler} profile={profile} />
+            ) : (
+                <ProfileData profile={profile} isOwner={isOwner} setEditMode={() => setEditMode(true)} />
+            )}
+            <ProfileStatus status={status} updateStatus={updateStatus} />
         </div>
     );
 };
+

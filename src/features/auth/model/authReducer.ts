@@ -1,5 +1,5 @@
 import {AnyAction} from "redux";
-import {sequrityAPI} from "../api/sequrityAPI";
+import {securityAPI} from "../api/securityAPI";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {stopSubmit} from "redux-form";
 import {authAPI} from "../api/authAPI";
@@ -111,7 +111,7 @@ export const loggedOutTC = (): Thunk => async (dispatch: ThunkDispatch<rootState
 
 export const getCaptchaUrlTC = (): Thunk => async (dispatch: ThunkDispatch<rootState, unknown, AnyAction>) => {
     try {
-        const response = await sequrityAPI.getCaptchaUrl();
+        const response = await securityAPI.getCaptchaUrl();
         const captchaURL = response.data.url
         dispatch(setCaptchaUrlAC(captchaURL))
     } catch (error) {

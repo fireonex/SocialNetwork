@@ -1,6 +1,6 @@
 import './index.css';
 import React from "react";
-import {SocialNetworkApp} from "./app/App";
+import {SocialNetworkApp} from "./app/ui/App";
 import ReactDOM from "react-dom";
 
 

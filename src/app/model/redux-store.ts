@@ -1,14 +1,14 @@
 import {Action, AnyAction, applyMiddleware, combineReducers, createStore, Store} from "redux";
-import {profilePageActions, profileReducer} from "../features/components/profile/model/profileReducer";
-import {dialogsPageActions, dialogsReducer} from "../features/components/dialogs/model/dialogsReducer";
-import {navbarReducer} from "../features/components/navbar/navbarReducer";
+import {profilePageActions, profileReducer} from "../../features/components/profile/model/profileReducer";
+import {dialogsPageActions, dialogsReducer} from "../../features/components/dialogs/model/dialogsReducer";
+import {navbarReducer} from "../../features/components/navbar/navbarReducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
 import {reducer as formReducer} from "redux-form";
 import {appReducer} from "./appReducer";
-import {rootState} from "../common/types/types";
-import {usersPageActions, usersReducer} from "../features/components/users/model/usersReducer";
-import {authActions} from "../features/auth/types";
-import {authReducer} from "../features/auth/model/authReducer";
+import {rootState} from "../../common/types/types";
+import {usersPageActions, usersReducer} from "../../features/components/users/model/usersReducer";
+import {authActions} from "../../features/auth/types";
+import {authReducer} from "../../features/auth/model/authReducer";
 
 
 type action = profilePageActions

@@ -4,6 +4,7 @@ import {Input} from "../../../common/commonComponents/formControl/Input";
 import {createField, GetStringKeys} from "../../../common/commonComponents/formControl/FormControl";
 import {RequiredField} from "../../../common/utils/validators";
 import {LoginFormData} from "../types";
+import {StyledButton} from "../../../common/commonComponents/antdComponents/StyledButton";
 
 
 type Props = {
@@ -37,7 +38,7 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormData, Props> & Props> = ({h
             {error}
         </div>
         <div>
-            <button>Login</button>
+            <StyledButton>Login</StyledButton>
         </div>
     </form>
 }

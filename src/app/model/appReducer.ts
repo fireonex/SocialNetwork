@@ -1,9 +1,8 @@
 import {AnyAction} from "redux";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
-
-import {appState, rootState} from "../common/types/types";
-import {getAuthMeTC} from "../features/auth/model/authReducer";
-import {authActions} from "../features/auth/types";
+import {appState, rootState} from "../../common/types/types";
+import {getAuthMeTC} from "../../features/auth/model/authReducer";
+import {authActions} from "../../features/auth/types";
 
 export type appActions = ReturnType<typeof setIsInitializedAC>;
 

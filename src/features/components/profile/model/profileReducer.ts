@@ -1,7 +1,7 @@
 import {Dispatch} from "redux";
 import {toggleFetching} from "../../users/model/usersReducer";
 import {v1} from "uuid";
-import {BaseThunk, InferActions} from "../../../../app/redux-store";
+import {BaseThunk, InferActions} from "../../../../app/model/redux-store";
 import {FormAction, stopSubmit} from "redux-form";
 import actions from "redux-form/lib/actions";
 import {profileAPI} from "../api/profileAPI";

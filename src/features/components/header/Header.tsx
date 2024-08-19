@@ -1,6 +1,9 @@
 import React from "react";
 import {S} from './Header.styles'
 import {NavLink} from "react-router-dom";
+import {StyledButton} from "../../../common/commonComponents/antdComponents/StyledButton";
+import logo from "../../../common/assets/sprite.svg"
+import {Icon} from "../../../common/commonComponents/icon/Icon";
 
 type Props = {
     isAuth: boolean;
@@ -16,20 +19,20 @@ export const Header = ({isAuth, loggedOutTC, login}: Props) => {
 
     return (
         <S.Header>
-            <S.Logo
-                src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAHXPluq6GtTRPDIHRv5kJPy86uFjp5sO7hg&usqp=CAU'}
-                alt={'logo'}/>
+            <Icon iconId={'social-network-logo'} height={'100%'} width={'80px'} viewBox={'0 0 40 50'}/>
             <S.LoginBlock>
                 {isAuth
                     ? <>
                         <div>{login}</div>
-                        <button onClick={logoutHandler}>Log out</button>
+                        <StyledButton onClick={logoutHandler}>Log out</StyledButton>
                     </>
                     : <NavLink to={'/login'}>Login</NavLink>}
             </S.LoginBlock>
         </S.Header>
     )
 }
+
+
 
 
 

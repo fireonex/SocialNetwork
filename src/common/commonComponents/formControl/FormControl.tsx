@@ -6,11 +6,11 @@ import {FieldValidatorType} from "../../utils/validators";
 
 const FormControlStyle = styled.div<{ error: boolean }>`
     textarea {
-        border: ${props => (props.error ? "solid red 2px" : "none")};
+        box-shadow: ${props => (props.error ? "0 0 2px 2px rgba(218, 34, 34, 0.54)" : "none")};
     }
 
     input {
-        border: ${props => (props.error ? "solid red 2px" : "none")};
+        box-shadow: ${props => (props.error ? "0 0 2px 2px rgba(218, 34, 34, 0.54)" : "none")};
     }
 
     span {
@@ -19,19 +19,6 @@ const FormControlStyle = styled.div<{ error: boolean }>`
 
 `;
 
-// export const FormControl: React.FC<TextareaProps & { children: React.ReactNode }> =
-//     ({meta: {touched, error}, children }) => {
-//
-//     const hasError = touched && error;
-//     return (
-//         <FormControl error={!!hasError}>
-//             <div>
-//                 {children}
-//             </div>
-//             {hasError && <span>{error}</span>}
-//         </FormControl>
-//     );
-// }
 
 type FormControlPropsType = {
     meta: WrappedFieldMetaProps

@@ -1,15 +1,15 @@
 import React, {ChangeEvent, useState} from 'react';
-import {Preloader} from "../../../../common/commonComponents/preloader/Preloader";
-import {ProfileStatus} from "./ProfileStatus";
-import examplePhoto from "../../../../common/assets/defaultSmallUserImg.png";
-import {ProfileData} from "./ProfileData";
-import {ReduxProfileDataForm} from "./ProfileDataForm";
-import {ProfileStructure} from "../types";
-import frame from "../../../../common/assets/avatar-frame.jpg"
-import {Button} from "antd";
+import {Preloader} from "../../../../../../common/commonComponents/preloader/Preloader";
+import {ProfileStatus} from "./profileStatus/ProfileStatus";
+import examplePhoto from "../../../../../../common/assets/defaultSmallUserImg.png";
+import {ProfileData} from "./profileData/ProfileData";
+import {ReduxProfileDataForm} from "./profileData/ProfileDataForm";
+import {ProfileStructure} from "../../../types";
+import {Image} from "antd";
 import styled from "styled-components";
-import { UploadOutlined } from '@ant-design/icons';
-import {StyledButton} from "../../../../common/commonComponents/antdComponents/StyledButton";
+import {EyeOutlined, UploadOutlined} from '@ant-design/icons';
+import {StyledButton} from "../../../../../../common/commonComponents/antdComponents/StyledButton";
+
 
 type Props = {
     status: string;
@@ -59,10 +59,13 @@ export const ProfileInfo = ({
 
     return (
         <div>
-            <img
+            <Image
                 src={profile.photos?.large || examplePhoto}
                 alt={'Profile photo'}
-                style={{ width: '200px', height: '200px'}}
+                preview={{
+                    mask: <EyeOutlined style={{ fontSize: '24px', color: 'white' }} />,
+                    movable: false,
+                }}
             />
             {isOwner && (
                 <UploadWrapper>

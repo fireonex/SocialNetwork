@@ -14,7 +14,7 @@ import { store } from "../model/redux-store";
 import {ConfigProvider, Layout} from "antd";
 
 const DialogsContainer = React.lazy(() => import('../../features/components/dialogs/ui/DialogsContainer'));
-const ProfileContainer = React.lazy(() => import("../../features/components/profile/ui/ProfileContainer"));
+const ProfileContainer = React.lazy(() => import("../../features/components/profile/ui/profile/ProfileContainer"));
 const UsersContainer = React.lazy(() => import("../../features/components/users/ui/UsersContainer"));
 
 type MatchParams = {}

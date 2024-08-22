@@ -1,7 +1,7 @@
 import {Button, ButtonProps} from "antd";
 import styled from "styled-components";
 
-export const GButton = styled(Button)`
+const GButton = styled(Button)`
     font-family: "IM FELL English", serif;
     font-size: 18px;
     line-height: 18px;
@@ -31,8 +31,8 @@ export const GButton = styled(Button)`
     }
 
     &:hover {
-        transform: scale(1.05); /* Лёгкий масштаб при наведении */
-        color: white; /* Цвет текста */
+        transform: scale(1.05); 
+        color: white; 
     }
 `;
 

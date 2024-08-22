@@ -3,15 +3,15 @@ import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
-import {ProfileStructure} from "../types";
-import {rootState} from "../../../../common/types/types";
+import {ProfileStructure} from "../../types";
+import {rootState} from "../../../../../common/types/types";
 import {
     getStatusTC,
     getUserProfileTC,
     updatePhotoTC,
     updateProfileInfoTC,
     updateStatusTC
-} from "../model/profileReducer";
+} from "../../model/profileReducer";
 
 
 type MapStateProps = {

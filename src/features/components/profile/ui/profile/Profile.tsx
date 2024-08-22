@@ -1,8 +1,9 @@
 import React from 'react';
-import {ProfileInfo} from "./ProfileInfo";
-import {S} from './Profile.styles';
-import {PostsContainer} from "./posts/PostsContainer";
-import {ProfileStructure} from "../types"
+import {ProfileInfo} from "./profileInfo/ProfileInfo";
+
+import {PostsContainer} from "../posts/PostsContainer";
+import {ProfileStructure} from "../../types"
+import styled from "styled-components";
 
 type Props = {
     profile: ProfileStructure;
@@ -13,6 +14,13 @@ type Props = {
     updateProfileInfo: (profile: ProfileStructure) => Promise<any>;
 };
 
+const StyledProfile = styled.div `
+    margin: 20px;
+    padding: 10px;
+`
+
+
+
 export const Profile: React.FC<Props> = ({
                                                         profile,
                                                         status,
@@ -22,7 +30,7 @@ export const Profile: React.FC<Props> = ({
                                                         updateProfileInfo
                                                     }) => {
     return (
-        <S.Profile>
+        <StyledProfile>
             <ProfileInfo
                 savePhoto={savePhoto}
                 isOwner={isOwner}
@@ -32,6 +40,6 @@ export const Profile: React.FC<Props> = ({
                 updateProfileInfo={updateProfileInfo}
             />
             <PostsContainer/>
-        </S.Profile>
+        </StyledProfile>
     );
 };

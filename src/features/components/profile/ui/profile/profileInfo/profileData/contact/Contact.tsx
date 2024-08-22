@@ -1,6 +1,6 @@
 import React from "react";
 import {Field, WrappedFieldArrayProps} from "redux-form";
-import {Input} from "../../../../common/commonComponents/formControl/Input";
+import {InputFormComponent} from "../../../../../../../../common/commonComponents/formControl/InputFormComponent";
 
 type Props = {
     contactTitle: string;
@@ -22,7 +22,7 @@ const renderContacts = ({ fields, meta: { error, submitFailed } }: WrappedFieldA
                 <Field
                     name={`${contact}.contactValue`}
                     type="text"
-                    component={Input}
+                    component={InputFormComponent}
                     placeholder="Contact Value"
                 />
             </div>

@@ -1,6 +1,6 @@
-import {Contact} from "./Contact";
+import {Contact} from "./contact/Contact";
 import React from "react";
-import {Contacts, ProfileStructure} from "../types";
+import {Contacts, ProfileStructure} from "../../../../types";
 
 type Props = {
     profile: ProfileStructure

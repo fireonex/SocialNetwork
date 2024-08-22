@@ -21,12 +21,12 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormData, Props> & Props> = ({h
 
     return <form onSubmit={handleSubmit}>
         <>
-            {createField<LoginFormValuesTypeKeys>('email', 'email', [RequiredField], InputFormComponent)}
-            {createField<LoginFormValuesTypeKeys>('password', 'password', [RequiredField], InputFormComponent, {type: 'password'})}
+            {createField<LoginFormValuesTypeKeys>('email', 'email', [], InputFormComponent)}
+            {createField<LoginFormValuesTypeKeys>('password', 'password', [], InputFormComponent, {type: 'password'})}
             {createField<LoginFormValuesTypeKeys>(undefined, 'rememberMe', [], InputFormComponent, {type: 'checkbox'}, 'remember me')}
 
             {captchaUrl && <img src={captchaUrl}/>}
-            {captchaUrl && createField<LoginFormValuesTypeKeys>('Symbols from image', 'captcha', [RequiredField], InputFormComponent, {})}
+            {captchaUrl && createField<LoginFormValuesTypeKeys>('Symbols from image', 'captcha', [], InputFormComponent, {})}
 
             <div style={{color: '#971f1f'}}>
                 {error}

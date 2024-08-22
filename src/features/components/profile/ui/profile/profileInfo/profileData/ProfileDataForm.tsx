@@ -6,7 +6,7 @@ import {InputFormComponent} from "../../../../../../../common/commonComponents/f
 import {Textarea} from "../../../../../../../common/commonComponents/formControl/Textarea";
 import {UrlValidator} from "../../../../../../../common/utils/validators";
 import {Caption} from "../../../../../../../common/commonComponents/textElements/Caption";
-import {SmallHeading} from "../../../../../../../common/commonComponents/textElements/smallHeading";
+import {SmallHeading} from "../../../../../../../common/commonComponents/textElements/SmallHeading";
 import {SaveOutlined} from "@ant-design/icons";
 import {IconButton} from "../../../../../../../common/commonComponents/antdComponents/IconButton";
 import {S} from "./ProfileDataForm.styles"

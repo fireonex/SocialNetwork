@@ -37,7 +37,7 @@ export const AppContent = styled(Content)`
   margin-top: 64px; /* Отступ для хедера */
   padding: 24px;
   background: ${(props) => props.theme?.token?.colorBgContainer || Theme.colors.NavbarLight};
-  border-radius: ${(props) => props.theme?.token?.borderRadiusLG || '8px'};
+  // border-radius: ${(props) => props.theme?.token?.borderRadiusLG || '8px'};
   min-height: calc(100vh - 64px); /* Высота экрана минус высота хедера */
   overflow-y: auto;
 `;

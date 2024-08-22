@@ -1,22 +1,27 @@
 import React from 'react';
 import {S} from './Post.styles'
+import {Caption} from "../../../../../../common/commonComponents/textElements/Caption";
+import {ProfileStructure} from "../../../types";
+import baseAvatar from "common/assets/defaultSmallUserImg.png"
+import {SmallHeading} from "../../../../../../common/commonComponents/textElements/SmallHeading";
 
 
 export type Props = {
     message: string
     count: number
+    profile: ProfileStructure | null
 }
 
 
-export const Post = (props: Props) => {
+export const Post = ({message, profile, count}: Props) => {
     return (
         <div>
             <S.Post>
-                <S.Avatar src={'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/69447950/1/?bust=1698331747&width=720'}
+                <S.Avatar src={profile && profile.photos.small ? profile.photos.small : baseAvatar}
                      alt={'avatar'}/>
-                {props.message}
+                <SmallHeading text={message}/>
                 <S.LikeWrapper>
-                    <span>like - {props.count}</span>
+                    <Caption text={`like - ${count}`}/>
                 </S.LikeWrapper>
             </S.Post>
         </div>

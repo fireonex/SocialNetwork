@@ -4,6 +4,8 @@ import {NavLink} from "react-router-dom";
 import {StyledButton} from "../../../common/commonComponents/antdComponents/StyledButton";
 import logo from "../../../common/assets/sprite.svg"
 import {Icon} from "../../../common/commonComponents/icon/Icon";
+import {SmallHeading} from "../../../common/commonComponents/textElements/SmallHeading";
+import {Caption} from "../../../common/commonComponents/textElements/Caption";
 
 type Props = {
     isAuth: boolean;
@@ -23,7 +25,7 @@ export const Header = ({isAuth, loggedOutTC, login}: Props) => {
             <S.LoginBlock>
                 {isAuth
                     ? <>
-                        <div>{login}</div>
+                        <Caption text={login ? login : ''}/>
                         <StyledButton onClick={logoutHandler}>Log out</StyledButton>
                     </>
                     : <NavLink to={'/login'}>Login</NavLink>}

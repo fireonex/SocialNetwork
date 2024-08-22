@@ -1,14 +1,9 @@
-import React, {ChangeEvent, useState} from 'react';
+import React from 'react';
 import {Preloader} from "../../../../../../common/commonComponents/preloader/Preloader";
-import {ProfileStatus} from "./profileStatus/ProfileStatus";
-import examplePhoto from "../../../../../../common/assets/defaultSmallUserImg.png";
-import {ProfileData} from "./profileData/ProfileData";
-import {ReduxProfileDataForm} from "./profileData/ProfileDataForm";
 import {ProfileStructure} from "../../../types";
-import {Image} from "antd";
 import styled from "styled-components";
-import {EyeOutlined, UploadOutlined} from '@ant-design/icons';
-import {StyledButton} from "../../../../../../common/commonComponents/antdComponents/StyledButton";
+import {ProfileImageWithButton} from "./profileImage/ProfileImageWithButton";
+import {ProfileDescription} from "./profileDescription/ProfileDescription";
 
 
 type Props = {
@@ -17,78 +12,38 @@ type Props = {
     updateStatus: (status: string) => void;
     isOwner: boolean;
     savePhoto: (file: File) => void;
-    updateProfileInfo: (profile: ProfileStructure) => Promise<any>
+    updateProfileInfo: (profile: ProfileStructure) => Promise<any>;
 };
 
-
-const UploadWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-
-  .upload-button {
-    margin-top: 10px;
-  }
+const ProfileWrapper = styled.div`
+    display: flex;
+    gap: 40px; /* Расстояние между блоками */
 `;
 
+
 export const ProfileInfo = ({
-                                                 status,
-                                                 profile,
-                                                 updateStatus,
-                                                 isOwner,
-                                                 savePhoto,
-                                                 updateProfileInfo
-                                             }: Props) => {
-    const [editMode, setEditMode] = useState(false);
+                                status,
+                                profile,
+                                updateStatus,
+                                isOwner,
+                                savePhoto,
+                                updateProfileInfo
+                            }: Props) => {
+
 
     if (!profile) {
-        return <Preloader />;
+        return <Preloader/>;
     }
 
-    const onSubmitHandler = (formData: ProfileStructure) => {
-        updateProfileInfo(formData).then(() => {
-            setEditMode(false);
-        });
-    };
-
-    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>): void => {
-        if (e.target.files && e.target.files.length) {
-            savePhoto(e.target.files[0]);
-        }
-    };
-
     return (
-        <div>
-            <Image
-                src={profile.photos?.large || examplePhoto}
-                alt={'Profile photo'}
-                preview={{
-                    mask: <EyeOutlined style={{ fontSize: '24px', color: 'white' }} />,
-                    movable: false,
-                }}
-            />
-            {isOwner && (
-                <UploadWrapper>
-                    <label htmlFor="file-upload">
-                        <StyledButton icon={<UploadOutlined />} className="upload-button">
-                            Change Profile Photo
-                        </StyledButton>
-                    </label>
-                    <input
-                        id="file-upload"
-                        type="file"
-                        onChange={onMainPhotoSelected}
-                        style={{ display: 'none' }}
-                    />
-                </UploadWrapper>
-            )}
-            {editMode ? (
-                <ReduxProfileDataForm initialValues={profile} onSubmit={onSubmitHandler} profile={profile} />
-            ) : (
-                <ProfileData profile={profile} isOwner={isOwner} setEditMode={() => setEditMode(true)} />
-            )}
-            <ProfileStatus status={status} updateStatus={updateStatus} />
-        </div>
+        <ProfileWrapper>
+            <ProfileImageWithButton profile={profile} isOwner={isOwner} savePhoto={savePhoto}/>
+            <ProfileDescription
+                profile={profile}
+                isOwner={isOwner}
+                updateProfileInfo={updateProfileInfo}
+                updateStatus={updateStatus}
+                status={status}/>
+        </ProfileWrapper>
     );
 };
-

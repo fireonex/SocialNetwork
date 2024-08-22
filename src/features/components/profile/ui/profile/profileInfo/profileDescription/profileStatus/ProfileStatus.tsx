@@ -1,14 +1,28 @@
-import React, { ChangeEvent } from "react";
+import React, {ChangeEvent} from "react";
+import {CustomInput} from "../../../../../../../../common/commonComponents/antdComponents/CustomInput";
+import {SmallHeading} from "../../../../../../../../common/commonComponents/textElements/SmallHeading";
+import {Caption} from "../../../../../../../../common/commonComponents/textElements/Caption";
+import styled from "styled-components";
 
 type Props = {
     status: string;
     updateStatus: (status: string) => void;
+    isOwner: boolean;
 }
 
 type State = {
     editMode: boolean;
     status: string;
 }
+
+
+const StatusContainer = styled.div`
+    display: flex;
+    gap: 10px;
+    h4 {
+        margin: 0;
+    }
+`;
 
 export class ProfileStatus extends React.Component<Props, State> {
 
@@ -46,16 +60,15 @@ export class ProfileStatus extends React.Component<Props, State> {
 
     render() {
         return <>
-            {!this.state.editMode && <div onDoubleClick={this.activateModeHandler}>
-                <b>
-                    My status: {this.props.status || 'no status'}
-                </b>
-            </div>}
+            {!this.state.editMode && <StatusContainer onDoubleClick={this.activateModeHandler}>
+                <SmallHeading text={'My status: '}/>
+                <Caption text={this.props.status || 'no status'}/>
+            </StatusContainer>}
             {this.state.editMode && <div>
-                <input value={this.state.status}
-                       onChange={this.onStatusChange}
-                       onBlur={this.deactivateModeHandler}
-                       autoFocus={true} />
+                <CustomInput value={this.state.status}
+                             onChange={this.onStatusChange}
+                             onBlur={this.deactivateModeHandler}
+                             autoFocus={true}/>
             </div>}
         </>;
     }

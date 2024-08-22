@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {Theme} from "../../../common/styles";
 
 const Header = styled.header`
     display: flex;
@@ -7,7 +8,7 @@ const Header = styled.header`
     background: linear-gradient(90deg, rgba(32,88,30,1) 50%, rgba(0,0,0,1) 100%);
     padding: 0 20px 0 0;
     height: 64px;
-    color: #A9895D;
+    color: ${Theme.colors.NavbarDark};
 `;
 
 const Logo = styled.img`

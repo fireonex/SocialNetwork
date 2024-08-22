@@ -5,9 +5,9 @@ import {addPostAC} from "../../model/profileReducer";
 import {rootState} from "../../../../../common/types/types";
 
 
-
 const mapStateToProps = (state: rootState) => ({
     messagesData: state.profilePage.messagesData,
+    profile: state.profilePage.profile
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -15,6 +15,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         dispatch(addPostAC(newPostText));
     },
 });
+
+
 
 
 // connect подключает Posts к Redux store

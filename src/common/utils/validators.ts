@@ -1,13 +1,14 @@
 export type FieldValidatorType = (value: string) => string | undefined
 
 
-export const RequiredField = (value: string) => {
-    if (value) {
-        return undefined
+export const RequiredField = (value: string, touched: boolean) => {
+    if (touched && !value) {
+        return 'Field is required';
     } else {
-        return 'field is required'
+        return undefined;
     }
-}
+};
+
 
 export const MaxLengthCreator = (length: number) => (value: string) => {
     if (value && value.length <= length) {

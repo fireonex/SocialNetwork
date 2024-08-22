@@ -39,7 +39,7 @@ export const Profile: React.FC<Props> = ({
                 updateStatus={updateStatus}
                 updateProfileInfo={updateProfileInfo}
             />
-            <PostsContainer/>
+            <PostsContainer isOwner={isOwner}/>
         </StyledProfile>
     );
 };

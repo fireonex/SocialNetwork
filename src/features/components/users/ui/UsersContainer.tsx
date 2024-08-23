@@ -14,6 +14,8 @@ import {
     getUsers
 } from "../model/usersSelectors";
 import {followUserTC, getUsersTC, unfollowUserTC} from "../model/usersReducer";
+import {Skeleton} from "antd";
+import {CustomSkeleton} from "../../../../common/commonComponents/antdComponents/CustomSkeleton";
 
 
 type Props = {
@@ -52,17 +54,19 @@ class UsersContainer extends React.Component<Props, State> {
     render() {
         return (
             <>
-                {this.props.isFetching && <Preloader />}
-                <Users
-                    totalCount={this.props.totalCount}
-                    users={this.props.users}
-                    pageSize={this.props.pageSize}
-                    currentPage={this.props.currentPage}
-                    setCurrentPage={this.setCurrentPageHandler}
-                    followingInProgress={this.props.followingInProgress}
-                    followHandler={this.followHandler}
-                    unfollowHandler={this.unfollowHandler}
-                />
+                {this.props.isFetching
+                    ? <CustomSkeleton/>
+                    : <Users
+                        totalCount={this.props.totalCount}
+                        users={this.props.users}
+                        pageSize={this.props.pageSize}
+                        currentPage={this.props.currentPage}
+                        setCurrentPage={this.setCurrentPageHandler}
+                        followingInProgress={this.props.followingInProgress}
+                        followHandler={this.followHandler}
+                        unfollowHandler={this.unfollowHandler}
+                    />}
+
             </>
         );
     }

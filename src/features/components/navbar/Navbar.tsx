@@ -1,18 +1,32 @@
-import React from "react";
-import {NavLink} from "react-router-dom";
-import {S} from './Navbar.styles'
-import {StyledButton} from "../../../common/commonComponents/antdComponents/StyledButton";
-
+import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { S } from './Navbar.styles';
+import icon from "../../../common/assets/logo-sn-2.svg";
 
 type Props = {
     //friendsData: friendsType[]
-}
-
+};
 
 export const Navbar = ({}: Props) => {
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+    // Хук для обновления ширины экрана
+    useEffect(() => {
+        const handleResize = () => {
+            setScreenWidth(window.innerWidth);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        // Удаление слушателя при размонтировании компонента
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     return (
         <S.Navigation>
+            {screenWidth > 992 && <img src={icon} width={'50px'} alt="Icon" />}
             <S.NavLinkWrapper>
                 <NavLink to={'/profile'}>Profile</NavLink>
             </S.NavLinkWrapper>
@@ -28,19 +42,6 @@ export const Navbar = ({}: Props) => {
             <S.NavLinkWrapper>
                 <NavLink to={'/music'}>Music</NavLink>
             </S.NavLinkWrapper>
-            {/*<S.NavLinkWrapper>*/}
-            {/*    <NavLink to={'/friends'}>Friends</NavLink>*/}
-            {/*</S.NavLinkWrapper>*/}
-            {/*<Friends friendsData={friendsData}/>*/}
         </S.Navigation>
     );
-}
-
-
-
-
-
-
-
-
-
+};

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Layout } from 'antd';
 import { Theme } from "../../common/styles";
 
+
 const { Header, Content, Sider } = Layout;
 
 // Задаем значения по умолчанию для случая, если тема не будет доступна
@@ -29,7 +30,10 @@ export const AppHeader = styled(Header)`
   left: 200px; /* Ширина сайдбара */
   width: calc(100% - 200px); /* Учитываем ширину сайдбара */
   z-index: 1000;
-  padding: 0;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 // Прокручиваемая центральная часть
@@ -37,7 +41,6 @@ export const AppContent = styled(Content)`
   margin-top: 64px; /* Отступ для хедера */
   padding: 24px;
   background: ${(props) => props.theme?.token?.colorBgContainer || Theme.colors.NavbarLight};
-  // border-radius: ${(props) => props.theme?.token?.borderRadiusLG || '8px'};
   min-height: calc(100vh - 64px); /* Высота экрана минус высота хедера */
   overflow-y: auto;
 `;

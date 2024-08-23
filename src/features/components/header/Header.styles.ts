@@ -10,6 +10,19 @@ const Header = styled.header`
     height: 64px;
     color: ${Theme.colors.NavbarDark};
 `;
+export const AppHeader = styled(Header)`
+    background: linear-gradient(90deg, rgba(32,88,30,1) 50%, rgba(0,0,0,1) 100%);
+  position: fixed;
+  top: 0;
+  left: 200px; /* Ширина сайдбара */
+  width: calc(100% - 200px); /* Учитываем ширину сайдбара */
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 80px; /* Увеличенная высота для иконки */
+`;
 
 const Logo = styled.img`
   height: 40px;
@@ -34,4 +47,5 @@ export const S = {
     Header,
     Logo,
     LoginBlock,
+    AppHeader
 };

@@ -11,8 +11,21 @@ const PaginationContainer = styled.div`
     margin: 20px 0;
 `;
 
+const UsersContainer = styled.div`
+    margin: 20px;
+    padding: 10px;
+`;
+
+const PaginationWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+`;
+
 
 export const S = {
     UserPhoto,
-    PaginationContainer
+    PaginationContainer,
+    PaginationWrapper,
+    UsersContainer
 }

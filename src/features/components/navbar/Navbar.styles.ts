@@ -8,7 +8,7 @@ const Navigation = styled.nav`
 `;
 
 const NavLinkWrapper = styled.div`
-    margin-bottom: 20px;
+    margin: 20px 0;
     font-size: 20px;
 
     & > a {

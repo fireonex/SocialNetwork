@@ -1,50 +1,46 @@
-import * as React from 'react';
-import {NavLink} from "react-router-dom";
-import {UserPhoto} from "./UserPhoto";
-import {userData} from "../../types";
-
+import React from 'react';
+import { NavLink } from "react-router-dom";
+import { UserPhoto } from "./UserPhoto";
+import { userData } from "../../types";
+import { StyledButton } from "../../../../../common/commonComponents/antdComponents/StyledButton";
+import { SpanWithText } from "../../../../../common/commonComponents/textElements/SpanWithText";
+import { SmallHeading } from "../../../../../common/commonComponents/textElements/SmallHeading";
+import {S} from "./User.styles"
 
 type Props = {
-    user: userData
+    user: userData;
     followingInProgress: number[];
     followHandler: (user: userData) => void;
     unfollowHandler: (user: userData) => void;
 };
 
-
-export const User = ({user, unfollowHandler, followingInProgress, followHandler}: Props) => {
+export const User = ({ user, unfollowHandler, followingInProgress, followHandler }: Props) => {
     return (
-        <div>
-            <div>
-                <div>
-                    <NavLink to={`/profile/${user.id}`}>
-                        <UserPhoto user={user}/>
-                    </NavLink>
-                </div>
-                <div>
-                    {user.followed ? (
-                        <button
-                            onClick={() => unfollowHandler(user)}
-                            disabled={followingInProgress.includes(user.id)}
-                        >
-                            Unfollow
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => followHandler(user)}
-                            disabled={followingInProgress.includes(user.id)}
-                        >
-                            Follow
-                        </button>
-                    )}
-                </div>
-            </div>
-            <div>
-                <div>{user.name}</div>
-                <div>{user.status}</div>
-                <div>{"user.location.country"}</div>
-                <div>{"user.location.city"}</div>
-            </div>
-        </div>
+        <S.UserContainer>
+            <S.UserContent>
+                <NavLink to={`/profile/${user.id}`}>
+                    <UserPhoto user={user} />
+                </NavLink>
+                <SmallHeading text={user.name} />
+                <SpanWithText text={user.status ? user.status : ''} />
+                {user.followed ? (
+                    <StyledButton
+                        onClick={() => unfollowHandler(user)}
+                        disabled={followingInProgress.includes(user.id)}
+                    >
+                        Unfollow
+                    </StyledButton>
+                ) : (
+                    <StyledButton
+                        onClick={() => followHandler(user)}
+                        disabled={followingInProgress.includes(user.id)}
+                    >
+                        Follow
+                    </StyledButton>
+                )}
+            </S.UserContent>
+        </S.UserContainer>
     );
 };
+
+

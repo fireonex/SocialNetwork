@@ -4,7 +4,7 @@ import {ProfileInfo} from "./profileInfo/ProfileInfo";
 import {PostsContainer} from "../posts/PostsContainer";
 import {ProfileStructure} from "../../types"
 import styled from "styled-components";
-
+import c from "../../../../../app/ui/img.png"
 type Props = {
     profile: ProfileStructure;
     status: string;

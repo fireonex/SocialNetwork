@@ -1,43 +1,50 @@
-import {InjectedFormProps, reduxForm} from "redux-form";
+import { InjectedFormProps, reduxForm } from "redux-form";
 import React from "react";
-import {InputFormComponent} from "../../../common/commonComponents/formControl/InputFormComponent";
-import {createField, GetStringKeys} from "../../../common/commonComponents/formControl/FormControl";
-import {RequiredField} from "../../../common/utils/validators";
-import {LoginFormData} from "../types";
-import {StyledButton} from "../../../common/commonComponents/antdComponents/StyledButton";
-
+import { InputFormComponent } from "../../../common/commonComponents/formControl/InputFormComponent";
+import { createField, GetStringKeys } from "../../../common/commonComponents/formControl/FormControl";
+import { LoginFormData } from "../types";
+import { StyledButton } from "../../../common/commonComponents/antdComponents/StyledButton";
+import {S} from "./Login.styles"
 
 type Props = {
-    captchaUrl: string | null
-}
+    captchaUrl: string | null;
+};
 
+type LoginFormValuesTypeKeys = GetStringKeys<LoginFormData>;
 
+const LoginForm: React.FC<InjectedFormProps<LoginFormData, Props> & Props> = ({ handleSubmit, error, captchaUrl }) => {
+    return (
+        <form onSubmit={handleSubmit}>
+            <>
+                <S.FieldWrapper>
+                    {createField<LoginFormValuesTypeKeys>("email", "email", [], InputFormComponent)}
+                </S.FieldWrapper>
+                <S.FieldWrapper>
+                    {createField<LoginFormValuesTypeKeys>("password", "password", [], InputFormComponent, { type: "password" })}
+                </S.FieldWrapper>
+                <S.CheckboxWrapper>
+                    {createField<LoginFormValuesTypeKeys>(undefined, "rememberMe", [], InputFormComponent, { type: "checkbox" }, "Remember me")}
+                </S.CheckboxWrapper>
 
+                {captchaUrl && (
+                    <>
+                        <img src={captchaUrl} alt="captcha" />
+                        <S.FieldWrapper>
+                            {createField<LoginFormValuesTypeKeys>("Symbols from image", "captcha", [], InputFormComponent)}
+                        </S.FieldWrapper>
+                    </>
+                )}
 
-type LoginFormValuesTypeKeys = GetStringKeys<LoginFormData>
+                {error && <S.ErrorText>{error}</S.ErrorText>}
 
-const LoginForm: React.FC<InjectedFormProps<LoginFormData, Props> & Props> = ({handleSubmit
-                                                                       , error, captchaUrl}) => {
-
-    return <form onSubmit={handleSubmit}>
-        <>
-            {createField<LoginFormValuesTypeKeys>('email', 'email', [], InputFormComponent)}
-            {createField<LoginFormValuesTypeKeys>('password', 'password', [], InputFormComponent, {type: 'password'})}
-            {createField<LoginFormValuesTypeKeys>(undefined, 'rememberMe', [], InputFormComponent, {type: 'checkbox'}, 'remember me')}
-
-            {captchaUrl && <img src={captchaUrl}/>}
-            {captchaUrl && createField<LoginFormValuesTypeKeys>('Symbols from image', 'captcha', [], InputFormComponent, {})}
-
-            <div style={{color: '#971f1f'}}>
-                {error}
-            </div>
-            <div>
-                <StyledButton>Login</StyledButton>
-            </div>
-        </>
-    </form>
-}
+                <S.ButtonWrapper>
+                    <StyledButton>Login</StyledButton>
+                </S.ButtonWrapper>
+            </>
+        </form>
+    );
+};
 
 export const ReduxLoginForm = reduxForm<LoginFormData, Props>({
-    form: 'login'
-})(LoginForm)
+    form: "login"
+})(LoginForm);

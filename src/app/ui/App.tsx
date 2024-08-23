@@ -1,17 +1,17 @@
-import { BrowserRouter, Redirect, Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
-import { S } from './App.styles';
-import React, { Component, Suspense } from "react";
-import { connect, ConnectedProps, Provider } from "react-redux";
-import { initializeAppTC } from "../model/appReducer";
-import { Preloader } from "../../common/commonComponents/preloader/Preloader";
+import {BrowserRouter, Redirect, Route, RouteComponentProps, Switch, withRouter} from "react-router-dom";
+import {S} from './App.styles';
+import React, {Component, Suspense} from "react";
+import {connect, ConnectedProps, Provider} from "react-redux";
+import {initializeAppTC} from "../model/appReducer";
 import HeaderContainer from "../../features/components/header/HeaderContainer";
-import { Navbar } from "../../features/components/navbar/Navbar";
-import { News } from "../../features/components/news/News";
-import { Music } from "../../features/components/music/Music";
-import { Login } from "../../features/auth/ui/Login";
-import { rootState } from "../../common/types/types";
-import { store } from "../model/redux-store";
+import {Navbar} from "../../features/components/navbar/Navbar";
+import {News} from "../../features/components/news/News";
+import {Music} from "../../features/components/music/Music";
+import {Login} from "../../features/auth/ui/Login";
+import {rootState} from "../../common/types/types";
+import {store} from "../model/redux-store";
 import {ConfigProvider, Layout} from "antd";
+import {CustomSkeleton} from "../../common/commonComponents/antdComponents/CustomSkeleton";
 
 const DialogsContainer = React.lazy(() => import('../../features/components/dialogs/ui/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import("../../features/components/profile/ui/profile/ProfileContainer"));
@@ -47,7 +47,7 @@ class App extends Component<Props> {
 
     render() {
         if (!this.props.initialized) {
-            return <Preloader />;
+            return <CustomSkeleton/>
         }
 
         return (

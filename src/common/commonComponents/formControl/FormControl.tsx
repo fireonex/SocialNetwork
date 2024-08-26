@@ -4,20 +4,20 @@ import {Field, WrappedFieldMetaProps, WrappedFieldProps} from "redux-form";
 import {FieldValidatorType} from "../../utils/validators";
 
 
-const FormControlStyle = styled.div<{ error: boolean }>`
+const FormControlStyle = styled.div<{ $error: boolean }>`
     textarea {
-        box-shadow: ${props => (props.error ? "0 0 2px 2px rgba(218, 34, 34, 0.54)" : "none")};
+        box-shadow: ${props => (props.$error ? "0 0 2px 2px rgba(218, 34, 34, 0.54)" : "none")};
     }
 
     input {
-        box-shadow: ${props => (props.error ? "0 0 2px 2px rgba(218, 34, 34, 0.54)" : "none")};
+        box-shadow: ${props => (props.$error ? "0 0 2px 2px rgba(218, 34, 34, 0.54)" : "none")};
     }
 
     span {
         color: #971f1f;
     }
-
 `;
+
 
 
 type FormControlPropsType = {
@@ -27,14 +27,15 @@ type FormControlPropsType = {
 export const FormControl: React.FC<FormControlPropsType> = ({meta: {touched, error}, children}) => {
     const hasError = touched && error;
     return (
-        <FormControlStyle error={!!hasError}>
+        <FormControlStyle $error={!!hasError}>
             <div>
                 {children}
             </div>
             {hasError && <span>{error}</span>}
         </FormControlStyle>
-    )
-}
+    );
+};
+
 
 
 

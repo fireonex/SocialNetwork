@@ -12,6 +12,7 @@ import {rootState} from "../../common/types/types";
 import {store} from "../model/redux-store";
 import {ConfigProvider, Layout} from "antd";
 import {CustomSkeleton} from "../../common/commonComponents/antdComponents/CustomSkeleton";
+import LoginContainer from "../../features/auth/ui/LoginContainer";
 
 const DialogsContainer = React.lazy(() => import('../../features/components/dialogs/ui/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import("../../features/components/profile/ui/profile/ProfileContainer"));
@@ -67,7 +68,7 @@ class App extends Component<Props> {
                                 <Route exact path='/users' component={UsersContainer} />
                                 <Route exact path='/news' component={News} />
                                 <Route exact path='/music' component={Music} />
-                                <Route exact path='/login' component={Login} />
+                                <Route exact path='/login' component={LoginContainer} />
                                 <Route exact path='/'>
                                     <Redirect to='/profile' />
                                 </Route>

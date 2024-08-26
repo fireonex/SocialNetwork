@@ -1,38 +1,39 @@
 import React from "react";
-import {Login} from "./Login";
-import {compose} from "redux";
-import {connect} from "react-redux";
-import {loggedInTC} from "../model/authReducer";
-import {rootState} from "../../../common/types/types";
-import {LoginFormData} from "../types";
+import { connect } from "react-redux";
+import { loggedInTC } from "../model/authReducer";
+import { LoginFormData } from "../types";
+import { Login } from "./Login";
+import { rootState } from "../../../common/types/types";
+import { ThunkDispatch } from 'redux-thunk';
+import { Action } from 'redux';
 
+const mapStateToProps = (state: rootState) => ({
+    isAuth: state.auth.isAuth,
+    captchaUrl: state.auth.captchaUrl,
+});
 
-type MapDispatchPropsType = {
-    loggedInTC: (formData: LoginFormData) => void
-}
+const mapDispatchToProps = (dispatch: ThunkDispatch<rootState, unknown, Action>) => ({
+    loggedIn: (formData: LoginFormData) => dispatch(loggedInTC(formData)),
+});
 
-type MapStatePropsType = {
-    isAuth: boolean
-    captchaUrl: string | null
-}
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-type LoginContainerPropsType = MapStatePropsType & MapDispatchPropsType;
+class LoginContainer extends React.Component<Props> {
 
-export class LoginContainer extends React.Component<LoginContainerPropsType> {
+    loginHandler = (formData: LoginFormData) => {
+        this.props.loggedIn(formData);
+    };
+
 
     render() {
         return (
-            <Login loggedInTC={this.props.loggedInTC} isAuth={this.props.isAuth} captchaUrl={this.props.captchaUrl}/>
+            <Login
+                loggedIn={this.loginHandler}
+                isAuth={this.props.isAuth}
+                captchaUrl={this.props.captchaUrl}
+            />
         );
     }
 }
 
-
-const mapStateToProps = (state: rootState): MapStatePropsType => ({
-    isAuth: state.auth.isAuth,
-    captchaUrl: state.auth.captchaUrl
-});
-
-export default compose<React.ComponentType>(
-    connect(mapStateToProps, {loggedInTC}),
-)(LoginContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

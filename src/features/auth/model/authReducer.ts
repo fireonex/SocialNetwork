@@ -1,4 +1,4 @@
-import {AnyAction} from "redux";
+import {Action, AnyAction} from "redux";
 import {securityAPI} from "../api/securityAPI";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {stopSubmit} from "redux-form";
@@ -13,7 +13,7 @@ const SET_CAPTCHA_URL = 'social-network/auth/SET-CAPTCHA-URL';
 
 // Types
 
-
+type ThunkLoggedIn = ThunkAction<void, rootState, unknown, Action<string>>;
 type Thunk = ThunkAction<void, rootState, unknown, authActions>;
 
 // Initial State
@@ -80,23 +80,26 @@ export const getAuthMeTC = (): Thunk => async (dispatch: ThunkDispatch<rootState
     }
 };
 
-export const loggedInTC = (formData: LoginFormData): Thunk => async (dispatch: ThunkDispatch<rootState, unknown, AnyAction>) => {
+
+
+export const loggedInTC = (formData: LoginFormData): ThunkLoggedIn => async (dispatch) => {
     try {
         const response = await authAPI.login(formData);
         if (response.resultCode === 0) {
             dispatch(getAuthMeTC());
         } else {
             if (response.resultCode === 10) {
-                dispatch(getCaptchaUrlTC())
+                dispatch(getCaptchaUrlTC());
             }
 
-            const errorMessage = response.messages.length ? response.messages : 'Some Error';
+            const errorMessage = response.messages.length ? response.messages[0] : 'Some Error';
             dispatch(stopSubmit('login', { _error: errorMessage }));
         }
     } catch (error) {
         console.error("Error in loggedInTC:", error);
     }
 };
+
 
 export const loggedOutTC = (): Thunk => async (dispatch: ThunkDispatch<rootState, unknown, AnyAction>) => {
     try {

@@ -10,7 +10,6 @@ type Props = {
 export const Navbar = ({}: Props) => {
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-    // Хук для обновления ширины экрана
     useEffect(() => {
         const handleResize = () => {
             setScreenWidth(window.innerWidth);
@@ -18,7 +17,6 @@ export const Navbar = ({}: Props) => {
 
         window.addEventListener("resize", handleResize);
 
-        // Удаление слушателя при размонтировании компонента
         return () => {
             window.removeEventListener("resize", handleResize);
         };

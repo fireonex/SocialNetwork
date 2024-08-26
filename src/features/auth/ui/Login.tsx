@@ -5,23 +5,20 @@ import { ReduxLoginForm } from "./LoginForm";
 import {S} from "./Login.styles"
 
 type Props = {
-    loggedInTC: (formData: LoginFormData) => void;
+    loggedIn: (formData: LoginFormData) => void;
     isAuth: boolean;
     captchaUrl: string | null;
 };
 
-export const Login = ({ loggedInTC, isAuth, captchaUrl }: Props) => {
+export const Login = ({ loggedIn, isAuth, captchaUrl }: Props) => {
+
     const onSubmitHandler = (formData: LoginFormData) => {
-        loggedInTC(formData);
+        loggedIn(formData);
     };
 
     if (isAuth) {
         return <Redirect to={"/profile"} />;
     }
-
-    //     email: string
-    //     password: string
-    //     rememberMe: boolean
 
     return (
         <S.LoginContainer>
@@ -30,3 +27,4 @@ export const Login = ({ loggedInTC, isAuth, captchaUrl }: Props) => {
         </S.LoginContainer>
     );
 };
+

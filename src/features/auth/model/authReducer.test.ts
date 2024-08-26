@@ -18,7 +18,8 @@ describe('authReducer', () => {
         const expectedState = {
             id: 1,
             email: 'test@example.com',
-            isAuth: true
+            isAuth: true,
+            captchaUrl: null
         };
 
         expect(authReducer(initialState, action)).toEqual(expectedState);

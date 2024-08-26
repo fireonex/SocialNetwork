@@ -10,6 +10,7 @@ type Props = {
     captchaUrl: string | null;
 };
 
+
 type LoginFormValuesTypeKeys = GetStringKeys<LoginFormData>;
 
 const LoginForm: React.FC<InjectedFormProps<LoginFormData, Props> & Props> = ({ handleSubmit, error, captchaUrl }) => {
@@ -36,10 +37,10 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormData, Props> & Props> = ({ 
                 )}
 
                 {error && <S.ErrorText>{error}</S.ErrorText>}
-
                 <S.ButtonWrapper>
-                    <StyledButton>Login</StyledButton>
+                    <button>Login</button>
                 </S.ButtonWrapper>
+
             </>
         </form>
     );

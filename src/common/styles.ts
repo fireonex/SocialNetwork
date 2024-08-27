@@ -3,7 +3,7 @@ export const Theme = {
     colors: {
         NavbarDark: "#EFCFA4FF",
         NavbarLight: "#FAEACAFF",
-        DarkGreen: "#20581e",
+        DarkGreen: "#023430",
         ButtonDark: "#5C8E90FF",
         ButtonLight: "#9BB6B3FF",
         FontLight: "#D6F2EC",

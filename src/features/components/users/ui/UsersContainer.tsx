@@ -1,9 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Users } from "./Users";
+import {connect} from "react-redux";
+import {Users} from "./Users";
 import {compose} from "redux";
 import {userData} from "../types";
-import {Preloader} from "../../../../common/commonComponents/preloader/Preloader";
 import {rootState} from "../../../../common/types/types";
 import {
     getCurrentPage,
@@ -14,7 +13,6 @@ import {
     getUsers
 } from "../model/usersSelectors";
 import {followUserTC, getUsersTC, unfollowUserTC} from "../model/usersReducer";
-import {Skeleton} from "antd";
 import {CustomSkeleton} from "../../../../common/commonComponents/antdComponents/CustomSkeleton";
 
 
@@ -25,22 +23,33 @@ type Props = {
     currentPage: number;
     isFetching: boolean;
     followingInProgress: number[];
-    getUsersTC: (currentPage: number, pageSize: number) => void;
+    getUsersTC: (currentPage: number, pageSize: number, term?: string, friend?: boolean) => void;
     followUserTC: (user: userData) => void;
     unfollowUserTC: (user: userData) => void;
 };
 
-type State = {};
+type State = {
+    term: string;
+    friend: boolean;
+};
 
 class UsersContainer extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            term: '',
+            friend: false
+        };
+    }
+
     componentDidMount() {
-        let {currentPage, pageSize} = this.props
+        let {currentPage, pageSize} = this.props;
         this.props.getUsersTC(currentPage, pageSize);
     }
 
     setCurrentPageHandler = (page: number) => {
-        let {pageSize} = this.props
-        this.props.getUsersTC(page, pageSize);
+        let {pageSize} = this.props;
+        this.props.getUsersTC(page, pageSize, this.state.term, this.state.friend);
     };
 
     followHandler = (user: userData) => {
@@ -50,6 +59,15 @@ class UsersContainer extends React.Component<Props, State> {
     unfollowHandler = (user: userData) => {
         this.props.unfollowUserTC(user);
     };
+
+    onFilterChange = (values: { userName: string, followed: boolean }) => {
+        this.setState({
+            term: values.userName,
+            friend: values.followed
+        }, () => {
+            this.props.getUsersTC(this.props.currentPage, this.props.pageSize, values.userName, values.followed);
+        });
+    }
 
     render() {
         return (
@@ -65,8 +83,8 @@ class UsersContainer extends React.Component<Props, State> {
                         followingInProgress={this.props.followingInProgress}
                         followHandler={this.followHandler}
                         unfollowHandler={this.unfollowHandler}
+                        onFilterChange={this.onFilterChange}
                     />}
-
             </>
         );
     }
@@ -82,8 +100,6 @@ const mapStateToProps = (state: rootState) => {
         followingInProgress: getFollowingInProgress(state)
     };
 };
-
-
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {

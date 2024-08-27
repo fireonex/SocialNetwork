@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {Theme} from "../../../common/styles";
 
 const Navigation = styled.nav`
-    background: #20581e;
+    background: ${Theme.colors.DarkGreen};
     padding: 20px;
     height: 100%;
 `;

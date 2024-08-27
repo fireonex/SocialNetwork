@@ -12,6 +12,11 @@ export type userData = {
     followed: boolean;
 };
 
+export type UsersFilters = {
+    term: string;
+    friend: boolean | null;
+}
+
 export type usersPage = {
     users: userData[];
     pageSize: number;
@@ -19,4 +24,5 @@ export type usersPage = {
     currentPage: number;
     isFetching: boolean;
     followingInProgress: number[];
+    filters: UsersFilters
 };

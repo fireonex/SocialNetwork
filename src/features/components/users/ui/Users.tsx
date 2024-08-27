@@ -5,6 +5,7 @@ import {S} from "./Users.styles"
 import { Row, Col } from "antd";
 import {Pagination} from "../../../../common/commonComponents/paginator/Pagination";
 import {Title} from "../../../../common/commonComponents/textElements/Title";
+import {UsersFiltration} from "./UsersFiltration";
 
 type Props = {
     pageSize: number;
@@ -15,6 +16,7 @@ type Props = {
     followingInProgress: number[];
     followHandler: (user: userData) => void;
     unfollowHandler: (user: userData) => void;
+    onFilterChange: (values: {userName: string; followed: boolean;}) => void;
 };
 
 export const Users = ({
@@ -25,13 +27,15 @@ export const Users = ({
                           users,
                           followHandler,
                           unfollowHandler,
-                          followingInProgress
+                          followingInProgress,
+                            onFilterChange
                       }: Props) => {
 
     return (
         <S.UsersContainer>
             <Title text={'Our users'}/>
             <S.PaginationWrapper>
+                <UsersFiltration onFilterChange={onFilterChange}/>
                 <Pagination
                     pageSize={pageSize}
                     totalCount={totalCount}

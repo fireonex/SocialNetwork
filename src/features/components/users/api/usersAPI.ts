@@ -2,8 +2,15 @@ import {instance} from "../../../../common/instance/instance";
 import {userData} from "../types";
 
 export const usersAPI = {
-    getUsers: async (currentPage: number, pageSize: number) => {
-        const res = await instance.get(`users?page=${currentPage}&count=${pageSize}`);
+    getUsers: async (currentPage: number, pageSize: number, term: string = '', friend: boolean | null = null) => {
+        const res = await instance.get(`users`, {
+            params: {
+                page: currentPage,
+                count: pageSize,
+                term,
+                friend
+            }
+        });
         return res.data;
     },
     followUser: async (user: userData) => {

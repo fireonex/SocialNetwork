@@ -13,6 +13,7 @@ const SET_CURRENT_PAGE = 'social-network/users/SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'social-network/users/SET-TOTAL-USERS-COUNT';
 const TOGGLE_IS_FETCHING = 'social-network/users/TOGGLE-IS-FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'social-network/users/TOGGLE-IS-FOLLOWING-PROGRESS';
+const SET_USERS_FILTRATION = 'social-network/users/SET_USERS_FILTRATION';
 
 // Types
 export type usersPageActions =
@@ -22,7 +23,8 @@ export type usersPageActions =
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof toggleFetching>
-    | ReturnType<typeof toggleIsFollowingProgress>;
+    | ReturnType<typeof toggleIsFollowingProgress>
+    | ReturnType<typeof usersFiltration>
 
 
 // Initial State
@@ -32,7 +34,11 @@ let initialState: usersPage = {
     totalCount: 0,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: []
+    followingInProgress: [],
+    filters: {
+        term: '',
+        friend: null
+    }
 };
 
 // Reducer
@@ -75,6 +81,14 @@ export const usersReducer = (state = initialState, action: usersPageActions): us
                     ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id !== action.userId)
             };
+        case SET_USERS_FILTRATION:
+                return {
+                    ...state,
+                    filters: {
+                        term: action.name,
+                        friend: action.followed
+                    }
+                };
         default:
             return state;
     }
@@ -117,13 +131,19 @@ export const toggleIsFollowingProgress = (followingInProgress: boolean, userId: 
     userId
 }) as const;
 
+export const usersFiltration = (name: string, followed: boolean | null) => ({
+    type: SET_USERS_FILTRATION,
+    name, followed
+}) as const;
+
 
 // Thunks
-export const getUsersTC = (currentPage: number, pageSize: number): Thunk =>
+export const getUsersTC = (currentPage: number, pageSize: number, term: string = '',
+                           friend: boolean = false): Thunk =>
     async (dispatch: thunkDispatch) => {
         dispatch(toggleFetching(true));
         try {
-            const data = await usersAPI.getUsers(currentPage, pageSize);
+            const data = await usersAPI.getUsers(currentPage, pageSize, term, friend);
             dispatch(setUsers(data.items));
             dispatch(setTotalUsersCount(data.totalCount));
             dispatch(setCurrentPage(currentPage));

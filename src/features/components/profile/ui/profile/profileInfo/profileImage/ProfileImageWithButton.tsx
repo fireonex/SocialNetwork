@@ -1,9 +1,9 @@
-import { Image } from "antd";
+import {Image} from "antd";
 import examplePhoto from "../../../../../../../common/assets/defaultSmallUserImg.png";
-import { EyeOutlined, UploadOutlined } from "@ant-design/icons";
-import { StyledButton } from "../../../../../../../common/commonComponents/antdComponents/StyledButton";
-import React, { ChangeEvent, useRef } from "react";
-import { ProfileStructure } from "../../../../types";
+import {EyeOutlined, UploadOutlined} from "@ant-design/icons";
+import {StyledButton} from "../../../../../../../common/commonComponents/antdComponents/StyledButton";
+import React, {ChangeEvent, useRef} from "react";
+import {ProfileStructure} from "../../../../types";
 import styled from "styled-components";
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
     profile: ProfileStructure;
 };
 
-export const ProfileImageWithButton = ({ isOwner, savePhoto, profile }: Props) => {
+export const ProfileImageWithButton = ({isOwner, savePhoto, profile}: Props) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -27,6 +27,7 @@ export const ProfileImageWithButton = ({ isOwner, savePhoto, profile }: Props) =
         }
     };
 
+
     return (
         <ProfileLeftSide>
             <Image
@@ -34,13 +35,13 @@ export const ProfileImageWithButton = ({ isOwner, savePhoto, profile }: Props) =
                 width={400}
                 alt={'Profile photo'}
                 preview={{
-                    mask: <EyeOutlined style={{ fontSize: '24px', color: 'white' }} />,
-                    movable: false,
-                }}
+                    mask: <EyeOutlined style={{fontSize: '24px', color: 'white'}}/>,
+                    movable: false}}
             />
+
             {isOwner && (
                 <UploadWrapper>
-                    <StyledButton icon={<UploadOutlined />} className="upload-button" onClick={handleButtonClick}>
+                    <StyledButton icon={<UploadOutlined/>} className="upload-button" onClick={handleButtonClick}>
                         Change Profile Photo
                     </StyledButton>
                     <input
@@ -48,7 +49,7 @@ export const ProfileImageWithButton = ({ isOwner, savePhoto, profile }: Props) =
                         type="file"
                         onChange={onMainPhotoSelected}
                         ref={fileInputRef}
-                        style={{ display: 'none' }}
+                        style={{display: 'none'}}
                     />
                 </UploadWrapper>
             )}
@@ -57,13 +58,13 @@ export const ProfileImageWithButton = ({ isOwner, savePhoto, profile }: Props) =
 };
 
 const UploadWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
 `;
 
 const ProfileLeftSide = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;

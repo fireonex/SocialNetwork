@@ -6,6 +6,8 @@ import {FormAction, stopSubmit} from "redux-form";
 import actions from "redux-form/lib/actions";
 import {profileAPI} from "../api/profileAPI";
 import {Photos, ProfileStructure, profilePage} from "../types";
+import {handleAsyncError} from "../../../../common/utils/handleAsyncError";
+import {setErrorAC} from "../../../../app/model/appReducer";
 
 
 // Actions
@@ -46,11 +48,7 @@ export type profilePageActions =
 
 // Initial State
 let initialState: profilePage = {
-    messagesData: [
-        // {id: '1', post: 'How are you?', likesCount: 5},
-        // {id: '2', post: 'Hello!!!', likesCount: 8},
-        // {id: '3', post: 'This is my first post', likesCount: 10},
-    ],
+    messagesData: [],
     profile: null,
     status: ''
 };
@@ -94,6 +92,8 @@ export const getUserProfileTC = (userId: number) => async (dispatch: Dispatch) =
     try {
         const data = await profileAPI.getProfile(userId);
         dispatch(setUserProfile(data));
+    } catch (error: unknown) {
+        handleAsyncError(error, dispatch);
     } finally {
         dispatch(toggleFetching(false));
     }
@@ -102,8 +102,10 @@ export const getUserProfileTC = (userId: number) => async (dispatch: Dispatch) =
 export const getStatusTC = (userId: number) => async (dispatch: Dispatch) => {
     dispatch(toggleFetching(true));
     try {
-        const res = await profileAPI.getStatus(userId);
-        dispatch(setStatus(res.data));
+        const data = await profileAPI.getStatus(userId);
+        dispatch(setStatus(data));
+    } catch (error: unknown) {
+        handleAsyncError(error, dispatch);
     } finally {
         dispatch(toggleFetching(false));
     }
@@ -112,10 +114,14 @@ export const getStatusTC = (userId: number) => async (dispatch: Dispatch) => {
 export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => {
     dispatch(toggleFetching(true));
     try {
-        const res = await profileAPI.updateStatus(status);
-        if (res.data.resultCode === 0) {
+        const data = await profileAPI.updateStatus(status);
+        if (data.resultCode === 0) {
             dispatch(setStatus(status));
+        } else {
+            dispatch(setErrorAC(data.messages));
         }
+    } catch (error: unknown) {
+        handleAsyncError(error, dispatch);
     } finally {
         dispatch(toggleFetching(false));
     }
@@ -125,14 +131,14 @@ export const updateStatusTC = (status: string) => async (dispatch: Dispatch) => 
 export const updatePhotoTC = (file: File) => async (dispatch: Dispatch) => {
     dispatch(toggleFetching(true));
     try {
-        const res = await profileAPI.updateProfilePhoto(file);
-        if (res.data.resultCode === 0) {
-            dispatch(setPhoto(res.data.data.photos));
+        const data = await profileAPI.updateProfilePhoto(file);
+        if (data.resultCode === 0) {
+            dispatch(setPhoto(data.data.photos));
         } else {
-            console.error("Failed to update photo:", res.data.messages);
+            dispatch(setErrorAC(data.messages));
         }
-    } catch (error) {
-        console.error("Network error:", error);
+    } catch (error: unknown) {
+        handleAsyncError(error, dispatch);
     } finally {
         dispatch(toggleFetching(false));
     }
@@ -140,19 +146,22 @@ export const updatePhotoTC = (file: File) => async (dispatch: Dispatch) => {
 
 
 export const updateProfileInfoTC = (profile: ProfileStructure): ThunkType => async (dispatch, getState) => {
-    const userId = getState().auth.id
-    const data = await profileAPI.updateProfileInfo(profile).then(res => res.data)
-
-    if (data.resultCode === 0) {
-        if (userId != null) {
-            await dispatch(getUserProfileTC(userId))
+    const userId = getState().auth.id;
+    try {
+        const data = await profileAPI.updateProfileInfo(profile);
+        if (data.resultCode === 0) {
+            if (userId != null) {
+                await dispatch(getUserProfileTC(userId));
+            }
         } else {
-            throw new Error("userId can't be null")
+            dispatch(stopSubmit("edit-profile", {_error: data.messages[0]}));
+            return Promise.reject(data.messages[0]);
         }
-    } else {
-        dispatch(stopSubmit("edit-profile", {_error: data.messages[0] }))
-        return Promise.reject(data.messages[0])
+    } catch (error: unknown) {
+        handleAsyncError(error, dispatch);
+        return Promise.reject("Failed to update profile");
     }
-}
+};
+
 type ActionsType = InferActions<typeof actions>
 type ThunkType = BaseThunk<ActionsType | FormAction>

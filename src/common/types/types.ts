@@ -4,9 +4,12 @@ import {navbarPage} from "../../features/components/navbar/navbarReducer";
 import {FormStateMap} from "redux-form";
 import {authState} from "../../features/auth/types";
 import {dialogsPage} from "../../features/components/dialogs/types"
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {AnyAction} from "redux";
 
 export type appState = {
     initialized: boolean;
+    error: string | null
 };
 
 export type rootState = {
@@ -18,4 +21,7 @@ export type rootState = {
     app: appState
     form: FormStateMap
 }
+
+export type Thunk = ThunkAction<void, rootState, unknown, AnyAction>;
+export type thunkDispatch = ThunkDispatch<rootState, unknown, AnyAction>
 

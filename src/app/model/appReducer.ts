@@ -1,17 +1,15 @@
-import {AnyAction} from "redux";
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
-import {appState, rootState} from "../../common/types/types";
+import {ThunkDispatch} from "redux-thunk";
+import {appState, rootState, Thunk} from "../../common/types/types";
 import {getAuthMeTC} from "../../features/auth/model/authReducer";
 import {authActions} from "../../features/auth/types";
 
-export type appActions = ReturnType<typeof setIsInitializedAC>;
-
+export type appActions = ReturnType<typeof setIsInitializedAC> | ReturnType<typeof setErrorAC>;
 
 let initialState: appState = {
-    initialized: false
+    initialized: false,
+    error: null
 };
 
-type Thunk = ThunkAction<void, rootState, unknown, AnyAction>;
 
 export const appReducer = (state = initialState, action: appActions): appState => {
     switch (action.type) {
@@ -19,6 +17,11 @@ export const appReducer = (state = initialState, action: appActions): appState =
             return {
                 ...state,
                 initialized: true
+            };
+        case "SET-ERROR":
+            return {
+                ...state,
+                error: action.error
             };
         default:
             return state;
@@ -28,6 +31,10 @@ export const appReducer = (state = initialState, action: appActions): appState =
 
 export const setIsInitializedAC = () => ({
     type: "SET-IS-INITIALIZED",
+}) as const;
+
+export const setErrorAC = (error: string | null) => ({
+    type: "SET-ERROR", error
 }) as const;
 
 

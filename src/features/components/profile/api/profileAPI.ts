@@ -1,28 +1,32 @@
-
 import {instance} from "../../../../common/instance/instance";
 import {ProfileStructure} from "../types";
+
 
 export const profileAPI = {
     getProfile: async (userId: number) => {
         const res = await instance.get<ProfileStructure>(`profile/${userId}`);
         return res.data;
     },
-    getStatus: (userId: number) => {
-        return instance.get(`profile/status/${userId}`)
+    getStatus: async (userId: number) => {
+        const res = await instance.get(`profile/status/${userId}`)
+        return res.data;
     },
-    updateStatus: (status: string) => {
-        return instance.put(`profile/status`, {status})
+    updateStatus: async (status: string) => {
+        const res = await instance.put(`profile/status`, {status})
+        return res.data;
     },
-    updateProfilePhoto: (file: File) => {
+    updateProfilePhoto: async (file: File) => {
         const formData = new FormData();
         formData.append("image", file);
-        return instance.put(`profile/photo`, formData, {
+        const res = await instance.put(`profile/photo`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         });
+        return res.data;
     },
-    updateProfileInfo: (profile: ProfileStructure) => {
-        return instance.put(`profile`, profile)
+    updateProfileInfo: async (profile: ProfileStructure) => {
+        const res = await instance.put(`profile`, profile)
+        return res.data;
     }
 }

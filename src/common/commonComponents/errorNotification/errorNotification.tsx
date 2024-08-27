@@ -1,18 +1,18 @@
-import {S} from "./errorNotification.styles"
+import {Alert} from "antd";
 
 type Props = {
     message: string;
 };
 
 
-export const errorNotification = ({message}: Props) => {
+export const ErrorNotification = ({message}: Props) => {
     return (
-        <S.AlertContainer>
-            <S.AlertContent>
-                <S.AlertIcon>⚠️</S.AlertIcon>
-                <S.AlertMessage>{message}</S.AlertMessage>
-            </S.AlertContent>
-        </S.AlertContainer>
+        <Alert
+            message={message}
+            type="error"
+            showIcon
+            closable
+        />
     );
 };
 

@@ -5,13 +5,14 @@ import {stopSubmit} from "redux-form";
 import {authAPI} from "../api/authAPI";
 import {rootState} from "../../../common/types/types";
 import {authActions, authState, LoginFormData} from "../types";
+import {handleAsyncError} from "../../../common/utils/handleAsyncError";
 
 // Actions
 const SET_USER_DATA = 'social-network/auth/SET-USER-DATA';
 const SET_IS_LOGGED_IN = 'social-network/auth/SET-IS-LOGGED-IN';
 const SET_CAPTCHA_URL = 'social-network/auth/SET-CAPTCHA-URL';
 
-// Types
+
 
 type ThunkLoggedIn = ThunkAction<void, rootState, unknown, Action<string>>;
 type Thunk = ThunkAction<void, rootState, unknown, authActions>;
@@ -35,8 +36,8 @@ export const authReducer = (state = initialState, action: authActions): authStat
         case SET_IS_LOGGED_IN:
             return {
                 ...state,
-                ...action.data,  // добавляем данные из формы
-                isAuth: true // Установить isAuth в true при логине
+                ...action.data,
+                isAuth: true
             };
         case SET_CAPTCHA_URL:
             return {
@@ -70,13 +71,13 @@ export const setCaptchaUrlAC = (url: string) => ({
 // Thunks
 export const getAuthMeTC = (): Thunk => async (dispatch: ThunkDispatch<rootState, unknown, AnyAction>) => {
     try {
-        const response = await authAPI.authMe();
-        if (response.data.resultCode === 0) {
-            const { id, email } = response.data.data;
+        const data = await authAPI.authMe();
+        if (data.resultCode === 0) {
+            const { id, email } = data.data;
             dispatch(setAuthUserDataAC(id, email, true));
         }
-    } catch (error) {
-        console.error("Error in getAuthMeTC:", error);
+    } catch (error: unknown) {
+        handleAsyncError(error, dispatch);
     }
 };
 
@@ -95,10 +96,15 @@ export const loggedInTC = (formData: LoginFormData): ThunkLoggedIn => async (dis
             const errorMessage = response.messages.length ? response.messages[0] : 'Some Error';
             dispatch(stopSubmit('login', { _error: errorMessage }));
         }
-    } catch (error) {
-        console.error("Error in loggedInTC:", error);
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            dispatch(stopSubmit('login', { _error: error.message }));
+        } else {
+            dispatch(stopSubmit('login', { _error: 'Unknown error occurred' }));
+        }
     }
 };
+
 
 
 export const loggedOutTC = (): Thunk => async (dispatch: ThunkDispatch<rootState, unknown, AnyAction>) => {
@@ -107,8 +113,8 @@ export const loggedOutTC = (): Thunk => async (dispatch: ThunkDispatch<rootState
         if (response.resultCode === 0) {
             dispatch(setAuthUserDataAC(null, null, false));
         }
-    } catch (error) {
-        console.error("Error in loggedOutTC:", error);
+    } catch (error: unknown) {
+        handleAsyncError(error, dispatch);
     }
 };
 
@@ -117,7 +123,7 @@ export const getCaptchaUrlTC = (): Thunk => async (dispatch: ThunkDispatch<rootS
         const response = await securityAPI.getCaptchaUrl();
         const captchaURL = response.data.url
         dispatch(setCaptchaUrlAC(captchaURL))
-    } catch (error) {
-        console.error("Error in loggedOutTC:", error);
+    } catch (error: unknown) {
+        handleAsyncError(error, dispatch);
     }
 };

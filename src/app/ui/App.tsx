@@ -7,12 +7,12 @@ import HeaderContainer from "../../features/components/header/HeaderContainer";
 import {Navbar} from "../../features/components/navbar/Navbar";
 import {News} from "../../features/components/news/News";
 import {Music} from "../../features/components/music/Music";
-import {Login} from "../../features/auth/ui/Login";
 import {rootState} from "../../common/types/types";
 import {store} from "../model/redux-store";
 import {ConfigProvider, Layout} from "antd";
 import {CustomSkeleton} from "../../common/commonComponents/antdComponents/CustomSkeleton";
 import LoginContainer from "../../features/auth/ui/LoginContainer";
+import {ErrorNotification} from "../../common/commonComponents/errorNotification/errorNotification";
 
 const DialogsContainer = React.lazy(() => import('../../features/components/dialogs/ui/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import("../../features/components/profile/ui/profile/ProfileContainer"));
@@ -25,7 +25,8 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state: rootState) => ({
-    initialized: state.app.initialized
+    initialized: state.app.initialized,
+    error: state.app.error
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -61,6 +62,7 @@ class App extends Component<Props> {
                         <HeaderContainer />
                     </S.AppHeader>
                     <S.AppContent>
+                        {this.props.error && <ErrorNotification message={this.props.error}/>}
                         <Suspense fallback={'Loading...'}>
                             <Switch>
                                 <Route exact path='/profile/:userId?' component={ProfileContainer} />

@@ -1,19 +1,16 @@
 import { appReducer, setIsInitializedAC } from './appReducer';
 import {appState} from "../../common/types/types";
 
-// Определение типа для неизвестного действия
-type UnknownAction = {
-    type: 'UNKNOWN_ACTION';
-};
 
-// Тест для проверки экшена SET-IS-INITIALIZED
 test('appReducer should handle SET-IS-INITIALIZED action', () => {
     const initialState: appState = {
-        initialized: false
+        initialized: false,
+        error: null,
     };
 
     const expectedState: appState = {
-        initialized: true
+        initialized: true,
+        error: null,
     };
 
     expect(appReducer(initialState, setIsInitializedAC())).toEqual(expectedState);

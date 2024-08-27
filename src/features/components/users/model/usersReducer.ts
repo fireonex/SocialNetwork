@@ -1,8 +1,9 @@
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {updateObjectInArray} from "../../../../common/utils/object-helpers";
 import {usersAPI} from "../api/usersAPI";
-import {rootState} from "../../../../common/types/types";
+import {Thunk, thunkDispatch} from "../../../../common/types/types";
 import {userData, usersPage} from "../types";
+import {handleAsyncError} from "../../../../common/utils/handleAsyncError";
+import {setErrorAC} from "../../../../app/model/appReducer";
 
 // Actions
 const FOLLOW_USER = 'social-network/users/FOLLOW-USER';
@@ -24,7 +25,6 @@ export type usersPageActions =
     | ReturnType<typeof toggleIsFollowingProgress>;
 
 
-
 // Initial State
 let initialState: usersPage = {
     users: [],
@@ -41,12 +41,12 @@ export const usersReducer = (state = initialState, action: usersPageActions): us
         case FOLLOW_USER:
             return {
                 ...state,
-                users: updateObjectInArray(state.users, action.id, 'id', { followed: true })
+                users: updateObjectInArray(state.users, action.id, 'id', {followed: true})
             };
         case UNFOLLOW_USER:
             return {
                 ...state,
-                users: updateObjectInArray(state.users, action.id, 'id', { followed: false })
+                users: updateObjectInArray(state.users, action.id, 'id', {followed: false})
             };
         case SET_USERS:
             return {
@@ -119,40 +119,51 @@ export const toggleIsFollowingProgress = (followingInProgress: boolean, userId: 
 
 
 // Thunks
-export const getUsersTC = (currentPage: number, pageSize: number): ThunkAction<void, rootState, unknown, usersPageActions> =>
-    async (dispatch: ThunkDispatch<rootState, unknown, usersPageActions>) => {
+export const getUsersTC = (currentPage: number, pageSize: number): Thunk =>
+    async (dispatch: thunkDispatch) => {
         dispatch(toggleFetching(true));
         try {
             const data = await usersAPI.getUsers(currentPage, pageSize);
             dispatch(setUsers(data.items));
             dispatch(setTotalUsersCount(data.totalCount));
             dispatch(setCurrentPage(currentPage));
+        } catch (error: unknown) {
+            handleAsyncError(error, dispatch);
         } finally {
             dispatch(toggleFetching(false));
         }
     };
 
-export const followUserTC = (user: userData): ThunkAction<void, rootState, unknown, usersPageActions> =>
-    async (dispatch: ThunkDispatch<rootState, unknown, usersPageActions>) => {
+
+export const followUserTC = (user: userData): Thunk =>
+    async (dispatch: thunkDispatch) => {
         dispatch(toggleIsFollowingProgress(true, user.id));
         try {
             const data = await usersAPI.followUser(user);
             if (data.resultCode === 0) {
                 dispatch(follow(user.id));
+            } else {
+                dispatch(setErrorAC(data.messages));
             }
+        } catch (error: unknown) {
+            handleAsyncError(error, dispatch);
         } finally {
             dispatch(toggleIsFollowingProgress(false, user.id));
         }
     };
 
-export const unfollowUserTC = (user: userData): ThunkAction<void, rootState, unknown, usersPageActions> =>
-    async (dispatch: ThunkDispatch<rootState, unknown, usersPageActions>) => {
+export const unfollowUserTC = (user: userData): Thunk =>
+    async (dispatch: thunkDispatch) => {
         dispatch(toggleIsFollowingProgress(true, user.id));
         try {
             const data = await usersAPI.unfollowUser(user);
             if (data.resultCode === 0) {
                 dispatch(unfollow(user.id));
+            } else {
+                dispatch(setErrorAC(data.messages));
             }
+        } catch (error: unknown) {
+            handleAsyncError(error, dispatch);
         } finally {
             dispatch(toggleIsFollowingProgress(false, user.id));
         }

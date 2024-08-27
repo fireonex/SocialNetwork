@@ -11,11 +11,7 @@ export type navbarPage = {
 }
 
 let initialState: navbarPage = {
-    sidebarFriends: [
-        {id: 1, friendName: 'Laezel', friendPhoto: friendAvatar},
-        {id: 2, friendName: 'Astarion', friendPhoto: friendAvatar},
-        {id: 3, friendName: 'Will', friendPhoto: friendAvatar},
-    ]
+    sidebarFriends: []
 }
 
 export const navbarReducer = (state = initialState, action: any) => {

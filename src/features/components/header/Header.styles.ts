@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {Theme} from "../../../common/styles";
+import {Theme} from "../../../common/styles/styles";
 
 const Header = styled.header`
     display: flex;

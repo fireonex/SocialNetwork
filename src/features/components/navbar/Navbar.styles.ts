@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {Theme} from "../../../common/styles";
+import {Theme} from "../../../common/styles/styles";
 
 const Navigation = styled.nav`
     background: ${Theme.colors.DarkGreen};

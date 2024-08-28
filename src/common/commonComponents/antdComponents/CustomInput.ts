@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {Input} from "antd";
-import {Theme} from "../../styles";
+import {Theme} from "../../styles/styles";
 
 export const CustomInput = styled(Input)`
     &.ant-input:focus,

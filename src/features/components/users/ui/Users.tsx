@@ -34,8 +34,8 @@ export const Users = ({
     return (
         <S.UsersContainer>
             <Title text={'Our users'}/>
+            <UsersFiltration onFilterChange={onFilterChange}/>
             <S.PaginationWrapper>
-                <UsersFiltration onFilterChange={onFilterChange}/>
                 <Pagination
                     pageSize={pageSize}
                     totalCount={totalCount}
@@ -47,10 +47,10 @@ export const Users = ({
                 {users.map(user => (
                     <Col
                         key={user.id}
-                        xs={24}  // Полная ширина на малых экранах (мобильных)
-                        sm={12}  // Половина ширины на небольших экранах (планшеты)
-                        md={8}   // Треть ширины на средних экранах (небольшие ноутбуки)
-                        lg={6}   // Четверть ширины на больших экранах (широкие экраны)
+                        xs={24}  // Полная ширина на малых экранах
+                        sm={12}  // Половина ширины на небольших экранах
+                        md={8}   // Треть ширины на средних экранах
+                        lg={6}   // Четверть ширины на больших экранах
                         xl={4}   // Одна шестая ширины на очень больших экранах
                     >
                         <User

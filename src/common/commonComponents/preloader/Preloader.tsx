@@ -1,7 +1,7 @@
 import React from 'react';
 import {Flex, Spin} from 'antd';
 import styled from "styled-components";
-import {Theme} from "../../styles";
+import {Theme} from "../../styles/styles";
 
 const contentStyle: React.CSSProperties = {
     padding: 50,

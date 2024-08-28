@@ -13,6 +13,7 @@ import {ConfigProvider, Layout} from "antd";
 import {CustomSkeleton} from "../../common/commonComponents/antdComponents/CustomSkeleton";
 import LoginContainer from "../../features/auth/ui/LoginContainer";
 import {ErrorNotification} from "../../common/commonComponents/errorNotification/errorNotification";
+import {GlobalStyle} from "../../common/styles/GlobalStyle";
 
 const DialogsContainer = React.lazy(() => import('../../features/components/dialogs/ui/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import("../../features/components/profile/ui/profile/ProfileContainer"));
@@ -54,6 +55,7 @@ class App extends Component<Props> {
 
         return (
             <S.AppWrapper>
+                <GlobalStyle/>
                 <S.AppSider breakpoint="lg" collapsedWidth="0">
                     <Navbar />
                 </S.AppSider>

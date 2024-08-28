@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Theme} from "../../styles";
+import {Theme} from "../../styles/styles";
 import {Input} from "antd";
 
 const {TextArea} = Input;

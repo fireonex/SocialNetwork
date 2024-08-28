@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Layout } from 'antd';
-import { Theme } from "../../common/styles";
+import { Theme } from "../../common/styles/styles";
 
 
 const { Header, Content, Sider } = Layout;
@@ -36,14 +36,33 @@ export const AppHeader = styled(Header)`
   justify-content: space-between;
 `;
 
-// Прокручиваемая центральная часть
+
 export const AppContent = styled(Content)`
-  margin-top: 64px; /* Отступ для хедера */
-  padding: 24px;
-  background: ${(props) => props.theme?.token?.colorBgContainer || Theme.colors.NavbarLight};
-  min-height: calc(100vh - 64px); /* Высота экрана минус высота хедера */
-  overflow-y: auto;
+    margin-top: 64px;
+    padding: 24px;
+    background: ${(props) => props.theme?.token?.colorBgContainer || Theme.colors.NavbarLight};
+    min-height: calc(100vh - 64px);
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 `;
+
+
 
 export const S = {
     AppWrapper,

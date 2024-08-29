@@ -15,9 +15,12 @@ import LoginContainer from "../../features/auth/ui/LoginContainer";
 import {ErrorNotification} from "../../common/commonComponents/errorNotification/errorNotification";
 import {GlobalStyle} from "../../common/styles/GlobalStyle";
 
+
+
 const DialogsContainer = React.lazy(() => import('../../features/components/dialogs/ui/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import("../../features/components/profile/ui/profile/ProfileContainer"));
 const UsersContainer = React.lazy(() => import("../../features/components/users/ui/UsersContainer"));
+const Chat = React.lazy(() => import("../../features/components/messages/ui/ChatWithHooks"));
 
 type MatchParams = {}
 
@@ -72,6 +75,7 @@ class App extends Component<Props> {
                                 <Route exact path='/users' component={UsersContainer} />
                                 <Route exact path='/news' component={News} />
                                 <Route exact path='/music' component={Music} />
+                                <Route exact path='/chat' component={Chat} />
                                 <Route exact path='/login' component={LoginContainer} />
                                 <Route exact path='/'>
                                     <Redirect to='/profile' />

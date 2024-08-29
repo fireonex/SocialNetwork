@@ -1,7 +1,7 @@
 import {ThunkDispatch} from "redux-thunk";
 import {appState, rootState, Thunk} from "../../common/types/types";
 import {getAuthMeTC} from "../../features/auth/model/authReducer";
-import {authActions} from "../../features/auth/types";
+import {authPageActions} from "../../features/auth/types";
 
 export type appActions = ReturnType<typeof setIsInitializedAC> | ReturnType<typeof setErrorAC>;
 
@@ -40,7 +40,7 @@ export const setErrorAC = (error: string | null) => ({
 
 export const initializeAppTC = (): Thunk => (dispatch: ThunkDispatch<rootState,
     unknown,
-    appActions | authActions>) => {
+    appActions | authPageActions>) => {
 
     let promise = dispatch(getAuthMeTC())
     Promise.all([promise])

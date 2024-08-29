@@ -1,6 +1,6 @@
 import {setAuthUserDataAC, setCaptchaUrlAC, setIsLoggedInAC} from "./model/authReducer";
 
-export type authActions =
+export type authPageActions =
     | ReturnType<typeof setAuthUserDataAC>
     | ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setCaptchaUrlAC>;

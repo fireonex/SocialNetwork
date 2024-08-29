@@ -40,6 +40,9 @@ export const Navbar = ({}: Props) => {
             <S.NavLinkWrapper>
                 <NavLink to={'/music'}>Music</NavLink>
             </S.NavLinkWrapper>
+            <S.NavLinkWrapper>
+                <NavLink to={'/chat'}>Chat</NavLink>
+            </S.NavLinkWrapper>
         </S.Navigation>
     );
 };

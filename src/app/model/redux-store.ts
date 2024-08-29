@@ -7,14 +7,16 @@ import {reducer as formReducer} from "redux-form";
 import {appReducer} from "./appReducer";
 import {rootState} from "../../common/types/types";
 import {usersPageActions, usersReducer} from "../../features/components/users/model/usersReducer";
-import {authActions} from "../../features/auth/types";
+import {authPageActions} from "../../features/auth/types";
 import {authReducer} from "../../features/auth/model/authReducer";
+import {chatPageActions, chatReducer} from "../../features/components/messages/model/chat-reducer";
 
 
 type action = profilePageActions
     | dialogsPageActions
     | usersPageActions
-    | authActions
+    | authPageActions
+    | chatPageActions
 
 
 let reducers = combineReducers({
@@ -24,6 +26,7 @@ let reducers = combineReducers({
     navbarPage: navbarReducer,
     auth: authReducer,
     app: appReducer,
+    chat: chatReducer,
     form: formReducer,
 });
 

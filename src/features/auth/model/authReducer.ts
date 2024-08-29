@@ -4,7 +4,7 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {stopSubmit} from "redux-form";
 import {authAPI} from "../api/authAPI";
 import {rootState} from "../../../common/types/types";
-import {authActions, authState, LoginFormData} from "../types";
+import {authPageActions, authState, LoginFormData} from "../types";
 import {handleAsyncError} from "../../../common/utils/handleAsyncError";
 
 // Actions
@@ -15,7 +15,7 @@ const SET_CAPTCHA_URL = 'social-network/auth/SET-CAPTCHA-URL';
 
 
 type ThunkLoggedIn = ThunkAction<void, rootState, unknown, Action<string>>;
-type Thunk = ThunkAction<void, rootState, unknown, authActions>;
+type Thunk = ThunkAction<void, rootState, unknown, authPageActions>;
 
 // Initial State
 let initialState: authState = {
@@ -26,7 +26,7 @@ let initialState: authState = {
 };
 
 // Reducer
-export const authReducer = (state = initialState, action: authActions): authState => {
+export const authReducer = (state = initialState, action: authPageActions): authState => {
     switch (action.type) {
         case SET_USER_DATA:
             return {

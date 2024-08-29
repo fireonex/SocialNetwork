@@ -6,6 +6,7 @@ import {authState} from "../../features/auth/types";
 import {dialogsPage} from "../../features/components/dialogs/types"
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
+import {chatState} from "../../features/components/messages/model/chat-reducer";
 
 export type appState = {
     initialized: boolean;
@@ -18,6 +19,7 @@ export type rootState = {
     usersPage: usersPage
     navbarPage: navbarPage
     auth: authState
+    chat: chatState
     app: appState
     form: FormStateMap
 }

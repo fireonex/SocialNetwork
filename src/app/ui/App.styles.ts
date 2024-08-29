@@ -2,17 +2,14 @@ import styled from 'styled-components';
 import { Layout } from 'antd';
 import { Theme } from "../../common/styles/styles";
 
-
 const { Header, Content, Sider } = Layout;
 
-// Задаем значения по умолчанию для случая, если тема не будет доступна
 export const AppWrapper = styled(Layout)`
   display: flex;
   height: 100vh;
   font-family: "IM FELL English";
 `;
 
-// Фиксируем боковое меню
 export const AppSider = styled(Sider)`
   background: linear-gradient(180deg, rgb(250, 234, 202), rgb(239, 207, 164) 100%);
   position: fixed;
@@ -22,7 +19,6 @@ export const AppSider = styled(Sider)`
   z-index: 900;
 `;
 
-// Фиксируем хэдер
 export const AppHeader = styled(Header)`
   background: ${(props) => props.theme?.token?.colorBgContainer || '#ffffff'};
   position: fixed;
@@ -35,7 +31,6 @@ export const AppHeader = styled(Header)`
   align-items: center;
   justify-content: space-between;
 `;
-
 
 export const AppContent = styled(Content)`
     margin-top: 64px;
@@ -61,7 +56,6 @@ export const AppContent = styled(Content)`
         background: #555;
     }
 `;
-
 
 
 export const S = {

@@ -1,6 +1,4 @@
 
-
-
 export const Theme = {
     colors: {
         NavbarDark: "#EFCFA4FF",
